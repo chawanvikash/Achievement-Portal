@@ -1,0 +1,190 @@
+
+
+header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background:#003366;
+    color: white;
+    padding: 15px 30px;
+    font-size: 19px;
+}
+
+header .logo a{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 22px;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+}
+
+header .logo img{
+    height: 50px;
+    width: auto;
+}
+
+.search{
+    width: 300px;
+    height: 30px;
+    padding-left: 7px;
+    font-size: 18px;
+    border-radius: 10px;
+    border: 2px solid black;
+}
+
+.search:hover{
+    background: rgb(225, 223, 223);
+}
+
+nav{
+    transform: translateX(50px);
+}
+
+nav a{
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+    font-weight: 500;
+}
+
+nav a:hover{
+    text-decoration: underline;
+}
+
+.login-btn{
+    background: #ff9800;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.login-btn:hover{
+    background: #f5a834;
+}
+
+.register-btn{
+    background: #4caf50;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.register-btn:hover{
+    background: #5bd25f;
+}
+
+.hero1 {
+    background: url('https://cache.careers360.mobi/media/article_images/2023/5/27/iiest-shibpur-nit-engineering-college-west-bengal-featured-image.jpg') no-repeat center/cover;
+    height: 400px;
+    position: relative;
+    color: white;
+    text-align: center;
+}
+
+.overview {
+    background: rgba(0, 0, 0, 0.6);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.overview h1 {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+.overview p {
+    font-size: 20px;
+}
+
+.content {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    padding: 50px;
+    background: white;
+    gap: 40px;
+}
+
+.contact-form, .contact-info {
+    width: 45%;
+}
+
+.contact-form h2, .contact-info h2 {
+    color: #003366;
+    margin-bottom: 20px;
+}
+
+.contact-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.contact-form input, .contact-form textarea {
+    padding: 12px;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 6px;
+    outline: none;
+}
+
+.contact-form input:focus, .contact-form textarea:focus {
+    border-color: #003366;
+}
+
+.contact-form button {
+    padding: 12px;
+    font-size: 16px;
+    background: #ff9800;
+    border: none;
+    border-radius: 5px;
+}
+
+.contact-form button:hover {
+    background: #e68900;
+    cursor: pointer;
+}
+
+strong, .contact-info p, .contact-info a{
+    font-size: 19px;
+}
+
+
+.action{
+    background: #003366;
+    color: white;
+    text-align: center;
+    padding: 40px 40px;
+}
+
+.action p{
+    font-size: 18px;
+}
+
+.action button{
+    padding: 10px 20px;
+    font-size: 16px;
+    background: #ff9800;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.action button:hover{
+    background: #e68900;
+}
+
+footer {
+    background: #222;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    font-size: 16px;
+}
+
+.foot {
+    cursor: pointer;
+}
