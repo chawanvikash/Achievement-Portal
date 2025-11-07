@@ -42,18 +42,18 @@ You can use MongoDB Compass to visually manage your database.
 1.BACKEND SETUP-
 ----------------
 
-# 1. Navigate to the backend folder
+ 1. Navigate to the backend folder
 cd Backend
 
-# 2. Install all required npm packages
+ 2. Install all required npm packages
 npm install
 
-# 3. Create the .env file
-# Create a new file in the /Backend folder named .env
-# Copy and paste the content from the .env.example below:
+ 3. Create the .env file
+ Create a new file in the /Backend folder named .env
+ Copy and paste the content from the .env.example below:
 
-# 4. Run the server
-# This will start the server on http://localhost:8080
+ 4. Run the server
+ This will start the server on http://localhost:8080
 nodemon server.js
 
 -------------------------------------------------------------------------------------------------------------------------------------------------
@@ -61,10 +61,10 @@ nodemon server.js
 CREATE THIS FILE AT,  Backend/.env
 ----------------------------------
 
-# This is the secret key for signing your session cookies
+ This is the secret key for signing your session cookies
 SESSION_SECRET="your_random_secret_string_here"
 
-# This is the connection string for your local MongoDB
+ This is the connection string for your local MongoDB
 DATABASE_URL="mongodb://127.0.0.1:27017/Achievements"
 
 --------------------------------------------------------------------------------------------------------------------------------------------------
@@ -72,17 +72,17 @@ DATABASE_URL="mongodb://127.0.0.1:27017/Achievements"
 2.FRONTEND SETUP-
 ----------------
 
-# 1. Open a NEW terminal
-# (Your backend server must be left running in the first terminal)
+ 1. Open a NEW terminal
+ (Your backend server must be left running in the first terminal)
 
-# 2. Navigate to the frontend folder from the root
+ 2. Navigate to the frontend folder from the root
 cd Frontend
 
-# 3. Install all required npm packages
+ 3. Install all required npm packages
 npm install
 
-# 4. Run the frontend development server
-# This will start the app on http://localhost:5173
+ 4. Run the frontend development server
+ This will start the app on http://localhost:5173
 npm run dev
 
 --------------------------------------------------------------------------------------------------------------------------------------------------
