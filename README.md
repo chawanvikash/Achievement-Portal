@@ -14,6 +14,8 @@ Features-->
 
 * Backend: Uses isLoggedIn middleware to protect API routes, ensuring only logged-in users can access or modify data.
 
+* CSS and Styling has done by (Bootstrap - React) and (fontawesome)
+
 --> Personal User Dashboard: A complete "Create, Read, Update, Delete" (CRUD) dashboard where logged-in users can:
 
 * View only their own posts.
@@ -43,18 +45,18 @@ You can use MongoDB Compass to visually manage your database.
 ----------------
 
  1. Navigate to the backend folder
-cd Backend
+(cd Backend)
 
  2. Install all required npm packages
-npm install
+(npm install)
 
  3. Create the .env file
- Create a new file in the /Backend folder named .env
- Copy and paste the content from the .env.example below:
+ Create a new file in the /Backend folder named (.env)
+
 
  4. Run the server
  This will start the server on http://localhost:8080
-nodemon server.js
+(nodemon server.js)
 
 -------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -62,10 +64,10 @@ CREATE THIS FILE AT,  Backend/.env
 ----------------------------------
 
  This is the secret key for signing your session cookies
-SESSION_SECRET="your_random_secret_string_here"
+(SESSION_SECRET="your_random_secret_string_here")
 
  This is the connection string for your local MongoDB
-DATABASE_URL="mongodb://127.0.0.1:27017/Achievements"
+(DATABASE_URL="mongodb://127.0.0.1:27017/Achievements")
 
 --------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -76,14 +78,14 @@ DATABASE_URL="mongodb://127.0.0.1:27017/Achievements"
  (Your backend server must be left running in the first terminal)
 
  2. Navigate to the frontend folder from the root
-cd Frontend
+(cd Frontend)
 
  3. Install all required npm packages
-npm install
+(npm install)
 
  4. Run the frontend development server
  This will start the app on http://localhost:5173
-npm run dev
+(npm run dev)
 
 --------------------------------------------------------------------------------------------------------------------------------------------------
 
