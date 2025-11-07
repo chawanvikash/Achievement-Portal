@@ -43,20 +43,11 @@ function EventsPage(){
      <>
      <NavBar/>
      
-        <div className="hero">
-          <a href="#">
-            <img 
-              src="https://placehold.co/50x50/eeeeee/333333?text=IIEST" 
-              alt="Event logo" 
-              onError={(e) => { e.target.src = 'https://placehold.co/50x50?text=Logo'; }}
-            />
-            <span>IIEST, Shibpur</span>
-          </a>
-        </div>
+
         
      
 
-      <section className="hero">
+      <section className="event">
         <div className="overview">
           <h1>Events and Fests</h1>
           <p>
@@ -150,10 +141,7 @@ function EventsPage(){
         </ul>
       </section>
 
-      <footer>
-        <p className="foot">Address | Contact | Email</p>
-        <p>&copy; 2025 IIEST Shibpur. All rights reserved.</p>
-      </footer>
+
     </>
   );
  

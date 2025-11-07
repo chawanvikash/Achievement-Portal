@@ -16,6 +16,9 @@ body {
   width: 100%;
   max-width: 450px;
   text-align: center;
+  transition: all 0.3s ease-in-out;
+  transform: scale(1);
+  
 }
 
 .register-form h2 {
@@ -114,4 +117,15 @@ body {
   
   
 
+}
+.reg-btn{
+  padding: 6px;
+  border: none;
+  border-radius: 4px;
+  color: #0a0a0a;
+  background-color: rgb(246, 178, 95);
+}
+.register-form:hover{
+  transform: scale(1.02,1.02) ;
+  box-shadow: 2px 2px 3px rgb(147, 146, 146);
 }

@@ -1,80 +1,4 @@
 
-.home{
-    margin: 0px;
-}
-header{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background:#003366;
-    color: white;
-    padding: 15px 30px;
-    font-size: 19px;
-}
-
-header .logo a{
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 22px;
-    font-weight: bold;
-    color: white;
-    text-decoration: none;
-}
-
-header .logo img{
-    height: 50px;
-    width: auto;
-}
-
-.search{
-    width: 300px;
-    height: 30px;
-    padding-left: 7px;
-    font-size: 18px;
-    border-radius: 10px;
-    border: 2px solid black;
-}
-
-.search:hover{
-    background: rgb(225, 223, 223);
-}
-
-nav{
-    transform: translateX(50px);
-}
-
-nav a{
-    color: white;
-    text-decoration: none;
-    margin: 0 10px;
-    font-weight: 500;
-}
-
-nav a:hover{
-    text-decoration: underline;
-}
-
-.login-btn{
-    background: #ff9800;
-    padding: 5px 10px;
-    border-radius: 5px;
-}
-
-.login-btn:hover{
-    background: #f5a834;
-}
-
-.register-btn{
-    background: #4caf50;
-    padding: 5px 10px;
-    border-radius: 5px;
-}
-
-.register-btn:hover{
-    background: #5bd25f;
-}
-
 .hero{
     margin-top: 60px;
     background: url('https://www.iiests.ac.in/assets/images/whyiiest/02.jpg') no-repeat center/cover;
@@ -82,7 +6,23 @@ nav a:hover{
     position: relative;
     color: white;
     text-align: center;
+
+    animation-name: opacity;
+    animation-duration: 1.6s;
     
+    
+}
+.event{
+    margin-top: 60px;
+    background: url('https://assets.telegraphindia.com/telegraph/2024/Apr/1712148081_iiest.jpg') no-repeat center/cover;
+    height: 600px;
+    position: relative;
+    color: white;
+    text-align: center;
+    width: 80%;
+    margin-left: 10%;
+    animation-name: opacity;
+    animation-duration: 1.6s;
 }
 
 .overview{
@@ -94,13 +34,7 @@ nav a:hover{
     align-items: center;
 }
 
-.events ul{
-    font-size: 20px;
-}
 
-.events ul li{
-    padding-bottom: 5px;
-}
 
 .overview h1{
     font-size: 36px;
@@ -117,21 +51,7 @@ nav a:hover{
     background: white;
 }
 
-.news, .events{
-    width: 45%;
-}
 
-.news h2{
-    color: #003366;
-}
-
-.events h2{
-    color: #003366;
-}
-
-.events li{
-    cursor: pointer;
-}
 
 .cards{
     display: flex;
@@ -182,14 +102,9 @@ nav a:hover{
     background: #e68900;
 }
 
-.foot{
-    cursor: pointer;
-}
 
-footer{
-    background: #222;
-    color: white;
-    text-align: center;
-    padding: 15px;
-    font-size: 16px;
+
+@keyframes opacity {
+    from{opacity: 0;};
+    to{opacity: 1;}
 }

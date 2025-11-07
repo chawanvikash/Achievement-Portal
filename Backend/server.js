@@ -8,18 +8,15 @@ const session = require("express-session");
 const passport = require("passport");
 const localStrategy = require("passport-local");
 
-
 const { Post, User } = require("./models/user");
 const ExpressError = require("./utils/ExpressError");
 const wrapAsync = require("./utils/wrapAsync"); 
 const { isLoggedIn } = require("./utils/middleware");
 const dashboardRoute = require("./routes/users"); 
 
-
 app.use(cors({origin: "http://localhost:5173",credentials: true}));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
 
 main()
   .then(() => {
@@ -30,7 +27,6 @@ main()
 async function main() {
   await mongoose.connect('mongodb://127.0.0.1:27017/Achievements');
 };
-
 
 const sessionOptions = {
   secret: "averygoodsecret",
@@ -50,11 +46,12 @@ passport.use(new localStrategy({ usernameField: 'email' }, User.authenticate()))
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-
+//home route
 app.get("/api", (req, res) => {
   res.send("Root is absolutely working");
 });
 
+//verifying user
 app.get("/api/me", (req, res) => {
   if (!req.isAuthenticated()) {
     return res.status(401).json({ error: "No user is currently logged in." });
@@ -70,26 +67,55 @@ app.get("/api/me", (req, res) => {
   });
 });
 
+//home page
 app.get("/api/HomePage", (req, res) => {
   res.send("Accessing Home page");
 });
 
-
-app.get("/api/AcheivementPage", wrapAsync(async (req, res) => {
-  let achiev = await Post.find({}).populate('user', 'username email role');
+//acheivements of all studetns
+app.get("/api/AcheivementStudent", wrapAsync(async (req, res) => {
+  const students=await User.find({role:"student"}).select('_id');
+  const studentId=students.map(student=>student._id);
+  let achiev = await Post.find({user:{$in:studentId}}).populate('user', 'username email role').sort({createdAt:-1});
   res.json(achiev);
 }));
 
+//acheivements of all faculties
+app.get("/api/AcheivementFaculty", wrapAsync(async (req, res) => {
+  const faculties=await User.find({role:"faculty"}).select('_id');
+  const facultiesId=faculties.map(faculty=>faculty._id);
+  let achiev = await Post.find({user:{$in:facultiesId}}).populate('user', 'username email role').sort({createdAt:-1});
+  res.json(achiev);
+}));
+
+//acheivementss of all alumnies
+app.get("/api/AcheivementAlumni", wrapAsync(async (req, res) => {
+  const alumnies=await User.find({role:"alumni"}).select('_id');
+  const alumniId=alumnies.map(alumni=>alumni._id);
+  let achiev = await Post.find({user:{$in:alumniId}}).populate('user', 'username email role').sort({createdAt:-1});
+  res.json(achiev);
+}));
+
+//contact page
 app.get("/api/ContactPage", (req, res) => {
   res.send("Accessing Contacts page");
 });
+
+app.get("/api/AlumniPage", async(req, res) => {
+  const alums=(await User.find({role:"alumni"}));
+  res.json(alums);
+});
+
+
+//events page
 app.get("/api/EventsPage", (req, res) => {
   res.send("Accessing EventsPage page");
 });
 
-
+//middle ware route for dashboard
 app.use("/api/dashboard", dashboardRoute);
 
+//for registration
 app.post("/api/register", wrapAsync(async (req, res, next) => {
   const { username, email, password, role } = req.body;
   const newUser = new User({ username, email, role });
@@ -103,6 +129,7 @@ app.post("/api/register", wrapAsync(async (req, res, next) => {
   });
 }));
 
+//login
 app.post("/api/login", (req, res, next) => {
   passport.authenticate('local', (err, user, info) => {
     if (err) return next(err);
@@ -123,6 +150,7 @@ app.post("/api/login", (req, res, next) => {
   })(req, res, next);
 });
 
+//for logout
 app.post("/api/logout", (req, res, next) => {
   req.logout((err) => {
     if (err) return next(err);
@@ -131,6 +159,7 @@ app.post("/api/logout", (req, res, next) => {
 });
 
 
+//middle wares for the error handling
 app.use((req, res, next) => {
   next(new ExpressError(404, "Page not Found!"));
 });
@@ -151,6 +180,7 @@ app.use((err, req, res, next) => {
   res.status(statusCode).json({ error: message });
 });
 
+//listening server on port 8080;
 app.listen(port, () => {
   console.log(`Backend server is listening on port ${port}`);
 });

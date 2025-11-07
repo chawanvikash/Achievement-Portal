@@ -7,7 +7,7 @@ import photo from "../assets/success.avif"
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 
-function AchievementsPage() {
+function AcheiveAlumni() {
   
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -17,7 +17,7 @@ function AchievementsPage() {
   useEffect(() => { 
     const fetchPosts = async () => {
       try {  
-        const response = await axios.get( url+'/api/AcheivementPage');
+        const response = await axios.get( url+'/api/AcheivementAlumni');
         setPosts(response.data);
         console.log(response);
         
@@ -47,7 +47,7 @@ function AchievementsPage() {
     <>
 
      <NavBar/>
-      <div className="posts-list">
+      <div className="posts">
       
         {posts.map(post => (
           <Card style={{ width: '18rem' }}  className='cards'>
@@ -55,7 +55,7 @@ function AchievementsPage() {
               <Card.Body>
               <Card.Title><h3>Title:{post.title}</h3></Card.Title>
               <Card.Text>
-                <div key={post._id} className="post" >
+                <div key={post._id} className='post'>
                   
                   <h4>Name:{post.user.username}</h4>
                   <p>Descp:{post.body}</p>
@@ -75,4 +75,4 @@ function AchievementsPage() {
   );
 }
 
-export default AchievementsPage;
+export default AcheiveAlumni;

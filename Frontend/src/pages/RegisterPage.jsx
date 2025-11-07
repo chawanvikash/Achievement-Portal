@@ -2,8 +2,12 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import "../css/Register.css";
 import HomeBtn from '../includes/HomeBtn';
+import { useNavigate } from 'react-router-dom';
+import { Alert } from 'react-bootstrap';
 
 function RegisterPage() {
+  const navigate=useNavigate();
+  const [error,setError]=useState(null);
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -37,12 +41,22 @@ function RegisterPage() {
         role: 'student'
       
       });
-      window.alert(" Account registerd Succesfully,Please Login!");
+      navigate("/login");
+      
 
     } catch (error) {
-      // This will now receive the error from the backend
-      console.error('Error registering user:', error.response.data.error);
-      window.alert("Username or Email has Already taken!");
+      
+      const errorMessage = error.response?.data?.error || 'Invalid email or password.';
+      console.error('Error Registring user:', errorMessage);
+      setError(errorMessage); 
+      setFormData({
+        username: '',
+        email: '',
+        password: '',
+        role: 'student'
+      
+      });
+      
 
     }
   };
@@ -51,6 +65,8 @@ function RegisterPage() {
 
     <>
     <HomeBtn/>
+     {error && <Alert variant="danger" onClose={() => setError(null)} dismissible>{error}</Alert>}
+
     <form onSubmit={handleSubmit} className='register-form'>
       <h2>Register</h2>
       <div className="input-group">
@@ -79,6 +95,11 @@ function RegisterPage() {
         </div>
 
         <button type="submit" className='sub-btn'>Register</button>
+        <br />
+        <p style={{textDecoration:"underline"}}>Account Exited!</p>
+        <form action="/login" method='get'>
+              <button className='reg-btn'>login</button>
+        </form> 
         
 
       </form>

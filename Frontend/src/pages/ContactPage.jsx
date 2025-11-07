@@ -43,7 +43,7 @@ function ContactPage(){
     <>
     <NavBar/>
     <div>
-        <section className="hero1">
+        <section className="contactpt">
             <div className="overview">
                 <h1>Contact Us</h1>
                 <p>We'd love to hear from you. Get in touch with us today!</p>

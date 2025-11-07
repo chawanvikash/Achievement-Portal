@@ -4,16 +4,18 @@ import "../css/Register.css";
 import { useNavigate, Link } from 'react-router-dom'; 
 import { useAuth } from '../context/AuthContext';
 import HomeBtn from '../includes/HomeBtn';
+import { Alert } from 'react-bootstrap';
 
 
 function LoginPage() {
   const { login } = useAuth();
   const navigate = useNavigate();
+  const [error,setError]=useState(null);
   const [formData, setFormData] = useState({
     email: '',
     password: '',  
   });
-  const url="http://localhost:8080"
+  const url="http://localhost:8080";
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -28,11 +30,11 @@ function LoginPage() {
         formData
       );
 
-      // This will now work because the backend sends a response
+      
       console.log('Success:', response.data.message);
       login(response.data.user); 
       
-      // b. Redirect to the homepage
+      
       navigate('/dashboard');
       
       
@@ -44,16 +46,17 @@ function LoginPage() {
       
 
     } catch (error) {
-      
-      console.error('Error Login user:', error.response.data.error);
-      window.alert("Error Login user:");
-     
+  
+      const errorMessage = error.response?.data?.error || 'Invalid email or password.';
+      console.error('Error Login user:', errorMessage);
+      setError(errorMessage); 
     }
   };
 
   return (
     <>
     <HomeBtn/>
+     {error && <Alert variant="danger" onClose={() => setError(null)} dismissible>{error}</Alert>}
     <form onSubmit={handleSubmit} className='register-form'>
       <h2>Login</h2>
       <div className="input-group">
@@ -65,7 +68,12 @@ function LoginPage() {
           <label htmlFor="ippass">Password</label>
           <input id='ippass' type="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange} required/>
         </div>
-        <button type="submit" className='sub-btn'>Login</button>  
+        <button type="submit" className='sub-btn'>Login</button> 
+        <br /> <br />
+        <p style={{textDecoration:"underline"}}>New Account</p>
+        <form action="/register" method='get'>
+              <button className='reg-btn'>Register</button>
+        </form> 
       </form>   
       </>
     
