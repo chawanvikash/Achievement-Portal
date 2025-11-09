@@ -3,9 +3,9 @@ import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import { Container, Row, Col, Card, Form, Button, Modal, Spinner, Alert } from 'react-bootstrap';
 import {  Link } from 'react-router-dom';
-import HomeBtn from '../includes/HomeBtn';
-import ProfileSidebar from '../includes/ProfileSideBar';
-function DashboardPage() {
+
+import "../css/Sidebar.css";
+function DashAchievement() {
 
   const { user } = useAuth(); 
   const [myPosts, setMyPosts] = useState([]);
@@ -86,8 +86,7 @@ function DashboardPage() {
   
   return (
     <>
-    <HomeBtn/>
-    <ProfileSidebar/>
+    <Link to="/dashboard/*"><Button variant='outline-primary'>Back</Button></Link>
     <Container className="mt-4">
       <Row>
         <Col md={12}>
@@ -196,4 +195,4 @@ function DashboardPage() {
 
 }
 
-export default DashboardPage;
+export default DashAchievement;

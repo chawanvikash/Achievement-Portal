@@ -1,5 +1,4 @@
 import NavBar from '../includes/NavBar';
-import "../css/Events.css";
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 

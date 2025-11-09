@@ -118,6 +118,15 @@ app.use("/api/dashboard", dashboardRoute);
 //for registration
 app.post("/api/register", wrapAsync(async (req, res, next) => {
   const { username, email, password, role } = req.body;
+
+  const officialDomain = ".iiests.ac.in";
+  if (role !== 'alumni') {
+    
+    if (!email || !email.endsWith(officialDomain)) {  
+      throw new ExpressError(400, `Registration denied. You must use an official email address for this role.`);
+    }
+  }
+
   const newUser = new User({ username, email, role });
   const registeredUser = await User.register(newUser, password);
   req.login(registeredUser, (err) => {
@@ -151,7 +160,7 @@ app.post("/api/login", (req, res, next) => {
 });
 
 //for logout
-app.post("/api/logout", (req, res, next) => {
+app.post("/api/logout",(req, res, next) => {
   req.logout((err) => {
     if (err) return next(err);
     res.status(200).json({ message: "Logout successful!" });

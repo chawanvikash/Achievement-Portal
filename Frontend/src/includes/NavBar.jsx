@@ -31,7 +31,7 @@ export default function NavBar(){
                 <Nav.Link as={Link} to="/contacts">Contacts</Nav.Link>
             </Nav> 
             <Nav>
-              <Nav.Link as={Link} to="/dashboard"> <i class="fa-solid fa-circle-user" style={{color:"blue"}}></i> Profile</Nav.Link>
+              <Nav.Link as={Link} to="/dashboard"> <i className="fa-solid fa-circle-user" style={{color:"blue"}}></i> Profile</Nav.Link>
             </Nav>       
             </Navbar.Collapse>
           </Container>
