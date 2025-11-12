@@ -9,7 +9,7 @@ const AuthContext = createContext(null);
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true); 
-  const url="http://localhost:8080"
+  const url="https://achievement-portal-backend.onrender.com"
 
   
   useEffect(() => {
