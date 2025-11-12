@@ -14,7 +14,7 @@ function RegisterPage() {
     password: '',
     role: 'student'
   });
-  const url="http://localhost:8080"
+  const url="https://achievement-portal-backend.onrender.com"
 
   const handleChange = (e) => {
   
