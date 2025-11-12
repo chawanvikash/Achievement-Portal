@@ -15,7 +15,7 @@ function LoginPage() {
     email: '',
     password: '',  
   });
-  const url="http://localhost:8080";
+  const url="https://achievement-portal-backend.onrender.com";
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
