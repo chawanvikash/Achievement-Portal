@@ -14,7 +14,7 @@ function DashAchievement() {
   const [newPost, setNewPost] = useState({ title: '', body: '' });
   const [showModal, setShowModal] = useState(false);
   const [editingPost, setEditingPost] = useState(null); 
-  const url="http://localhost:8080"
+  const url="https://achievement-portal-backend.onrender.com"
 
   useEffect(() => {
     const fetchMyPosts = async () => {
