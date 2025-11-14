@@ -6,7 +6,7 @@ import axios from 'axios';
 function HomePage() {
  
   const [message, setMessage] = useState("");
-  const url="https://achievement-portal-backend.onrender.com"
+  const url="http://localhost:8080"
 
   useEffect(() => {
     

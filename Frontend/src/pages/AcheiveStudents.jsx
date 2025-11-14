@@ -12,7 +12,7 @@ function AcheiveStudents() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const url="https://achievement-portal-backend.onrender.com";
+  const url="http://localhost:8080";
 
   useEffect(() => { 
     const fetchPosts = async () => {

@@ -19,7 +19,7 @@ function Profile(){
                 <Col md={12}>
           
                 <h2>Welcome, {user.username}!</h2>
-                <p>This is your personal dashboard. You can manage your achievements here.</p>
+                <p>This is your personal dashboard. You can manage your Profile here.</p>
                 </Col>
                 </Row>
             </div>    
