@@ -1,19 +1,18 @@
 const router = require('express').Router();
 const { Post } = require('../models/user');
-const { isLoggedIn } = require('../utils/middleware');
+const { isVerified,isLoggedIn } = require('../utils/middleware');
 const wrapAsync = require('../utils/wrapAsync');
 const ExpressError = require('../utils/ExpressError');
 
 
-router.get('/myposts', isLoggedIn, wrapAsync(async (req, res) => {
-  // 'req.user' is available because of 'isLoggedIn'
+router.get('/myposts', isLoggedIn,isVerified, wrapAsync(async (req, res) => {
   const posts = await Post.find({ user: req.user._id })
-    .populate('user', 'username')
+    .populate('user', 'username role')
     .sort({ createdAt: -1 }); 
   res.json(posts);
 }));
 
-router.post('/posts', isLoggedIn, wrapAsync(async (req, res) => {
+router.post('/posts', isLoggedIn,isVerified, wrapAsync(async (req, res) => {
   const { title, body } = req.body;
   if (!title || !body) {
     throw new ExpressError(400, "Title and body are required.");
@@ -29,7 +28,7 @@ router.post('/posts', isLoggedIn, wrapAsync(async (req, res) => {
 }));
 
 
-router.put('/posts/:postId', isLoggedIn, wrapAsync(async (req, res) => {
+router.put('/posts/:postId', isLoggedIn,isVerified, wrapAsync(async (req, res) => {
   const { postId } = req.params;
   const { title, body } = req.body;
 
@@ -38,10 +37,13 @@ router.put('/posts/:postId', isLoggedIn, wrapAsync(async (req, res) => {
   if (!post.user.equals(req.user._id)) {
     throw new ExpressError(403, "You are not authorized to edit this post.");
   }
-
+  if(post.title!==title || post.body!==body){
+    post.isVerified=false;
+  }
  
   post.title = title;
   post.body = body;
+  
   await post.save();
   await post.populate('user', 'username');
 
@@ -49,7 +51,7 @@ router.put('/posts/:postId', isLoggedIn, wrapAsync(async (req, res) => {
 }));
 
 
-router.delete('/posts/:postId', isLoggedIn, wrapAsync(async (req, res) => {
+router.delete('/posts/:postId', isLoggedIn,isVerified, wrapAsync(async (req, res) => {
   const { postId } = req.params;
 
   const post = await Post.findById(postId);

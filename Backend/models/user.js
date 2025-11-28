@@ -18,6 +18,10 @@ const userSchema = new Schema({
     required: true, 
     enum: ['student', 'faculty', 'alumni', 'staff'], 
     default: 'student'
+  },
+  isVerified:{
+    type:Boolean,
+    default:false,
   }
 }, {
   timestamps: true, 
@@ -41,6 +45,10 @@ const postSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User',                 
     required: true
+  },
+  isVerified:{
+    type:Boolean,
+    default:false,
   }
   
 }, {

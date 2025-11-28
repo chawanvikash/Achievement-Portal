@@ -11,8 +11,10 @@ const localStrategy = require("passport-local");
 const { Post, User } = require("./models/user");
 const ExpressError = require("./utils/ExpressError");
 const wrapAsync = require("./utils/wrapAsync"); 
-const { isLoggedIn } = require("./utils/middleware");
-const dashboardRoute = require("./routes/users"); 
+
+const adminRoute=require("./routes/adminRoute");
+const dashPostsRoute = require("./routes/dashPostsRoute"); 
+const { isVerified } = require("./utils/middleware");
 
 app.use(cors({origin: "http://localhost:5173",credentials: true}));
 app.use(express.urlencoded({ extended: true }));
@@ -62,7 +64,8 @@ app.get("/api/me", (req, res) => {
       _id: req.user._id,
       username: req.user.username,
       email: req.user.email,
-      role: req.user.role
+      role: req.user.role,
+      isVerified: req.user.isVerified,
     }
   });
 });
@@ -74,9 +77,9 @@ app.get("/api/HomePage", (req, res) => {
 
 //acheivements of all studetns
 app.get("/api/AcheivementStudent", wrapAsync(async (req, res) => {
-  const students=await User.find({role:"student"}).select('_id');
+  const students=await User.find({role:"student",isVerified:true}).select('_id');
   const studentId=students.map(student=>student._id);
-  let achiev = await Post.find({user:{$in:studentId}}).populate('user', 'username email role').sort({createdAt:-1});
+  let achiev = await Post.find({user:{$in:studentId},isVerified:true}).populate('user', 'username email role').sort({createdAt:-1});
   res.json(achiev);
 }));
 
@@ -113,29 +116,55 @@ app.get("/api/EventsPage", (req, res) => {
 });
 
 //middle ware route for dashboard
-app.use("/api/dashboard", dashboardRoute);
+app.use("/api/dashboard", dashPostsRoute);
+app.use("/api/admin",adminRoute);
 
 //for registration
 app.post("/api/register", wrapAsync(async (req, res, next) => {
   const { username, email, password, role } = req.body;
+  
 
-  const officialDomain = ".iiests.ac.in";
-  if (role !== 'alumni') {
-    
-    if (!email || !email.endsWith(officialDomain)) {  
-      throw new ExpressError(400, `Registration denied. You must use an official email address for this role.`);
+  let isAccountVerified = false;
+  if (role === "staff") {
+    if (email !== "chawanvikash30@gmail.com") {
+      throw new ExpressError(403, "Registration denied. You are not the authorized admin.");
     }
+    isAccountVerified = true;
+  } 
+
+  else {
+    const officialDomain = ".iiests.ac.in";
+    if (role !== 'alumni') {
+      if (!email || !email.endsWith(officialDomain)) {  
+        throw new ExpressError(400, `Registration denied. You must use an official email address.`);
+      }
+    }
+    // Students/Alumni/Faculty remain unverified (false) until approved
   }
 
-  const newUser = new User({ username, email, role });
-  const registeredUser = await User.register(newUser, password);
-  req.login(registeredUser, (err) => {
-    if (err) return next(err);
-    res.status(201).json({
-      message: "User registered successfully!",
-      user: { username: registeredUser.username, role: registeredUser.role, email: registeredUser.email }
-    });
+  const newUser = new User({ 
+    username, 
+    email, 
+    role, 
+    isVerified: isAccountVerified 
   });
+
+  const registeredUser = await User.register(newUser, password);
+
+  if (isAccountVerified) {
+    req.login(registeredUser, (err) => {
+      if (err) return next(err);
+      res.status(201).json({
+        message: "Admin registered and logged in!",
+        user: { username: registeredUser.username, role: registeredUser.role, email: registeredUser.email, isVerified: registeredUser.isVerified }
+      });
+    });
+  } else {
+    res.status(201).json({
+      message: "Registration successful! Please wait for admin approval.",
+      user: null 
+    });
+  }
 }));
 
 //login
@@ -145,6 +174,9 @@ app.post("/api/login", (req, res, next) => {
     if (!user) {
       return res.status(401).json({ error: info.message || "Incorrect email or password." });
     }
+    if (user.isVerified === false) {
+    throw new ExpressError(403, "Forbidden: Your account is not verified. Please wait for an admin to approve it.");
+  }
     req.login(user, (err) => {
       if (err) return next(err);
       return res.status(200).json({
@@ -152,7 +184,8 @@ app.post("/api/login", (req, res, next) => {
         user: {
           username: req.user.username,
           role: req.user.role,
-          email: req.user.email
+          email: req.user.email,
+          isVerified: req.user.isVerified,
         }
       });
     });
