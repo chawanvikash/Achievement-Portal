@@ -5,6 +5,7 @@ import ProfileSidebar from '../includes/ProfileSideBar';
 import { useAuth } from '../context/AuthContext';
 import {Row,Col } from 'react-bootstrap';
 import HomeBtn from '../includes/HomeBtn';
+import DashAdminUser from './DashAdminUser';
 
 import "../css/Profile.css";
 
@@ -28,6 +29,10 @@ function Profile(){
       
             <Routes>
                 <Route path='/MyAchievement' element={<DashAchievement/>}></Route>
+                <Route path='/pendingUsers' element={<DashAdminUser/>}></Route>
+                <Route path='/pendingAcheivements' element={<DashAchievement/>}></Route>
+
+
             </Routes>
 
         </>

@@ -150,3 +150,26 @@ body {
 
 
 
+.users,.achives{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+
+
+}
+.user,.achive{
+  background-color: #b5d5f5;
+  padding: 10px;
+  border-radius: 5px;
+  width: 100vh;
+  text-align: center;
+  margin-top: 20px;
+
+
+
+}
+.mail{
+  text-decoration: underline;
+}

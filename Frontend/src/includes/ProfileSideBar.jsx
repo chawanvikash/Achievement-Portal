@@ -6,13 +6,31 @@ import { useAuth } from '../context/AuthContext';
 import '../css/Sidebar.css';
 
 const ProfileSidebar = () => {
-  const { logout } = useAuth();
+  const { logout,user } = useAuth();
 
   return (
     
     
-    <Nav className="d-none d-md-block bg-light sidebar flex-column ">     
-    
+    <Nav className="d-none d-md-block bg-light sidebar flex-column ">  
+    {user.role==="staff" ? 
+      <div>
+        <Nav.Item>       
+        <LinkContainer to="/pendingUsers">
+          <Nav.Link >
+            <FaTachometerAlt className="me-2" /> Pending-Users
+          </Nav.Link>
+        </LinkContainer>
+        </Nav.Item> 
+
+        <Nav.Item>       
+        <LinkContainer to="/pendingAcheivements">
+          <Nav.Link >
+            <FaTachometerAlt className="me-2" /> Pending-Achievements
+          </Nav.Link>
+        </LinkContainer>
+        </Nav.Item> 
+      </div> : 
+      <div>
       <Nav.Item>       
         <LinkContainer to="/MyAchievement">
           <Nav.Link >
@@ -20,6 +38,9 @@ const ProfileSidebar = () => {
           </Nav.Link>
         </LinkContainer>
       </Nav.Item>
+      </div>}   
+    
+      
      
       <Nav.Item>
         <Nav.Link onClick={logout} className="logout-link">

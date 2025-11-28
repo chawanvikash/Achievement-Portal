@@ -60,6 +60,7 @@ function AcheiveStudents() {
                   <h4>Name:{post.user.username}</h4>
                   <p>Descp:{post.body}</p>
                   <p>Role:{post.user.role}</p>
+                  Posted on: {new Date(post.createdAt).toLocaleDateString()}
 
                 </div>
               </Card.Text>

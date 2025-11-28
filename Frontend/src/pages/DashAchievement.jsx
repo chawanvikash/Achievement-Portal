@@ -151,6 +151,11 @@ function DashAchievement() {
                   </Card.Subtitle>
                   <Button variant="outline-primary" size="sm" onClick={() => handleOpenEditModal(post)}>Edit</Button>
                   <Button variant="outline-danger" size="sm" className="ms-2" onClick={() => handleDeletePost(post._id)}>Delete</Button>
+                  <br /> <br />
+                  <div className='isVerified' >
+                    {post.isVerified === true ? (<p style={{backgroundColor:"lightyellow"}}>Your post is successfully published</p>) : (<p style={{backgroundColor:"lightcoral"}}>Your post is under pending</p>)}
+                  </div>
+                  
                 </Card.Body>
               </Card>
             ))

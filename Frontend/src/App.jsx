@@ -14,6 +14,8 @@ import Profile from './pages/Profile';
 import AcheiveAlumni from './pages/AcheiveAlumni';
 import AcheiveFaculty from './pages/AcheiveFaculty';
 import AcheiveStudents from './pages/AcheiveStudents';
+import DashAdminUser from './pages/DashAdminUser';
+import DashAdminAcheivements from './pages/DashAdminAcheivements';
 
 function App() {
   return (
@@ -34,6 +36,10 @@ function App() {
         <Route path="/achievements/alumni" element={<AcheiveAlumni />} />
         <Route path="/dashboard/*" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
         <Route path="/MyAchievement" element={<DashAchievement />} />
+        <Route path="/pendingUsers" element={<DashAdminUser />} />
+        <Route path="/pendingAcheivements" element={<DashAdminAcheivements />} />
+
+
 
       </Routes>
     </>

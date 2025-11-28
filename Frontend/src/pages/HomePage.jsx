@@ -3,6 +3,8 @@ import '../css/HomePage.css';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+
+
 function HomePage() {
  
   const [message, setMessage] = useState("");
@@ -23,6 +25,7 @@ function HomePage() {
   return (
     <>
     <NavBar/>
+    
     <div className='homepage'>
      
     
@@ -32,6 +35,7 @@ function HomePage() {
           <p>Celebrating excellence in academics, research, innovation, and culture at IIEST Shibpur.</p>
         </div>
       </section>
+      
 
       <section className="content">
         <h2>Highlights</h2>
