@@ -71,9 +71,14 @@ app.get("/api/me", (req, res) => {
 });
 
 //home page
-app.get("/api/HomePage", (req, res) => {
-  res.send("Accessing Home page");
-});
+app.get("/api/public/achievements", wrapAsync(async (req, res) => {
+  const publicPosts = await Post.find({ isVerified: true }) // Only approved posts
+    .populate('user', 'username role email') // Get author info
+    .sort({ createdAt: -1 }) // Newest first
+    .limit(3); // Only get 3
+    
+  res.json(publicPosts);
+}));
 
 //acheivements of all studetns
 app.get("/api/AcheivementStudent", wrapAsync(async (req, res) => {

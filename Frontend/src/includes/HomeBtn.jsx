@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 export default function HomeBtn() {
     
   return (
-    <Navbar expand="lg" className="bg-body-tertiary-home" fixed="top" collapseOnSelect>
+    <Navbar expand="lg" className="bg-body-tertiary-home" style={{backgroundColor:"white"}} fixed="top" collapseOnSelect>
       <Container>
         
         <Navbar.Toggle aria-controls="basic-navbar-nav" />

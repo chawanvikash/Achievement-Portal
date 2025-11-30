@@ -6,8 +6,7 @@
     position: relative;
     color: white;
     text-align: center;
-    width: 160%;
-    margin-left: -30%;
+    margin-top: 33px;
     animation-name: opacity;
     animation-duration: 1.5s;
 } 

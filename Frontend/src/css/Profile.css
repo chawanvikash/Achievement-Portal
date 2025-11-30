@@ -1,6 +1,70 @@
-.welcome{
-    background: linear-gradient(to left,rgb(157, 233, 242),rgb(237, 229, 117));
-    padding: 20px;
-    border-radius: 7px;
 
+.dashboard-layout {
+    display: flex;
+    min-height: 100vh;
+    background-color: #f4f6f9; 
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+.dashboard-main {
+    flex-grow: 1;
+    margin-left: 260px;
+    padding: 2rem;
+    transition: margin-left 0.3s ease;
+}
+
+.welcome-section {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    border-radius: 12px;
+    padding: 2.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    border-left: 5px solid #3498db; 
+    position: relative;
+    overflow: hidden;
+}
+
+.welcome-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+}
+
+.welcome-subtitle {
+    font-size: 1.1rem;
+    color: #7f8c8d;
+    margin: 0;
+    font-weight: 400;
+}
+
+
+.dashboard-content {
+    background-color: transparent;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+    .dashboard-main {
+        margin-left: 0; 
+        padding: 1rem;
+        padding-bottom: 80px; 
+    }
+
+    .welcome-section {
+        padding: 1.5rem;
+        text-align: center;
+        border-left: none;
+        border-top: 5px solid #3498db;
+    }
+
+    .welcome-title {
+        font-size: 1.5rem;
+    }
 }

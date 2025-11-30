@@ -2,6 +2,7 @@ import NavBar from '../includes/NavBar';
 import "../css/Contact.css"
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Footer from '../includes/Footer';
 
 
 
@@ -78,6 +79,7 @@ function ContactPage(){
             </form>
         </section>
     </div>
+    <Footer/>
     </>
   );
  

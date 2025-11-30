@@ -3,6 +3,7 @@ import "../css/Alumni.css"
 import React, { useState, useEffect } from 'react';
 import axios from 'axios'; 
 import photo from "../assets/icon.jpg"
+import Footer from '../includes/Footer';
 
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -77,6 +78,7 @@ function AlumniPage() {
           
         ))}
       </div>
+      <Footer/>
       </>
 
 

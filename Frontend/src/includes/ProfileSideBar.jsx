@@ -10,7 +10,8 @@ const ProfileSidebar = () => {
 
   return (
     
-    
+  
+
     <Nav className="d-none d-md-block bg-light sidebar flex-column ">  
     {user.role==="staff" ? 
       <div>
@@ -48,6 +49,7 @@ const ProfileSidebar = () => {
         </Nav.Link>
       </Nav.Item>
     </Nav>
+
    
    
   );

@@ -1,6 +1,8 @@
 import NavBar from '../includes/NavBar';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Footer from '../includes/Footer';
+import "../css/EventsPage.css"
 
 
 
@@ -56,7 +58,7 @@ function EventsPage(){
           </p>
         </div>
       </section>
-
+      <div className='evecontent'>
       <section className="content">
         <h2>Cultural and Technical Fusion</h2>
         <div className="cards">
@@ -100,7 +102,7 @@ function EventsPage(){
       </section>
 
       <section className="events">
-        <h2>Events...</h2>
+        <h2 className='evetitle'>Events</h2>
         <div className="collaboration">
           <h3>HACKATHON</h3>
           <p>
@@ -132,15 +134,16 @@ function EventsPage(){
       </section>
 
       <section className="Upcoming">
-        <h2>Upcoming Events</h2>
-        <ul>
-          <li>Freshers Orientation---3rd September,2025</li>
-          <li>Workshop on AI and ML---7th September,2025</li>
-          <li>Hackathon 2025---13th September to 15th September,2025</li>
-        </ul>
+        <h2 className='uptitle'>Upcoming Events</h2>
+        <div>
+          <p>Freshers Orientation---3rd September,2025</p>
+          <p>Workshop on AI and ML---7th September,2025</p>
+          <p>Hackathon 2025---13th September to 15th September,2025</p>
+        </div>
       </section>
+      </div>
 
-
+    <Footer/>
     </>
   );
  

@@ -1,0 +1,93 @@
+
+.site-footer {
+  background-color: #1a252f; 
+  color: #ecf0f1;
+  font-family: 'Segoe UI', sans-serif;
+  margin-bottom: 0%;
+  margin-top: auto; 
+  font-size: 0.95rem;
+  
+}
+
+
+.footer-heading {
+  color: #ffffff;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 1.1rem;
+  border-bottom: 2px solid #3498db;
+  display: inline-block;
+  padding-bottom: 5px;
+}
+
+
+.footer-text {
+  color: #bdc3c7;
+  line-height: 1.6;
+}
+
+.footer-links li {
+  margin-bottom: 10px;
+}
+
+.footer-links a {
+  color: #bdc3c7;
+  text-decoration: none;
+  transition: color 0.3s ease, padding-left 0.3s ease;
+}
+
+.footer-links a:hover {
+  color: #3498db;
+  padding-left: 5px; 
+}
+
+
+.footer-contact li {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 15px;
+  color: #bdc3c7;
+}
+
+.footer-contact .icon {
+  color: #3498db;
+  margin-top: 4px;
+}
+
+
+.social-icons {
+  display: flex;
+  gap: 15px;
+}
+
+.social-link {
+  width: 35px;
+  height: 35px;
+  background-color: rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: #ffffff;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.social-link:hover {
+  background-color: #3498db;
+  color: white;
+  transform: translateY(-3px);
+}
+
+
+.footer-divider {
+  border-color: rgba(255, 255, 255, 0.1);
+  margin: 0;
+}
+
+.copyright-text {
+  font-size: 0.85rem;
+  color: #95a5a6;
+}

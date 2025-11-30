@@ -13,14 +13,14 @@
     
 }
 .event{
-    margin-top: 60px;
+    margin-top: 33px;
     background: url('https://assets.telegraphindia.com/telegraph/2024/Apr/1712148081_iiest.jpg') no-repeat center/cover;
     height: 600px;
     position: relative;
     color: white;
     text-align: center;
-    width: 80%;
-    margin-left: 10%;
+    width: 90%;
+    margin-left: 5%;
     animation-name: opacity;
     animation-duration: 1.6s;
 }
@@ -82,7 +82,8 @@
     background: #003366;
     color: white;
     text-align: center;
-    padding: 40px 40px;
+    padding: 20px 20px;
+    min-height: min-content;
 }
 
 .action p{
@@ -107,4 +108,12 @@
 @keyframes opacity {
     from{opacity: 0;}
     to{opacity: 1;}
+}
+.view-all-btn{
+    background-color: rgb(120, 175, 66);
+    border: 0.5px solid rgb(105, 225, 65);
+}
+.view-all-btn:hover{
+     background-color: rgb(130, 188, 71);
+     border: 0.5px solid rgb(105, 225, 65);
 }

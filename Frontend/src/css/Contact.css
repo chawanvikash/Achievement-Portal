@@ -75,11 +75,11 @@ nav a:hover{
 
 .contactpt {
     background: url('https://cache.careers360.mobi/media/article_images/2023/5/27/iiest-shibpur-nit-engineering-college-west-bengal-featured-image.jpg') no-repeat center/cover;
-    height: 400px;
+    height: 420px;
     position: relative;
     color: white;
     text-align: center;
-    
+    margin-top: 33px;
     animation-name: opacity;
     animation-duration: 1.5s;
 }

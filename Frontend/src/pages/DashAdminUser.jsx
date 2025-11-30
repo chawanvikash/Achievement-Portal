@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios'; 
 import { Container, Row, Col, Card, Form, Button, Modal, Spinner, Alert } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import ProfileSidebar from '../includes/ProfileSideBar';
+import HomeBtn from '../includes/HomeBtn';
 
 
 function DashAdminUser() {
@@ -50,21 +52,18 @@ function DashAdminUser() {
   }
 
   return (
+    <div>
+      <HomeBtn/>
     <Container className="mt-4">
-      {/* Back Button */}
-      <div className="mb-3">
-        <Link to="/dashboard">
-          <Button variant='outline-secondary'>&larr; Back to Dashboard</Button>
-        </Link>
-      </div>
+
 
       <h2>Pending User Approvals</h2>
       <p className="text-muted">Review and approve new account requests.</p>
 
-      {/* Error Alert */}
+     
       {error && <Alert variant="danger" onClose={() => setError(null)} dismissible>{error}</Alert>}
       
-      {/* Success Alert */}
+      
       {successMessage && <Alert variant="success" onClose={() => setSuccessMessage(null)} dismissible>{successMessage}</Alert>}
 
       {users.length === 0 ? (
@@ -94,6 +93,9 @@ function DashAdminUser() {
         </div>
       )}
     </Container>
+    <ProfileSidebar/>
+
+    </div>
   );
 }
 
