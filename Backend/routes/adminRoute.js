@@ -39,6 +39,22 @@ router.put('/users/:userId/approve', isLoggedIn, isAdmin, wrapAsync(async (req, 
 }));
 
 
+router.delete('/users/:userId/reject', isLoggedIn, isAdmin, wrapAsync(async (req, res) => {
+  const { userId } = req.params;
+
+  const deletedUser = await User.findByIdAndDelete(userId);
+  
+
+  if (!deletedUser) {
+    throw new ExpressError(404, "User not found.");
+  }
+  res.json({ 
+    message: `User ${deletedUser.username} has been rejected and removed.`, 
+    user: deletedUser 
+  });
+}));
+
+
 router.put('/achievements/:postId/approve', isLoggedIn, isAdmin, wrapAsync(async (req, res) => {
   const { postId } = req.params;
   

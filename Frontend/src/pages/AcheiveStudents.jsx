@@ -7,6 +7,7 @@ import Footer from '../includes/Footer';
 
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import { FaTrophy, FaUser, FaCalendarAlt, FaArrowRight } from 'react-icons/fa';
 
 function AcheiveStudents() {
   
@@ -58,17 +59,20 @@ function AcheiveStudents() {
               <Card.Body>
               <Card.Title><h3>{post.title}</h3></Card.Title>
               <Card.Img variant="top" src={photo}  className='success'/>
-              
+            
+             <p className='role'>-{post.user.role}</p>
               <Card.Text>
-                <div key={post._id} className="post" >            
-                  <h4>Name:{post.user.username}</h4>
-                  <p>Descp:{post.body}</p>
+                <div key={post._id} className="post" >
+                  <div className='name'>
+                     <p><FaUser className='icon'/> &nbsp;{post.user.username}</p>
+                  </div>
                   
-                  <p className='role'>-{post.user.role}</p>
+                  
+                  <p className='desp'>{post.body}</p>
 
                 </div>
               </Card.Text>
-            <Button variant="primary">Go somewhere</Button>
+            
             <br />
             Posted on: {new Date(post.createdAt).toLocaleDateString()}
           </Card.Body>

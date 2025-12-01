@@ -56,18 +56,18 @@ function AcheiveFaculty() {
             
               <Card.Body>
               <Card.Title><h3>{post.title}</h3></Card.Title>
-              <Card.Img variant="top" src={photo}  className='success'/>
+
+              <Card.Img variant="top" src={photo}  className='success' />
+              <p className='role'>-{post.user.role}</p>
               <Card.Text>
                 <div key={post._id} className="post" >
                   
-                  <h4>Name:{post.user.username}</h4>
-                  <p>Descp:{post.body}</p>
-                  
-                  <p className='role'>-{post.user.role}</p>
+                  <h4 className='name'>{post.user.username}</h4>
+                  <p className='desp'>{post.body}</p>
 
                 </div>
               </Card.Text>
-            <Button variant="primary">Go somewhere</Button>
+            
              Posted on: {new Date(post.createdAt).toLocaleDateString()}
           </Card.Body>
     </Card>

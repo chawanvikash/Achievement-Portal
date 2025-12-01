@@ -67,7 +67,7 @@ function AcheiveAlumni() {
 
                 </div>
               </Card.Text>
-            <Button variant="primary">Go somewhere</Button>
+           
             Posted on: {new Date(post.createdAt).toLocaleDateString()}
           </Card.Body>
     </Card>

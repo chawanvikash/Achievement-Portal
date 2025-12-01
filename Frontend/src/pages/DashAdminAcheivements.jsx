@@ -94,7 +94,7 @@ function DashAdminAcheivements() {
           {achieves.length === 0 ? (
             <Alert variant="info" className="shadow-sm">No pending achievements found. Great job!</Alert>
           ) : (
-            <Row>
+            <Col>
               {achieves.map(achieve => (             
                 <Col md={12} lg={6} key={achieve._id} className="mb-4">
                   <Card className="shadow-sm h-100 border-0 achive">
@@ -135,7 +135,7 @@ function DashAdminAcheivements() {
                   </Card>
                 </Col>
               ))}
-            </Row>
+            </Col>
           )}
         </Container>
       </div>

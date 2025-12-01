@@ -181,10 +181,24 @@ body {
   opacity: 0.7;
 }
 .role{
-  background-color: rgb(218, 219, 217);
-  color: black;
+  background-color: rgb(129, 159, 103);
+  color: rgb(255, 255, 255);
   font-weight: bold;
   padding: 3px;
   border-radius: 4px;
 
+}
+.name{
+  font-weight: bold;
+  font-size: 1.2rem !important;
+  background-color: rgb(245, 240, 181);
+  padding: 1px 10px !important;
+  border-radius: 5px;
+  width: fit-content;
+    
+
+}
+.icon{
+  font-size: 0.7rem;
+  color: rgb(78, 70, 241);
 }

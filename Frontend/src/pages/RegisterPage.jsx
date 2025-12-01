@@ -8,6 +8,7 @@ import { Alert } from 'react-bootstrap';
 function RegisterPage() {
   const navigate=useNavigate();
   const [error,setError]=useState(null);
+  const [success,setSuccess]=useState(null);
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -33,7 +34,8 @@ function RegisterPage() {
     
       console.log('Success:', response.data.message);
       
-      
+      const successMsg=response.data.message || "Thankyou for Registration , Wait for the Admin to approve your Request!";
+      setSuccess(successMsg);
       setFormData({
         username: '',
         email: '',
@@ -41,7 +43,7 @@ function RegisterPage() {
         role: 'student'
       
       });
-      navigate("/login");
+      
       
 
     } catch (error) {
@@ -65,6 +67,12 @@ function RegisterPage() {
 
     <>
     <HomeBtn/>
+    {success && (
+          <Alert variant="success" onClose={() => setSuccess(null)} dismissible>
+            <h6 className="alert-heading">Success!</h6>
+            <p>{success}</p>
+          </Alert>
+        )}
      {error && <Alert variant="danger" onClose={() => setError(null)} dismissible>{error}</Alert>}
 
     <form onSubmit={handleSubmit} className='register-form'>

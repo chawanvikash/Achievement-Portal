@@ -46,6 +46,22 @@ function DashAdminUser() {
       setError(err.response?.data?.error || "Failed to approve user.");
     }
   };
+  const handleReject = async (userId) => {
+    try {
+      setError(null); 
+      setSuccessMessage(null); 
+
+      
+      const response = await axios.delete(url + `/api/admin/users/${userId}/reject`);
+      setSuccessMessage(response.data.message || "User rejected successfully!");
+      setUsers(prevUsers => prevUsers.filter(user => user._id !== userId));
+      setTimeout(() => setSuccessMessage(null), 3000);
+
+    } catch (err) {
+      setError(err.response?.data?.error || "Failed to reject user.");
+    }
+  };
+
 
   if (loading) {
     return <Container className="text-center mt-5"><Spinner animation="border" /> <p>Loading pending users...</p></Container>;
@@ -79,6 +95,13 @@ function DashAdminUser() {
                   <p className="mb-0"><strong>Role:</strong> <span className="text-capitalize">{user.role}</span></p>
                 </div>
                 <div>
+                  <Button 
+                    variant="outline-danger" 
+                    size="sm"
+                    onClick={() => handleReject(user._id)}
+                  >
+                    Reject
+                  </Button>
                 
                   <Button 
                     variant="success" 
@@ -86,6 +109,8 @@ function DashAdminUser() {
                   >
                     Approve
                   </Button>
+
+
                 </div>
               </Card.Body>
             </Card>

@@ -1,27 +1,38 @@
 /* --- Layout --- */
 .dashboard-wrapper {
   display: flex;
+  
   min-height: 100vh;
   background-color: #f8f9fa; /* Very light grey background */
   font-family: 'Inter', 'Segoe UI', sans-serif;
+  width: 100%;
+  overflow-x: hidden; /* Prevent horizontal scroll */
 }
 
 .main-content {
   flex-grow: 1;
+  width: 100%; /* Ensure it takes full width */
+  
   padding-left: 0; /* Mobile default */
   transition: padding-left 0.3s ease;
+  box-sizing: border-box;
+  
+  
+  
 }
 
 /* Push content on Desktop to respect Fixed Sidebar */
 @media (min-width: 768px) {
   .main-content {
     padding-left: 240px; /* Matches sidebar width */
+    width: 100%;
   }
 }
 
 /* --- Loading Screen --- */
 .loading-screen {
   height: 100vh;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -34,6 +45,9 @@
   background: #ffffff;
   border-radius: 12px;
   overflow: hidden;
+  /* FIX: Ensure card takes full width and has a minimum width */
+  width: 100%;
+  min-width: 300px; 
 }
 
 .create-post-card .form-control-lg {
@@ -60,6 +74,10 @@
   border-radius: 12px;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   background-color: #ffffff;
+  /* FIX: Ensure card takes full width of the column */
+  width: 100%;
+  min-width: 450px; /* Prevent shrinking too small */
+  height: 100%; /* Ensure uniform height in grid */
 }
 
 .achievement-card:hover {
@@ -68,11 +86,10 @@
 }
 
 .description-text {
-  white-space: pre-line; /* Respects line breaks in user text */
+  white-space: pre-line; 
   line-height: 1.6;
 }
 
-/* --- Status Indicators --- */
 .status-indicator {
   font-size: 0.75rem;
   font-weight: 700;
@@ -82,6 +99,7 @@
   display: inline-flex;
   align-items: center;
   letter-spacing: 0.5px;
+  white-space: nowrap; 
 }
 
 .status-indicator.approved {
@@ -94,7 +112,7 @@
   color: #664d03;
 }
 
-/* --- Action Buttons --- */
+
 .action-buttons button {
   opacity: 0.6;
   transition: opacity 0.2s;
@@ -103,8 +121,9 @@
   opacity: 1;
 }
 
-/* --- Empty State --- */
+
 .empty-state {
   border: 2px dashed #dee2e6;
   color: #6c757d;
+  width: 100%;
 }
