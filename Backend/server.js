@@ -1,3 +1,7 @@
+if (process.env.NODE_ENV !== "production") {
+    require('dotenv').config();
+}
+
 const express = require("express");
 const app = express();
 const port= process.env.PORT || 8080;
@@ -15,6 +19,8 @@ const wrapAsync = require("./utils/wrapAsync");
 const adminRoute=require("./routes/adminRoute");
 const dashPostsRoute = require("./routes/dashPostsRoute"); 
 const { isVerified } = require("./utils/middleware");
+
+const sendOTP = require('./utils/email.js'); 
 
 app.use(cors({origin: "http://localhost:5173",credentials: true}));
 app.use(express.urlencoded({ extended: true }));
@@ -72,10 +78,10 @@ app.get("/api/me", (req, res) => {
 
 //home page
 app.get("/api/public/achievements", wrapAsync(async (req, res) => {
-  const publicPosts = await Post.find({ isVerified: true }) // Only approved posts
-    .populate('user', 'username role email') // Get author info
-    .sort({ createdAt: -1 }) // Newest first
-    .limit(3); // Only get 3
+  const publicPosts = await Post.find({ isVerified: true }) 
+    .populate('user', 'username role email') 
+    .sort({ createdAt: -1 }) 
+    .limit(3); 
     
   res.json(publicPosts);
 }));
@@ -124,52 +130,82 @@ app.get("/api/EventsPage", (req, res) => {
 app.use("/api/dashboard", dashPostsRoute);
 app.use("/api/admin",adminRoute);
 
-//for registration
+//api/register
 app.post("/api/register", wrapAsync(async (req, res, next) => {
   const { username, email, password, role } = req.body;
   
-
-  let isAccountVerified = false;
-  if (role === "staff") {
+  let isAccountApproved = false; 
+  if (role === "staff") { 
     if (email !== "chawanvikash30@gmail.com") {
       throw new ExpressError(403, "Registration denied. You are not the authorized admin.");
     }
-    isAccountVerified = true;
+    isAccountApproved = true; 
   } 
-
   else {
-    const officialDomain = ".iiests.ac.in";
+    const officialDomain = ".iiests.ac.in";    
     if (role !== 'alumni') {
       if (!email || !email.endsWith(officialDomain)) {  
-        throw new ExpressError(400, `Registration denied. You must use an official email address.`);
+        throw new ExpressError(400, `Registration denied. You must use an official email address ending in ${officialDomain}`);
       }
-    }
-    // Students/Alumni/Faculty remain unverified (false) until approved
+    } 
+    isAccountApproved = false; 
   }
+  const otp = Math.floor(100000 + Math.random() * 900000).toString();
+  const otpExpires = Date.now() + 10 * 60 * 1000; // 10 minutes
 
   const newUser = new User({ 
     username, 
     email, 
     role, 
-    isVerified: isAccountVerified 
-  });
-
+    isVerified: isAccountApproved, 
+    isEmailVerified: false,        
+    otp,                           
+    otpExpires                     
+  }); 
   const registeredUser = await User.register(newUser, password);
+  await sendOTP(email, otp);
 
-  if (isAccountVerified) {
-    req.login(registeredUser, (err) => {
-      if (err) return next(err);
-      res.status(201).json({
-        message: "Admin registered and logged in!",
-        user: { username: registeredUser.username, role: registeredUser.role, email: registeredUser.email, isVerified: registeredUser.isVerified }
-      });
-    });
-  } else {
-    res.status(201).json({
-      message: "Registration successful! Please wait for admin approval.",
-      user: null 
-    });
-  }
+  res.status(200).json({
+    message: "Registration successful! OTP sent to your email.",
+    email: email 
+  });
+}));
+
+// POST /api/verify-otp
+app.post('/api/verify-otp', wrapAsync(async (req, res, next) => {
+    const { email, otp } = req.body;
+
+    const user = await User.findOne({ email });
+    if (!user) return res.status(404).json({ error: "User not found." });  
+    if (user.otp !== otp || user.otpExpires < Date.now()) {
+        return res.status(400).json({ error: "Invalid or expired OTP." });
+    }
+    user.isEmailVerified = true;
+    user.otp = undefined;
+    user.otpExpires = undefined;
+    await user.save();
+
+    if (user.isVerified) { 
+        req.login(user, (err) => {
+            if (err) return next(err);
+            return res.status(200).json({ 
+                message: "Email Verified! Logged in successfully.", 
+                user: { 
+                    username: user.username, 
+                    role: user.role, 
+                    email: user.email 
+                },
+                redirect: "/dashboard"
+            });
+        });
+    } 
+
+    else {
+        res.status(200).json({ 
+            message: "Email verified! Please wait for Faculty Admin approval.",
+            redirect: "/login"
+        });
+    }
 }));
 
 //login

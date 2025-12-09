@@ -19,6 +19,16 @@ const userSchema = new Schema({
     enum: ['student', 'faculty', 'alumni', 'staff'], 
     default: 'student'
   },
+  isEmailVerified: {
+    type: Boolean,
+    default: false
+  },
+  otp: {
+    type: String
+  },
+  otpExpires: {
+    type: Date
+  },
   isVerified:{
     type:Boolean,
     default:false,
