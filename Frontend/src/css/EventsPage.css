@@ -35,3 +35,38 @@
     font-weight: bold;
     color: rgba(27, 24, 24, 0.822); 
 }
+.cardsEvent{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+.cardEve{
+    flex-grow: 1;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(231, 234, 234);
+    padding: 10px;
+    border-radius: 10px;
+    width: 400px;
+    min-height:400px;
+    margin: 20px;
+
+}
+.cardEve:hover{
+     background-color: rgb(214, 220, 220);
+     transform: scale(1.02,1.02);
+     transition: ease-in-out 0.3s;
+     cursor: pointer;
+  
+    
+}
+.EventHeading{
+    text-align: center;
+    font-weight: bold;
+    color: rgb(55, 56, 56);
+    font-size: 2rem;
+}
+.eventP{
+    text-align: center;
+}

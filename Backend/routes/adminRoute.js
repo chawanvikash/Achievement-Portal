@@ -1,5 +1,6 @@
 const router = require('express').Router();
-const { User,Post } = require('../models/user.js'); 
+const User  = require('../models/user.js'); 
+const Post  = require("../models/post.js")
 const { isLoggedIn, isAdmin } = require('../utils/middleware.js'); 
 const wrapAsync = require('../utils/wrapAsync.js');
 const ExpressError = require('../utils/ExpressError.js');
@@ -7,7 +8,7 @@ const ExpressError = require('../utils/ExpressError.js');
 
 router.get('/pending-users', isLoggedIn, isAdmin, wrapAsync(async (req, res) => {
 
-  const pendingUsers = await User.find({ isVerified: false })
+  const pendingUsers = await User.find({ $and:[{isVerified:false},{isEmailVerified:true}] })
     .sort({ createdAt: 1 });
     
   res.json(pendingUsers);
@@ -15,7 +16,7 @@ router.get('/pending-users', isLoggedIn, isAdmin, wrapAsync(async (req, res) => 
 
 router.get('/pending-achievements', isLoggedIn, isAdmin, wrapAsync(async (req, res) => {
 
-  const pendingPost = await Post.find({ isVerified: false }).populate("user","username role")
+  const pendingPost = await Post.find({isVerified:false}).populate("user","username role")
     .sort({ createdAt: 1 });
     
   res.json(pendingPost);

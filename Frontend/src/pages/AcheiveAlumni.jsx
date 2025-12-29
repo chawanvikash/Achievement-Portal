@@ -3,6 +3,7 @@ import "../css/Achievement.css"
 import React, { useState, useEffect } from 'react';
 import axios from 'axios'; 
 import photo from "../assets/success.avif"
+import { Link } from 'react-router-dom';
 
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -67,6 +68,12 @@ function AcheiveAlumni() {
 
                 </div>
               </Card.Text>
+              <Link to={`/achievements/${post._id}`}>
+           <Button variant="primary" className="w-100 mt-3">
+             Read Full Story <FaArrowRight className="ms-1"/>
+           </Button>
+        </Link>
+            
            
             Posted on: {new Date(post.createdAt).toLocaleDateString()}
           </Card.Body>

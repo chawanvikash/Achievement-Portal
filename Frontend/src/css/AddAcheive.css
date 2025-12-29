@@ -1,19 +1,19 @@
-/* --- Layout --- */
+
 .dashboard-wrapper {
   display: flex;
   
   min-height: 100vh;
-  background-color: #f8f9fa; /* Very light grey background */
+  background-color: #f8f9fa; 
   font-family: 'Inter', 'Segoe UI', sans-serif;
   width: 100%;
-  overflow-x: hidden; /* Prevent horizontal scroll */
+  overflow-x: hidden;
 }
 
 .main-content {
   flex-grow: 1;
-  width: 100%; /* Ensure it takes full width */
+  width: 100%; 
   
-  padding-left: 0; /* Mobile default */
+  padding-left: 0;
   transition: padding-left 0.3s ease;
   box-sizing: border-box;
   
@@ -21,15 +21,15 @@
   
 }
 
-/* Push content on Desktop to respect Fixed Sidebar */
+
 @media (min-width: 768px) {
   .main-content {
-    padding-left: 240px; /* Matches sidebar width */
+    padding-left: 240px; 
     width: 100%;
   }
 }
 
-/* --- Loading Screen --- */
+
 .loading-screen {
   height: 100vh;
   width: 100%;
@@ -40,12 +40,11 @@
   color: #6c757d;
 }
 
-/* --- Create Post Card --- */
+
 .create-post-card {
   background: #ffffff;
   border-radius: 12px;
   overflow: hidden;
-  /* FIX: Ensure card takes full width and has a minimum width */
   width: 100%;
   min-width: 300px; 
 }
@@ -69,15 +68,15 @@
   border-color: #0d6efd;
 }
 
-/* --- Achievement Cards --- */
+
 .achievement-card {
   border-radius: 12px;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   background-color: #ffffff;
-  /* FIX: Ensure card takes full width of the column */
+  
   width: 100%;
-  min-width: 450px; /* Prevent shrinking too small */
-  height: 100%; /* Ensure uniform height in grid */
+  min-width: 450px; 
+  height: 100%; 
 }
 
 .achievement-card:hover {

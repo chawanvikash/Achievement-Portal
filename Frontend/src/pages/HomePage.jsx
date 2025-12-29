@@ -1,43 +1,48 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Container, Row, Col, Card, Button, Badge } from 'react-bootstrap';
+import { Container, Row, Col, Card, Button, Badge ,Spinner} from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Link } from 'react-router-dom';
 import { FaTrophy, FaUser, FaCalendarAlt, FaArrowRight } from 'react-icons/fa';
 
-// Import components
+
 import NavBar from '../includes/NavBar';
 import Footer from '../includes/Footer';
 
-// Import assets and styles
-// Make sure 'icon.jpg' exists in frontend/src/assets/
+
 import photo from "../assets/icon.jpg"; 
 import '../css/HomePage.css';
 
 function HomePage() {
   
-  // 1. Initialize state as an empty array [] to prevent map errors
+
   const [posts, setPosts] = useState([]);
   const [error, setError] = useState(null);
+  const [loading,setLoading]=useState(true);
   
-  // Use environment variable or default to localhost
+  
   const url = "http://localhost:8080";
 
   useEffect(() => {
     const fetchHome = async () => {
       try {
-        // 2. Fetch public/approved achievements
-        // Ensure your backend has the /api/public/achievements route
+      
         const response = await axios.get(url + '/api/public/achievements');
         setPosts(response.data);
       } catch (err) {
         console.error("Error fetching public posts:", err);
         setError("Could not load recent achievements.");
-      } 
+      }finally{
+        setLoading(false);
+      }
     };
 
     fetchHome(); 
   }, []); 
+
+ if (loading) {
+    return <Container className="text-center mt-5"><Spinner animation="border" /> <p>Loading pending users...</p></Container>;
+  }
  
   return (
     <>
@@ -45,7 +50,7 @@ function HomePage() {
       
       <div className='homepage'>
         
-        {/* --- Hero Section --- */}
+       
         <section className="hero">
           <div className="overview text-center py-5 text-white" >
             <h1 className="display-4 fw-bold">Department of Computer Science & Technology</h1>
@@ -53,7 +58,7 @@ function HomePage() {
           </div>
         </section>
 
-        {/* --- Highlights Section --- */}
+       
         <section className="content py-5">
           <Container>
             <h2 className="text-center mb-5 fw-bold text-dark">Why Join Us?</h2>
@@ -95,7 +100,7 @@ function HomePage() {
           </Container>
         </section>
 
-        {/* --- Latest Verified Achievements Section --- */}
+      
         <section className="latest-achievements-section py-5 bg-light">
           <Container>
             <h2 className="section-title text-center mb-5 fw-bold text-dark">Latest Student Achievements</h2>
@@ -109,11 +114,11 @@ function HomePage() {
             ) : (
               <>
                 <Row className="g-4 verified-posts-grid">
-                  {/* Display top 3 posts */}
-                  {posts.slice(0, 3).map(post => (
+                  
+                  {posts.filter(post => post.user).slice(0, 3).map(post => (
                     <Col key={post._id} md={6} lg={4}>
                       <Card className="h-100 shadow-sm border-0 achievement-card-public">
-                        {/* Optional Image Placeholder */}
+                       
                         <div className="card-img-wrapper" style={{height: '180px', overflow: 'hidden', backgroundColor: '#eee'}}>
                            <Card.Img variant="top" src={photo} className="card-img" style={{width:'100%', height:'100%', objectFit:'cover'}} />
                            <div className="card-overlay" style={{position: 'absolute', top: '10px', right: '10px'}}>
@@ -142,7 +147,7 @@ function HomePage() {
                   ))}
                 </Row>
 
-                {/* "View All" Button */}
+                
                 <div className="view-all-container text-center mt-5">
                   <LinkContainer to="/achievements/students">
                     <Button variant="primary" size="lg" className="view-all-btn px-5 rounded-pill">
@@ -155,7 +160,7 @@ function HomePage() {
           </Container>
         </section>
 
-        {/* --- Notable Achievements List --- */}
+       
         <section className="achievements-list py-5">
           <Container>
             <h2 className="text-center mb-4 fw-bold">Notable Departmental Milestones</h2>
@@ -169,7 +174,7 @@ function HomePage() {
           </Container>
         </section>
 
-        {/* --- Call to Action --- */}
+        
         <section className="action text-center py-5 text-white" >
           <Container>
             <h2 className="fw-bold mb-3">Be a Part of Our Journey</h2>

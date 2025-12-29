@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Post } = require('../models/user');
+const Post  = require('../models/user');
 const { isVerified,isLoggedIn } = require('../utils/middleware');
 const wrapAsync = require('../utils/wrapAsync');
 const ExpressError = require('../utils/ExpressError');
@@ -14,12 +14,18 @@ router.get('/myposts', isLoggedIn,isVerified, wrapAsync(async (req, res) => {
 
 router.post('/posts', isLoggedIn,isVerified, wrapAsync(async (req, res) => {
   const { title, body } = req.body;
+  
   if (!title || !body) {
     throw new ExpressError(400, "Title and body are required.");
+  }
+  let verified=false;
+  if(req.user.role==="staff"){
+    verified=true;
   }
   const newPost = new Post({
     title,
     body,
+    isVerified:verified,
     user: req.user._id 
   });
   await newPost.save();
@@ -38,7 +44,13 @@ router.put('/posts/:postId', isLoggedIn,isVerified, wrapAsync(async (req, res) =
     throw new ExpressError(403, "You are not authorized to edit this post.");
   }
   if(post.title!==title || post.body!==body){
-    post.isVerified=false;
+    if(req.user.role==="staff"){
+      post.isVerified=true;
+    }
+    else{
+        post.isVerified=false;
+    }
+    
   }
  
   post.title = title;

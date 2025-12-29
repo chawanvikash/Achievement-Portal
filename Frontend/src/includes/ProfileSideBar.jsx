@@ -30,8 +30,13 @@ const ProfileSidebar = () => {
           </Nav.Link>
         </LinkContainer>
         </Nav.Item> 
+        
       </div> : 
       <div>
+        
+      </div>}   
+    
+      
       <Nav.Item>       
         <LinkContainer to="/MyAchievement">
           <Nav.Link >
@@ -39,10 +44,6 @@ const ProfileSidebar = () => {
           </Nav.Link>
         </LinkContainer>
       </Nav.Item>
-      </div>}   
-    
-      
-     
       <Nav.Item>
         <Nav.Link onClick={logout} className="logout-link">
           <FaSignOutAlt className="me-2" />Log Out

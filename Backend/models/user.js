@@ -40,34 +40,7 @@ const userSchema = new Schema({
 userSchema.plugin(passportLocalMongo, { usernameField: 'email' })
 const User = mongoose.model('User', userSchema);
 
-const postSchema = new Schema({
-  title: {
-    type: String,
-    required: true,
-    trim: true 
-  },
-  body: {
-    type: String,
-    required: true
-  },
-  
-  user: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',                 
-    required: true
-  },
-  isVerified:{
-    type:Boolean,
-    default:false,
-  }
-  
-}, {
-  timestamps: true 
-});
-
-const Post = mongoose.model('Post', postSchema);
-
-module.exports = {Post,User};
+module.exports = User;
 
 
 

@@ -114,7 +114,7 @@ function LoginPage() {
         <br /> <br />
         
         <div className="text-center">
-          <p style={{ textDecoration: "underline" }}>New Account?</p>
+          <p>New Account?</p>
           
           <Link to="/register">
             <button type="button" className='reg-btn'>Register</button>

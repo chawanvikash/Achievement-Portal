@@ -57,7 +57,7 @@ function RegisterPage() {
 
         <div className="input-group">
             <label htmlFor="ipemail">Email Address</label>
-            <input id='ipemail' type="email" name="email" placeholder="Email (use @iiests.ac.in for Student/Faculty)" value={formData.email} onChange={handleChange} required/>
+            <input id='ipemail' type="email" name="email" placeholder="Email (use Gsuit id for Student/Faculty)" value={formData.email} onChange={handleChange} required/>
         </div>
 
         <div className="input-group">

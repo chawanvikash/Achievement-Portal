@@ -58,13 +58,14 @@ function EventsPage(){
           </p>
         </div>
       </section>
+      <br /><br />
       <div className='evecontent'>
-      <section className="content">
-        <h2>Cultural and Technical Fusion</h2>
-        <div className="cards">
-          <div className="card">
+      <section className="Eventcontent">
+        <h2 className='EventHeading'>Cultural and Technical Fusion</h2><br />
+        <div className="cardsEvent">
+          <div className="cardEve">
             <h3>REVELATION</h3>
-            <p>
+            <p className='eventP'>
               Revelation is an annual technical and cultural festival organized
               by the Department of Computer Science and Technology at the Indian
               Institute of Engineering Science and Technology (IIEST), Shibpur.
@@ -74,10 +75,11 @@ function EventsPage(){
               internships through sponsorships.
             </p>
           </div>
+          <br />
 
-          <div className="card">
+          <div className="cardEve">
             <h3>INSTRUO</h3>
-            <p>
+            <p className='eventP'>
               INSTRUO, the Annual Technical Fest of IIEST, Shibpur, is all about
               “Driving Innovation.” From a modest and humble beginning in 2009 to
               becoming the largest Tech-Fest of Kolkata and the second largest
@@ -89,10 +91,11 @@ function EventsPage(){
               and surreal literary contests.
             </p>
           </div>
+          <br />
 
-          <div className="card">
+          <div className="cardEve">
             <h3>REBECCA</h3>
-            <p>
+            <p className='eventP'>
               From the pulsating beats of the music to the kaleidoscope of colors
               lighting up the night sky. Here&apos;s to reliving those cherished
               moments and having a blast along the way!

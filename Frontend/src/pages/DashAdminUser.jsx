@@ -70,7 +70,7 @@ function DashAdminUser() {
   return (
     <div>
       <HomeBtn/>
-    <Container className="mt-4">
+    <Container className="pending-user-container ">
 
 
       <h2>Pending User Approvals</h2>

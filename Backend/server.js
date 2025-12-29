@@ -4,7 +4,7 @@ if (process.env.NODE_ENV !== "production") {
 
 const express = require("express");
 const app = express();
-const port= process.env.PORT || 8080;
+const port= process.env.PORT ;
 const path = require("path");
 const mongoose = require('mongoose');
 const cors = require("cors");
@@ -12,13 +12,13 @@ const session = require("express-session");
 const passport = require("passport");
 const localStrategy = require("passport-local");
 
-const { Post, User } = require("./models/user");
+const User  = require("./models/user.js");
+const Post  = require("./models/post.js");
 const ExpressError = require("./utils/ExpressError");
 const wrapAsync = require("./utils/wrapAsync"); 
 
 const adminRoute=require("./routes/adminRoute");
 const dashPostsRoute = require("./routes/dashPostsRoute"); 
-const { isVerified } = require("./utils/middleware");
 
 const sendOTP = require('./utils/email.js'); 
 
@@ -33,11 +33,11 @@ main()
   .catch(err => console.log(err));
 
 async function main() {
-  await mongoose.connect('mongodb://127.0.0.1:27017/Achievements');
+  await mongoose.connect(process.env.DATABASE_URL);
 };
 
 const sessionOptions = {
-  secret: "averygoodsecret",
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true,
   cookie: {
@@ -72,6 +72,7 @@ app.get("/api/me", (req, res) => {
       email: req.user.email,
       role: req.user.role,
       isVerified: req.user.isVerified,
+      isEmailVerified:req.user.isEmailVerified,
     }
   });
 });
@@ -81,8 +82,7 @@ app.get("/api/public/achievements", wrapAsync(async (req, res) => {
   const publicPosts = await Post.find({ isVerified: true }) 
     .populate('user', 'username role email') 
     .sort({ createdAt: -1 }) 
-    .limit(3); 
-    
+    .limit(3);    
   res.json(publicPosts);
 }));
 
@@ -110,6 +110,18 @@ app.get("/api/AcheivementAlumni", wrapAsync(async (req, res) => {
   res.json(achiev);
 }));
 
+//individual achievement
+app.get('/api/posts/:id', wrapAsync(async (req, res) => {
+    const { id } = req.params;
+    const post = await Post.findById(id).populate('user', 'username role email');
+    
+    if (!post) {
+        throw new ExpressError(404, "Achievement not found");
+    }
+    res.json(post);
+}));
+
+
 //contact page
 app.get("/api/ContactPage", (req, res) => {
   res.send("Accessing Contacts page");
@@ -133,22 +145,31 @@ app.use("/api/admin",adminRoute);
 //api/register
 app.post("/api/register", wrapAsync(async (req, res, next) => {
   const { username, email, password, role } = req.body;
-  
+
+  const existingUser = await User.findOne({ email });
+  if (existingUser) {
+    if (existingUser.isEmailVerified) {
+      throw new ExpressError(400, "User already exists. Please login.");
+    } else {
+      await User.findByIdAndDelete(existingUser._id);
+    }
+  }
+  const  AdminEmail=process.env.AdminEmail;
   let isAccountApproved = false; 
   if (role === "staff") { 
-    if (email !== "chawanvikash30@gmail.com") {
+    if (email !== AdminEmail) {
       throw new ExpressError(403, "Registration denied. You are not the authorized admin.");
     }
     isAccountApproved = true; 
   } 
   else {
     const officialDomain = ".iiests.ac.in";    
-    if (role !== 'alumni') {
+    if (role === 'student' || role==='faculty') {
       if (!email || !email.endsWith(officialDomain)) {  
         throw new ExpressError(400, `Registration denied. You must use an official email address ending in ${officialDomain}`);
       }
     } 
-    isAccountApproved = false; 
+    isAccountApproved = true; 
   }
   const otp = Math.floor(100000 + Math.random() * 900000).toString();
   const otpExpires = Date.now() + 10 * 60 * 1000; // 10 minutes
@@ -227,6 +248,7 @@ app.post("/api/login", (req, res, next) => {
           role: req.user.role,
           email: req.user.email,
           isVerified: req.user.isVerified,
+          isEmailVerified:req.user.isEmailVerified,
         }
       });
     });

@@ -1,6 +1,7 @@
 import NavBar from '../includes/NavBar';
 import "../css/Achievement.css"
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios'; 
 import photo from "../assets/success.avif"
 import Footer from '../includes/Footer';
@@ -68,10 +69,15 @@ function AcheiveStudents() {
                   </div>
                   
                   
-                  <p className='desp'>{post.body}</p>
+                  <p className='desp'>{post.body.substring(0,100)}...</p>
 
                 </div>
               </Card.Text>
+              <Link to={`/achievements/${post._id}`}>
+           <Button variant="primary" className="w-100 mt-3">
+             Read Full Story <FaArrowRight className="ms-1"/>
+           </Button>
+        </Link>
             
             <br />
             Posted on: {new Date(post.createdAt).toLocaleDateString()}

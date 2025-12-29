@@ -19,8 +19,6 @@
     position: relative;
     color: white;
     text-align: center;
-    width: 90%;
-    margin-left: 5%;
     animation-name: opacity;
     animation-duration: 1.6s;
 }
