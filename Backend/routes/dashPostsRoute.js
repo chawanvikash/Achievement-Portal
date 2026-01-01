@@ -1,5 +1,10 @@
 const router = require('express').Router();
-const Post  = require('../models/user');
+
+const multer  = require('multer');
+const {storage}=require("../cloudConfig.js");
+const upload = multer({ storage })
+
+const Post  = require('../models/post.js');
 const { isVerified,isLoggedIn } = require('../utils/middleware');
 const wrapAsync = require('../utils/wrapAsync');
 const ExpressError = require('../utils/ExpressError');
@@ -12,7 +17,7 @@ router.get('/myposts', isLoggedIn,isVerified, wrapAsync(async (req, res) => {
   res.json(posts);
 }));
 
-router.post('/posts', isLoggedIn,isVerified, wrapAsync(async (req, res) => {
+router.post('/posts', isLoggedIn,isVerified,upload.single('image'), wrapAsync(async (req, res) => {
   const { title, body } = req.body;
   
   if (!title || !body) {
@@ -28,13 +33,19 @@ router.post('/posts', isLoggedIn,isVerified, wrapAsync(async (req, res) => {
     isVerified:verified,
     user: req.user._id 
   });
+  if (req.file) {
+            newPost.image = {
+                url: req.file.path,      
+                filename: req.file.filename 
+            };
+        }
   await newPost.save();
-  await newPost.populate('user', 'username'); 
+  await newPost.populate('user', 'username role'); 
   res.status(201).json(newPost);
 }));
 
 
-router.put('/posts/:postId', isLoggedIn,isVerified, wrapAsync(async (req, res) => {
+router.put('/posts/:postId', isLoggedIn,isVerified,upload.single('image'), wrapAsync(async (req, res) => {
   const { postId } = req.params;
   const { title, body } = req.body;
 
@@ -55,6 +66,11 @@ router.put('/posts/:postId', isLoggedIn,isVerified, wrapAsync(async (req, res) =
  
   post.title = title;
   post.body = body;
+  if(req.file){
+    url=req.file.path;
+    filename=req.file.filename;
+    post.image={url,filename};
+  };
   
   await post.save();
   await post.populate('user', 'username');

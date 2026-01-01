@@ -120,7 +120,7 @@ function HomePage() {
                       <Card className="h-100 shadow-sm border-0 achievement-card-public">
                        
                         <div className="card-img-wrapper" style={{height: '180px', overflow: 'hidden', backgroundColor: '#eee'}}>
-                           <Card.Img variant="top" src={photo} className="card-img" style={{width:'100%', height:'100%', objectFit:'cover'}} />
+                           <Card.Img variant="top" src={post.image.url} className="card-img" style={{width:'100%', height:'100%', objectFit:'cover'}} />
                            <div className="card-overlay" style={{position: 'absolute', top: '10px', right: '10px'}}>
                               <Badge bg="light" text="dark" className="role-badge shadow-sm">{post.user?.role || 'Student'}</Badge>
                            </div>

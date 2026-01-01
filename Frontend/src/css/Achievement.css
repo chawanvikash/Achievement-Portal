@@ -203,3 +203,10 @@ body {
 .pending-user-container {
   transform: translateY(-200px);
 }
+.super-text{
+  font-size: x-small;
+  font-weight: bold;
+}
+.super-title{
+ font-family: Georgia,  Times, serif;
+}

@@ -13,6 +13,11 @@ const postSchema = new Schema({
     type: String,
     required: true
   },
+  image:{
+    filename:String,
+    url:String,
+    
+  },
   
   user: {
     type: Schema.Types.ObjectId,

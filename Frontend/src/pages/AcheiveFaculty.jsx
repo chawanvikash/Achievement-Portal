@@ -58,7 +58,7 @@ function AcheiveFaculty() {
               <Card.Body>
               <Card.Title><h3>{post.title}</h3></Card.Title>
 
-              <Card.Img variant="top" src={photo}  className='success' />
+              <Card.Img variant="top" src={post.image.url}  className='success' />
               <p className='role'>-{post.user.role}</p>
               <Card.Text>
                 <div key={post._id} className="post" >

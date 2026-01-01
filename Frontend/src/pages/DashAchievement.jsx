@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
-import { Container, Row, Col, Card, Form, Button, Modal, Spinner, Alert, Badge } from 'react-bootstrap';
-import { FaEdit, FaTrash, FaPlus, FaCheckCircle, FaClock } from 'react-icons/fa';
+import { Container, Row, Col, Card, Form, Button, Modal, Spinner, Alert } from 'react-bootstrap';
+import { FaEdit, FaTrash, FaPlus, FaCheckCircle, FaClock, FaImage } from 'react-icons/fa';
 import HomeBtn from '../includes/HomeBtn';
 import ProfileSidebar from '../includes/ProfileSideBar';
 import "../css/AddAcheive.css"; 
@@ -12,10 +12,18 @@ function DashAchievement() {
   const [myPosts, setMyPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [newPost, setNewPost] = useState({ title: '', body: '' });
+  
+  
+  const [title, setTitle] = useState('');
+  const [body, setBody] = useState('');
+  const [image, setImage] = useState(null);
+
   const [showModal, setShowModal] = useState(false);
   const [editingPost, setEditingPost] = useState(null); 
-  const url="http://localhost:8080";
+  const [editImageFile, setEditImageFile] = useState(null);
+  
+  
+  const url = "http://localhost:8080";
 
   useEffect(() => {
     const fetchMyPosts = async () => {
@@ -30,14 +38,30 @@ function DashAchievement() {
     if (user) fetchMyPosts();
   }, [user]); 
 
+
   const handleCreatePost = async (e) => {
     e.preventDefault();
     setError(null);
+    
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('body', body);
+    if (image) {
+        formData.append('image', image);
+    }
+
     try {
-      const response = await axios.post(url+'/api/dashboard/posts', newPost);
+    
+      const response = await axios.post(url+'/api/dashboard/posts', formData);
+      
       setMyPosts([response.data, ...myPosts]); 
-      setNewPost({ title: '', body: '' }); 
+      
+      setTitle('');
+      setBody('');
+      e.target.reset(); 
+
     } catch (err) {
+      console.error(err);
       setError(err.response?.data?.error || "Error creating post");
     }
   };
@@ -55,20 +79,29 @@ function DashAchievement() {
 
   const handleOpenEditModal = (post) => {
     setEditingPost({ ...post }); 
+    setEditImageFile(null);
     setShowModal(true);
   };
 
   const handleCloseModal = () => setShowModal(false);
 
+  
   const handleUpdatePost = async () => {
     try {
-      const response = await axios.put(url+`/api/dashboard/posts/${editingPost._id}`, {
-        title: editingPost.title,
-        body: editingPost.body
-      });
+      const formData = new FormData();
+    
+      formData.append('title', editingPost.title);
+      formData.append('body', editingPost.body);
+      if (editImageFile) {
+          formData.append('image', editImageFile);
+      }
+      const response = await axios.put(url + `/api/dashboard/posts/${editingPost._id}`, formData);
+
+   
       setMyPosts(myPosts.map(post => (post._id === editingPost._id ? response.data : post)));
       handleCloseModal(); 
     } catch (err) {
+      console.error(err);
       setError(err.response?.data?.error || "Error updating post");
     }
   };
@@ -96,37 +129,48 @@ function DashAchievement() {
               <h2 className="fw-bold text-dark">Your Achievements</h2>
               <p className="text-muted">Share your academic and professional milestones.</p>
             </div>
-            
           </div>
 
           {error && <Alert variant="danger" onClose={() => setError(null)} dismissible>{error}</Alert>}
 
-
+     
           <Card className="create-post-card mb-5 shadow-sm border-0">
             <Card.Body className="p-4">
               <h5 className="mb-3 fw-bold text-secondary">Post a New Achievement</h5>
-              <Form onSubmit={handleCreatePost}>
+         
+              <Form onSubmit={handleCreatePost} encType="multipart/form-data">
                 <Form.Group className="mb-3">
                   <Form.Control 
                     type="text" 
                     placeholder="What did you achieve? (Title)" 
                     className="form-control-lg"
-                    value={newPost.title}
-                    onChange={(e) => setNewPost({ ...newPost, title: e.target.value })}
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
                     required
                   />
                 </Form.Group>
+                
                 <Form.Group className="mb-3">
                   <Form.Control 
                     as="textarea" 
                     rows={3}
                     placeholder="Share the details of your success..."
                     className="form-control-light"
-                    value={newPost.body}
-                    onChange={(e) => setNewPost({ ...newPost, body: e.target.value })}
+                    value={body}
+                    onChange={(e) => setBody(e.target.value)}
                     required
                   />
                 </Form.Group>
+
+                <Form.Group className="mb-3">
+                    <Form.Label className="text-muted small"><FaImage className="me-1"/> Upload Evidence / Photo</Form.Label>
+                    <Form.Control 
+                        type="file" 
+                        accept="image/*"
+                        onChange={(e) => setImage(e.target.files[0])}
+                    />
+                </Form.Group>
+
                 <div className="d-flex justify-content-end">
                   <Button variant="primary" type="submit" className="px-4 fw-bold">
                     <FaPlus className="me-2" /> Post Achievement
@@ -136,7 +180,6 @@ function DashAchievement() {
             </Card.Body>
           </Card>
 
- 
           <h5 className="mb-3 text-secondary fw-bold">Your Timeline</h5>
           <Row>
             {myPosts.length === 0 ? (
@@ -150,10 +193,20 @@ function DashAchievement() {
               myPosts.map(post => (
                 <Col md={12} lg={6} key={post._id} className="mb-4">
                   <Card className="achievement-card h-100 border-0 shadow-sm">
+                    
+                    {post.image && post.image.url && (
+                        <div style={{ height: '200px', overflow: 'hidden' }}>
+                            <Card.Img 
+                                variant="top" 
+                                src={post.image.url} 
+                                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                            />
+                        </div>
+                    )}
+
                     <Card.Body className="d-flex flex-column">
                       <div className="d-flex justify-content-between align-items-start mb-3">
                         
-                      
                         <div className={`status-indicator ${post.isVerified ? 'approved' : 'pending'}`}>
                           {post.isVerified ? (
                             <><FaCheckCircle className="me-1"/> Published</>
@@ -162,7 +215,6 @@ function DashAchievement() {
                           )}
                         </div>
                         
-                      
                         <div className="action-buttons">
                           <Button variant="link" className="text-muted p-0 me-3" onClick={() => handleOpenEditModal(post)}>
                             <FaEdit size={18} title="Edit" />
@@ -191,7 +243,6 @@ function DashAchievement() {
           </Row>
         </Container>
 
-       
         <Modal show={showModal} onHide={handleCloseModal} centered>
           <Modal.Header closeButton className="border-0 pb-0">
             <Modal.Title className="fw-bold">Edit Achievement</Modal.Title>
@@ -216,6 +267,20 @@ function DashAchievement() {
                   onChange={(e) => setEditingPost({ ...editingPost, body: e.target.value })}
                 />
               </Form.Group>
+              <Form.Group className="mb-3">
+            <Form.Label className="text-muted small">
+                <FaImage className="me-1" /> Upload New Photo (Optional)
+            </Form.Label>
+            {editingPost?.image && !editImageFile && (
+                 <div className="mb-2 small text-info">Current Image exists. Uploading new one will replace it.</div>
+            )}
+            <Form.Control
+                type="file"
+                accept="image/*"
+ 
+                onChange={(e) => setEditImageFile(e.target.files[0])}
+            />
+        </Form.Group>
             </Form>
           </Modal.Body>
           <Modal.Footer className="border-0 pt-0">
