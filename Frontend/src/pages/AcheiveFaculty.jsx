@@ -3,6 +3,7 @@ import "../css/Achievement.css"
 import React, { useState, useEffect } from 'react';
 import axios from 'axios'; 
 import Footer from '../includes/Footer';
+import photo from "../assets/icon.jpg";
 import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -55,7 +56,7 @@ function AcheiveFaculty() {
               <Card.Body>
               <Card.Title><h3>{post.title}</h3></Card.Title>
 
-              <Card.Img variant="top" src={post.image.url}  className='success' />
+              <Card.Img variant="top" src={post?.image?.url ?? photo}  className='success' />
               <p className='role'>-{post.user.role}</p>
               <Card.Text>
                 <div key={post._id} className="post" >

@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios'; 
 import Footer from '../includes/Footer';
+import photo from "../assets/icon.jpg";
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { FaTrophy, FaUser, FaCalendarAlt, FaArrowRight } from 'react-icons/fa';
@@ -57,7 +58,7 @@ function AcheiveInstitute() {
             
               <Card.Body>
               <Card.Title><h3>{post.title}</h3></Card.Title>
-              <Card.Img variant="top" src={post.image.url}  className='success'/>
+              <Card.Img variant="top" src={post?.image?.url || photo}  className='success'/>
             
              <p className='role'>-{post.user.role}</p>
               <Card.Text>

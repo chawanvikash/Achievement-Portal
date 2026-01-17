@@ -84,7 +84,7 @@ function AchievementDetail() {
       <div className="position-relative mb-5">
         <img 
             
-            src={post.image?.url || photo} 
+            src={post.image?.url ?? photo} 
             alt={post.title}
             className="w-100 rounded-4 shadow-sm"
             style={{ 

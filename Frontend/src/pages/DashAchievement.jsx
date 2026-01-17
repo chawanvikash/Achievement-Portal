@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import { Container, Row, Col, Card, Form, Button, Modal, Spinner, Alert } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import photo from "../assets/icon.jpg";
 import { FaEdit, FaTrash, FaPlus, FaCheckCircle, FaClock, FaImage ,FaArrowLeft} from 'react-icons/fa';
 import ProfileSidebar from '../includes/ProfileSideBar';
 import "../css/AddAcheive.css"; 
@@ -200,7 +201,7 @@ function DashAchievement() {
                         <div style={{ height: '200px', overflow: 'hidden' }}>
                             <Card.Img 
                                 variant="top" 
-                                src={post.image.url} 
+                                src={post.image.url ?? photo} 
                                 style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                             />
                         </div>
