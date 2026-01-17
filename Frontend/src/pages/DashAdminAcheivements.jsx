@@ -4,13 +4,14 @@ import { Container, Row, Col, Card, Button, Spinner, Alert, Badge } from 'react-
 import { Link } from 'react-router-dom';
 import ProfileSidebar from '../includes/ProfileSideBar';
 import "../css/Achievement.css"; 
+import { BASE_URL } from '../helper';
 
 function DashAdminAcheivements() {
   const [achieves, setAchieves] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
-  const url = "http://localhost:8080";
+  const url = BASE_URL;
 
   useEffect(() => { 
     const fetchPosts = async () => {

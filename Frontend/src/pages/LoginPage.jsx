@@ -3,7 +3,7 @@ import axios from 'axios';
 import "../css/Register.css";
 import { useNavigate, Link } from 'react-router-dom'; 
 import { useAuth } from '../context/AuthContext';
-
+import { BASE_URL } from '../helper';
 import { Alert, Spinner,Button } from 'react-bootstrap';
 import { FaArrowLeft, FaCalendarAlt, FaUserCircle } from 'react-icons/fa';
 function LoginPage() {
@@ -15,7 +15,7 @@ function LoginPage() {
     email: '',
     password: '',  
   });
-  const url = "http://localhost:8080";
+  const url =BASE_URL;
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });

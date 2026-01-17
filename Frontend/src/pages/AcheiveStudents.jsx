@@ -8,13 +8,14 @@ import Button from 'react-bootstrap/Button';
 import photo from "../assets/icon.jpg";
 import Card from 'react-bootstrap/Card';
 import { FaTrophy, FaUser, FaCalendarAlt, FaArrowRight } from 'react-icons/fa';
+import { BASE_URL } from '../helper';
 
 function AcheiveStudents() {
   
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const url="http://localhost:8080";
+  const url=BASE_URL;
 
   useEffect(() => { 
     const fetchPosts = async () => {

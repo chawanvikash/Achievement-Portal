@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Container, Row, Col, Card, Form, Button, Modal, Spinner, Alert } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import ProfileSidebar from '../includes/ProfileSideBar';
+import { BASE_URL } from "../helper";
 
 
 function DashAdminUser() {
@@ -12,7 +13,7 @@ function DashAdminUser() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null); 
-  const url="http://localhost:8080";
+  const url=BASE_URL;
 
 
   useEffect(() => { 

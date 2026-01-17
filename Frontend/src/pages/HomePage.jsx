@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { FaTrophy, FaUser, FaCalendarAlt, FaArrowRight } from 'react-icons/fa';
 import NavBar from '../includes/NavBar';
 import Footer from '../includes/Footer';
-
+import { BASE_URL } from '../helper';
 import photo from "../assets/icon.jpg"; 
 import '../css/HomePage.css';
 
@@ -18,7 +18,7 @@ function HomePage() {
   const [loading,setLoading]=useState(true);
   
   
-  const url = "http://localhost:8080";
+  const url = BASE_URL;
 
   useEffect(() => {
     const fetchHome = async () => {

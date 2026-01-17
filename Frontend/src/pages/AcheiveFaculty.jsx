@@ -7,13 +7,14 @@ import photo from "../assets/icon.jpg";
 import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import { BASE_URL } from '../helper';
 
 function AcheiveFaculty() {
   
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const url="http://localhost:8080";
+  const url=BASE_URL;
 
   useEffect(() => { 
     const fetchPosts = async () => {

@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import { Container, Button, Badge, Row, Col, Spinner, Alert } from 'react-bootstrap';
 import { FaArrowLeft, FaCalendarAlt, FaUserCircle } from 'react-icons/fa';
-
+import { BASE_URL } from '../helper.js';
 import photo from "../assets/success.avif"; 
 import Footer from "../includes/Footer.jsx"
 
@@ -13,7 +13,7 @@ function AchievementDetail() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   
-  const url = "http://localhost:8080";
+  const url =BASE_URL;
 
  
   useEffect(() => {

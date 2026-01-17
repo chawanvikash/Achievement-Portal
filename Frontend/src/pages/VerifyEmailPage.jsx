@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Container, Card, Form, Button, Alert } from 'react-bootstrap';
 import NavBar from '../includes/NavBar';
+import { BASE_URL } from '../helper';
 
 function VerifyEmailPage() {
     const location = useLocation();
@@ -12,7 +13,7 @@ function VerifyEmailPage() {
     const [otp, setOtp] = useState('');
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(null);
-    const url ="http://localhost:8080";
+    const url =BASE_URL;
 
     const handleSubmit = async (e) => {
         e.preventDefault();

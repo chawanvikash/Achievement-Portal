@@ -6,7 +6,8 @@ import { Link } from 'react-router-dom';
 import photo from "../assets/icon.jpg";
 import { FaEdit, FaTrash, FaPlus, FaCheckCircle, FaClock, FaImage ,FaArrowLeft} from 'react-icons/fa';
 import ProfileSidebar from '../includes/ProfileSideBar';
-import "../css/AddAcheive.css"; 
+import "../css/AddAcheive.css";
+import { BASE_URL } from '../helper'; 
 
 function DashAchievement() {
   const { user } = useAuth(); 
@@ -25,7 +26,7 @@ function DashAchievement() {
   const [editImageFile, setEditImageFile] = useState(null);
   
   
-  const url = "http://localhost:8080";
+  const url = BASE_URL;
 
   useEffect(() => {
     const fetchMyPosts = async () => {

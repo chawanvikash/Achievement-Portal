@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Container, Table, Button, Badge, Spinner, Alert, Card, Modal } from 'react-bootstrap';
 import { FaTrash, FaEnvelope, FaUser, FaCommentDots, FaReply } from 'react-icons/fa';
 import ProfileSidebar from '../includes/ProfileSideBar'; 
+import { BASE_URL } from '../helper';
 
 
 function AdminReviews() {
@@ -13,7 +14,7 @@ function AdminReviews() {
   const [showModal, setShowModal] = useState(false);
   const [selectedReview, setSelectedReview] = useState(null);
 
-  const url = "http://localhost:8080"; 
+  const url =BASE_URL; 
 
   useEffect(() => {
     const fetchReviews = async () => {

@@ -5,6 +5,7 @@ import { FaMapMarkerAlt, FaPhoneAlt, FaEnvelope, FaPaperPlane } from 'react-icon
 import NavBar from '../includes/NavBar';
 import Footer from '../includes/Footer';
 import "../css/Contact.css"; 
+import { BASE_URL } from '../helper';
 
 function ContactPage() {
   const [formData, setFormData] = useState({
@@ -16,7 +17,7 @@ function ContactPage() {
   const [status, setStatus] = useState("idle");
   const [errorMessage, setErrorMessage] = useState(null);
 
-  const url = "http://localhost:8080";
+  const url = BASE_URL;
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });

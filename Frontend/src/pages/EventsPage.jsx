@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Footer from '../includes/Footer';
 import "../css/EventsPage.css"
+import { BASE_URL } from '../helper';
 
 
 
@@ -10,7 +11,7 @@ function EventsPage(){
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const url="http://localhost:8080"
+  const url=BASE_URL;
 
   useEffect(() => {
    
