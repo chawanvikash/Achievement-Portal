@@ -3,19 +3,18 @@ const nodemailer = require('nodemailer');
 const sendOTP = async (email, otp) => {
     try {
         const transporter = nodemailer.createTransport({
-            service: 'gmail',
-            host: 'smtp.gmail.com',
-            port: 465, // Use 465 for Secure connection
-            secure: true, 
-            auth: {
-               user: process.env.EMAIL_USER, 
-               pass: process.env.EMAIL_PASS, 
-            },
-            
-            connectionTimeout: 10000, 
-            greetingTimeout: 10000,
-            socketTimeout: 10000,
-        });
+    host: 'smtp.gmail.com',
+    port: 465, // Try 465 with secure: true
+    secure: true, 
+    auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+    },
+    // Increased timeouts to handle cloud latency
+    connectionTimeout: 20000, 
+    greetingTimeout: 20000,
+    socketTimeout: 20000,
+});
 
         
         await transporter.verify();
