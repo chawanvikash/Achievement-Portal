@@ -15,6 +15,7 @@ const localStrategy = require("passport-local");
 
 const User  = require("./models/user.js");
 const Post  = require("./models/post.js");
+const Review=require("./models/review.js");
 const ExpressError = require("./utils/ExpressError");
 const wrapAsync = require("./utils/wrapAsync"); 
 
@@ -111,11 +112,18 @@ app.get("/api/AcheivementAlumni", wrapAsync(async (req, res) => {
   res.json(achiev);
 }));
 
+//acheivement of institue
+app.get("/api/AcheivementInstitute", wrapAsync(async (req, res) => {
+  const insties=await User.find({role:"staff"}).select('_id');
+  const instids=insties.map(insti=>insti._id);
+  let achiev = await Post.find({user:{$in:instids}}).populate('user', 'username email role').sort({createdAt:-1});
+  res.json(achiev);
+}));
+
 //individual achievement
 app.get('/api/posts/:id', wrapAsync(async (req, res) => {
     const { id } = req.params;
-    const post = await Post.findById(id).populate('user', 'username role email');
-    
+    const post = await Post.findById(id).populate('user', 'username role email');   
     if (!post) {
         throw new ExpressError(404, "Achievement not found");
     }
@@ -124,9 +132,23 @@ app.get('/api/posts/:id', wrapAsync(async (req, res) => {
 
 
 //contact page
-app.get("/api/ContactPage", (req, res) => {
-  res.send("Accessing Contacts page");
-});
+app.post("/api/contact/review", wrapAsync(async (req, res) => {
+  const { name, email, review } = req.body;
+  if (!name || !email || !review) {
+    throw new ExpressError(400, "All fields (name, email, message) are required.");
+  }
+  const newReview = new Review({
+    name,
+    email,
+    review
+  });
+  await newReview.save();
+  console.log("New Contact Message Saved:", newReview);
+  res.status(201).json({ 
+      message: "Message sent successfully!", 
+      data: newReview 
+  });
+}));
 
 app.get("/api/AlumniPage", async(req, res) => {
   const alums=(await User.find({role:"alumni"}));
@@ -163,13 +185,12 @@ app.post("/api/register", wrapAsync(async (req, res, next) => {
     }
     isAccountApproved = true; 
   } 
-  else {
+  else if(role === 'student' || role==='faculty'){
     const officialDomain = ".iiests.ac.in";    
-    if (role === 'student' || role==='faculty') {
       if (!email || !email.endsWith(officialDomain)) {  
         throw new ExpressError(400, `Registration denied. You must use an official email address ending in ${officialDomain}`);
       }
-    } 
+  
     isAccountApproved = true; 
   }
   const otp = Math.floor(100000 + Math.random() * 900000).toString();

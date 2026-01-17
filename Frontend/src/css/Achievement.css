@@ -188,8 +188,7 @@ body {
 }
 .name{
   font-weight: bold;
-  font-size: 1.2rem !important;
-  background-color: rgb(245, 240, 181);
+  font-size: 1.2rem !important; 
   padding: 1px 10px !important;
   border-radius: 5px;
   width: fit-content;

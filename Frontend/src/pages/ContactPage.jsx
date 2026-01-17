@@ -1,89 +1,207 @@
-import NavBar from '../includes/NavBar';
-import "../css/Contact.css"
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
+import { Container, Row, Col, Form, Button, Card, Alert, Spinner } from 'react-bootstrap';
+import { FaMapMarkerAlt, FaPhoneAlt, FaEnvelope, FaPaperPlane } from 'react-icons/fa';
+import NavBar from '../includes/NavBar';
 import Footer from '../includes/Footer';
+import "../css/Contact.css"; 
 
+function ContactPage() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    review: "", 
+  });
 
+  const [status, setStatus] = useState("idle");
+  const [errorMessage, setErrorMessage] = useState(null);
 
-function ContactPage(){
-  const [contacts, setContacts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const url="http://localhost:8080";
+  const url = "http://localhost:8080";
 
-  useEffect(() => {
-   
-    const fetchPosts = async () => {
-      try {
-        const response = await axios.get(url+'/api/ContactPage');
-        setContacts(response.data);
-        
-      } catch (err) {
-        
-        setError(err.message);
-      } finally {
-       
-        setLoading(false);
-      }
-    };
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
-    fetchPosts(); 
-  }, []); 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatus("submitting");
+    setErrorMessage(null);
 
+    try {
+      const response = await axios.post(url + "/api/contact/review", formData);
+      console.log("Success:", response.data);
+      setStatus("success");
+  
+      setFormData({ name: "", email: "", review: "" });
  
-  if (loading) {
-    return <p>Loading achievements...</p>;
-  }
+      setTimeout(() => setStatus("idle"), 5000);
 
-  if (error) {
-    return <p>Error loading data: {error}</p>;
-  }
+    } catch (error) {
+      console.error(error);
+      const msg = error.response?.data?.error || "Failed to send message. Please try again.";
+      setErrorMessage(msg);
+      setStatus("error");
+    }
+  };
 
-  return(
+  return (
     <>
-    <NavBar/>
-    <div>
-        <section className="contactpt">
-            <div className="overview">
-                <h1>Contact Us</h1>
-                <p>We'd love to hear from you. Get in touch with us today!</p>
-            </div>
-        </section>
+      <NavBar />
+ 
+      <div className="contact-hero mt-5">
+         <Container className="text-center text-dark">
+            <h1 className="display-4 fw-bold">Get in Touch</h1>
+            <p className="lead">We'd love to hear from you. Reach out to us for any queries.</p>
+         </Container>
+      </div>
 
-        <section className="content">
-            <div className="contact-form">
-                <h2>Send us a Message</h2>
-                <form>
-                    
-                    <input type="text" placeholder="Your Name" required />
-                    <input type="email" placeholder="Your Email" required />
-                    <textarea placeholder="Your Message" required></textarea>
-                    <button type="submit">Send</button>
-                </form>
-            </div>
+      <Container className="py-5">
+        <Row className="g-5">
+            
+            <Col lg={7}>
+                <Card className="border-0 shadow-sm p-4">
+                    <Card.Body>
+                        <h3 className="fw-bold mb-4 text-dark">Send us a Message</h3>
+                        
+                        {status === "success" && (
+                            <Alert variant="success">
+                                <FaPaperPlane className="me-2"/> Message sent successfully! We will get back to you soon.
+                            </Alert>
+                        )}
 
-            <div className="contact-info">
-                <h2>Our Contact Information</h2>
-                <p><strong>Address:</strong> Indian Institute of Engineering Science and Technology, Shibpur, Howrah, West Bengal, India</p>
-                <p><strong>Phone:</strong> +91 12345 67890</p>
-                <strong>Email:</strong><a href="#"> contacts@iiests.ac.in</a>
-            </div>
-        </section>
+                        {status === "error" && (
+                            <Alert variant="danger">{errorMessage}</Alert>
+                        )}
 
-        <section className="action">
-            <h2>Stay Connected</h2>
-            <p>Follow us for the latest updates, news and achievements.</p>
-            <form action="/register" method='get'>
-              <button >Register</button>
-            </form>
-        </section>
-    </div>
-    <Footer/>
+                        <Form onSubmit={handleSubmit}>
+                            <Row>
+                                <Col md={6} className="mb-3">
+                                    <Form.Label className="fw-bold small text-muted">YOUR NAME</Form.Label>
+                                    <Form.Control 
+                                        type="text" 
+                                        name="name" 
+                                        value={formData.name} 
+                                        onChange={handleChange} 
+                                        placeholder="John Doe" 
+                                        required 
+                                        className="form-control-lg"
+                                    />
+                                </Col>
+                                <Col md={6} className="mb-3">
+                                    <Form.Label className="fw-bold small text-muted">EMAIL ADDRESS</Form.Label>
+                                    <Form.Control 
+                                        type="email" 
+                                        name="email" 
+                                        value={formData.email} 
+                                        onChange={handleChange} 
+                                        placeholder="name@example.com" 
+                                        required 
+                                        className="form-control-lg"
+                                    />
+                                </Col>
+                            </Row>
+
+                            <Form.Group className="mb-4">
+                                <Form.Label className="fw-bold small text-muted">YOUR MESSAGE</Form.Label>
+                                <Form.Control 
+                                    as="textarea" 
+                                    rows={5} 
+                                    name="review" 
+                                    value={formData.review} 
+                                    onChange={handleChange} 
+                                    placeholder="How can we help you?" 
+                                    required 
+                                />
+                            </Form.Group>
+
+                            <Button 
+                                variant="primary" 
+                                type="submit" 
+                                size="lg" 
+                                className="w-100 fw-bold"
+                                disabled={status === "submitting"}
+                            >
+                                {status === "submitting" ? (
+                                    <><Spinner as="span" animation="border" size="sm" className="me-2"/> Sending...</>
+                                ) : (
+                                    "Send Message"
+                                )}
+                            </Button>
+                        </Form>
+                    </Card.Body>
+                </Card>
+            </Col>
+
+            <Col lg={5}>
+                <div className="ps-lg-4">
+                    <h3 className="fw-bold mb-4 text-dark">Contact Information</h3>
+                    <p className="text-muted mb-4">
+                        Have questions about admissions, research, or campus life? 
+                        Feel free to reach out to us directly.
+                    </p>
+
+                    <div className="d-flex mb-4">
+                        <div className="icon-box me-3">
+                            <FaMapMarkerAlt className="text-primary" size={24} />
+                        </div>
+                        <div>
+                            <h6 className="fw-bold mb-1">Address</h6>
+                            <p className="text-muted small">
+                                Indian Institute of Engineering Science and Technology,<br/>
+                                Shibpur, Howrah, West Bengal, India
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className="d-flex mb-4">
+                        <div className="icon-box me-3">
+                            <FaPhoneAlt className="text-primary" size={20} />
+                        </div>
+                        <div>
+                            <h6 className="fw-bold mb-1">Phone</h6>
+                            <p className="text-muted small">+91 12345 67890</p>
+                        </div>
+                    </div>
+
+                    <div className="d-flex mb-4">
+                        <div className="icon-box me-3">
+                            <FaEnvelope className="text-primary" size={20} />
+                        </div>
+                        <div>
+                            <h6 className="fw-bold mb-1">Email</h6>
+                            <p className="text-muted small">contacts@iiests.ac.in</p>
+                        </div>
+                    </div>
+
+                    <div className="map-container rounded overflow-hidden shadow-sm mt-4">
+                        <iframe 
+                            title="IIEST Map"
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3684.710404419791!2d88.30678631495923!3d22.55251698519293!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a0279c91a8d2d49%3A0x81dd1637291d8e94!2sIIEST%20Shibpur!5e0!3m2!1sen!2sin!4v1620000000000!5m2!1sen!2sin" 
+                            width="100%" 
+                            height="250" 
+                            style={{ border: 0 }} 
+                            allowFullScreen="" 
+                            loading="lazy">
+                        </iframe>
+                    </div>
+                </div>
+            </Col>
+        </Row>
+      </Container>
+
+      <div className="bg-light py-5 text-center border-top">
+         <Container>
+            <h3 className="fw-bold">Stay Connected</h3>
+            <p className="text-muted mb-4">Follow us for the latest updates, news and achievements.</p>
+            <a href="/register" className="btn btn-outline-primary fw-bold px-4 rounded-pill">
+                Register Now
+            </a>
+         </Container>
+      </div>
+
+      <Footer />
     </>
   );
- 
-
 }
 
-export default ContactPage
+export default ContactPage;

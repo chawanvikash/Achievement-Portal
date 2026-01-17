@@ -4,11 +4,8 @@ import { Container, Row, Col, Card, Button, Badge ,Spinner} from 'react-bootstra
 import { LinkContainer } from 'react-router-bootstrap';
 import { Link } from 'react-router-dom';
 import { FaTrophy, FaUser, FaCalendarAlt, FaArrowRight } from 'react-icons/fa';
-
-
 import NavBar from '../includes/NavBar';
 import Footer from '../includes/Footer';
-
 
 import photo from "../assets/icon.jpg"; 
 import '../css/HomePage.css';
@@ -47,9 +44,9 @@ function HomePage() {
   return (
     <>
       <NavBar/>
-      
+    
       <div className='homepage'>
-        
+
        
         <section className="hero">
           <div className="overview text-center py-5 text-white" >
@@ -57,7 +54,7 @@ function HomePage() {
             <p className="lead">Celebrating excellence in academics, research, innovation, and culture at IIEST Shibpur.</p>
           </div>
         </section>
-
+        
        
         <section className="content py-5">
           <Container>
@@ -66,7 +63,7 @@ function HomePage() {
               <Col md={4}>
                 <Card className="h-100 text-center p-4 border-0 shadow-sm highlight-card">
                   <Card.Body>
-                    <div className="icon-wrapper mb-3 text-primary display-4">
+                    <div className="icon-wrapper text-primary mb-3 display-4" id='icon1'>
                        <FaTrophy />
                     </div>
                     <h3>Academic Excellence</h3>
@@ -77,7 +74,7 @@ function HomePage() {
               <Col md={4}>
                 <Card className="h-100 text-center p-4 border-0 shadow-sm highlight-card">
                   <Card.Body>
-                    <div className="icon-wrapper mb-3 text-primary display-4">
+                    <div className="icon-wrapper text-success mb-3 display-4" id='icon2'>
                         <FaTrophy /> 
                     </div>
                     <h3>Research & Innovation</h3>
@@ -88,7 +85,7 @@ function HomePage() {
               <Col md={4}>
                 <Card className="h-100 text-center p-4 border-0 shadow-sm highlight-card">
                   <Card.Body>
-                    <div className="icon-wrapper mb-3 text-primary display-4">
+                    <div className="icon-wrapper mb-3 text-primary display-4" id='icon3'>
                          <FaTrophy />
                     </div>
                     <h3>Global Presence</h3>
@@ -131,7 +128,7 @@ function HomePage() {
                              <FaCalendarAlt className="me-1"/> {new Date(post.createdAt).toLocaleDateString()}
                           </div>
                           
-                          <Card.Title className="fw-bold text-primary">{post.title}</Card.Title>
+                          <Card.Title className="fw-bold text-dark">{post.title}</Card.Title>
                           
                           <Card.Text className="flex-grow-1 text-secondary small">
                             {post.body.length > 100 ? post.body.substring(0, 100) + "..." : post.body}

@@ -2,12 +2,11 @@ import NavBar from '../includes/NavBar';
 import "../css/Achievement.css"
 import React, { useState, useEffect } from 'react';
 import axios from 'axios'; 
-import photo from "../assets/success.avif"
 import { Link } from 'react-router-dom';
-
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Footer from '../includes/Footer';
+import { FaArrowRight, FaCalendarAlt, FaUserCircle } from 'react-icons/fa';
 
 function AcheiveAlumni() {
   

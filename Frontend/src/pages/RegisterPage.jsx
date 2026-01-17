@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import "../css/Register.css";
-import HomeBtn from '../includes/HomeBtn';
 import { useNavigate, Link } from 'react-router-dom'; 
-import { Alert } from 'react-bootstrap';
+import { Alert,Button } from 'react-bootstrap';
+import { FaArrowLeft, FaCalendarAlt, FaUserCircle } from 'react-icons/fa';
+
 
 function RegisterPage() {
   const navigate = useNavigate();
@@ -42,7 +43,12 @@ function RegisterPage() {
 
   return (
     <>
-    <HomeBtn/>
+    <Link to="/" className="text-decoration-none">
+        <Button variant="link" className="text-muted p-0 -mb-4 fw-bold" style={{ textDecoration: 'none' }}>
+          <FaArrowLeft className="me-2" /> Back to Achievements
+        </Button>
+      </Link>
+
     
     <div className="register-container" style={{display: 'flex', justifyContent: 'center', marginTop: '50px'}}>
       <form onSubmit={handleSubmit} className='register-form'>

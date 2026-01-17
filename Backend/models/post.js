@@ -17,8 +17,7 @@ const postSchema = new Schema({
     filename:String,
     url:String,
     
-  },
-  
+  }, 
   user: {
     type: Schema.Types.ObjectId,
     ref: 'User',                 
@@ -34,5 +33,4 @@ const postSchema = new Schema({
 });
 
 const Post = mongoose.model('Post', postSchema);
-
 module.exports=Post;

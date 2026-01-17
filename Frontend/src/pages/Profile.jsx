@@ -4,18 +4,16 @@ import DashAchievement from './DashAchievement';
 import ProfileSidebar from '../includes/ProfileSideBar';
 import { useAuth } from '../context/AuthContext';
 import { Container } from 'react-bootstrap';
-import HomeBtn from '../includes/HomeBtn';
 import DashAdminUser from './DashAdminUser';
-
+import AdminReviews from './AdminReviews';
 import "../css/Profile.css";
+
 
 function Profile(){
     const { user } = useAuth(); 
     return(
         <div className="dashboard-layout">
-            
-           
-            <HomeBtn/>
+    
             <ProfileSidebar/>
 
             <main className="dashboard-main">
@@ -34,6 +32,7 @@ function Profile(){
                             <Route path='/MyAchievement' element={<DashAchievement/>}></Route>
                             <Route path='/pendingUsers' element={<DashAdminUser/>}></Route>
                             <Route path='/pendingAcheivements' element={<DashAchievement/>}></Route>
+                            <Route path='/reviews' element={<AdminReviews/>}></Route>
                         </Routes>
                     </div>
 

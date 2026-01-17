@@ -3,18 +3,14 @@ import axios from 'axios';
 import "../css/Register.css";
 import { useNavigate, Link } from 'react-router-dom'; 
 import { useAuth } from '../context/AuthContext';
-import HomeBtn from '../includes/HomeBtn';
-import { Alert, Spinner } from 'react-bootstrap';
 
+import { Alert, Spinner,Button } from 'react-bootstrap';
+import { FaArrowLeft, FaCalendarAlt, FaUserCircle } from 'react-icons/fa';
 function LoginPage() {
   const { login } = useAuth();
-  const navigate = useNavigate();
-  
+  const navigate = useNavigate(); 
   const [error, setError] = useState(null);
-  
-
-  const [loading, setLoading] = useState(false); 
-  
+  const [loading, setLoading] = useState(false);  
   const [formData, setFormData] = useState({
     email: '',
     password: '',  
@@ -70,7 +66,12 @@ function LoginPage() {
 
   return (
     <>
-      <HomeBtn />
+      <Link to="/" className="text-decoration-none">
+        <Button variant="link" className="text-muted p-0 mb-4 fw-bold" style={{ textDecoration: 'none' }}>
+          <FaArrowLeft className="me-2" /> Back to Achievements
+        </Button>
+      </Link>
+
       
     
       {error && (

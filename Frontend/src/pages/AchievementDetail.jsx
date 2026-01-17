@@ -4,7 +4,7 @@ import axios from 'axios';
 import { Container, Button, Badge, Row, Col, Spinner, Alert } from 'react-bootstrap';
 import { FaArrowLeft, FaCalendarAlt, FaUserCircle } from 'react-icons/fa';
 
-import photo from "../assets/succes.avif"; 
+import photo from "../assets/success.avif"; 
 import Footer from "../includes/Footer.jsx"
 
 function AchievementDetail() {
@@ -124,10 +124,11 @@ function AchievementDetail() {
         <Col md={9} className="ps-md-4">
              <p className="lead text-dark" style={{ lineHeight: '1.8', whiteSpace: 'pre-wrap', fontSize: '1.15rem' }}>
                
-                 <span style={{ float: 'left', fontSize: '3.5rem', lineHeight: '0.8', paddingRight: '10px', fontWeight: 'bold' }}>
+                 <span style={{ float: 'left', fontSize: '3.5rem', lineHeight: '0.8', paddingRight: '1px', fontWeight: 'bold' }}>
                     {post.body.charAt(0)}
                  </span>
-                 {post.body.substring(1)}
+                 <span>{post.body.substring(1)}</span>
+                 
              </p>
         </Col>
       </Row>

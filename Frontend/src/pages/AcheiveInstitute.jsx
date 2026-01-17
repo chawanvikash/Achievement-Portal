@@ -1,13 +1,14 @@
 import NavBar from '../includes/NavBar';
 import "../css/Achievement.css"
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios'; 
 import Footer from '../includes/Footer';
-import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import { FaTrophy, FaUser, FaCalendarAlt, FaArrowRight } from 'react-icons/fa';
 
-function AcheiveFaculty() {
+function AcheiveInstitute() {
   
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -17,11 +18,12 @@ function AcheiveFaculty() {
   useEffect(() => { 
     const fetchPosts = async () => {
       try {  
-        const response = await axios.get( url+'/api/AcheivementFaculty');
+        const response = await axios.get( url+'/api/AcheivementInstitute');
         setPosts(response.data);
         console.log(response);
         
-      }catch (err) {  
+      }catch (err) {
+        
         setError(err.message);
       } finally {
        
@@ -46,22 +48,26 @@ function AcheiveFaculty() {
     <>
 
      <NavBar/>
-     {posts.length===0 ? (<p className='noPost'><i class="fa-chisel fa-regular fa-alarm-clock"></i> &nbsp; No post available Yet!</p>) :
-      <div className="posts">
+     {posts.length===0 ? (<p className='noPost'><i class="fa-chisel fa-regular fa-alarm-clock"></i> &nbsp; Posts are not Published Yet!</p>) :
       
+      <div className="posts">
         {posts.map(post => (
-          <Card style={{ width: '18rem' }}  className='cards'>
+          
+          <Card style={{ width: '18rem' }}  className='cards '>
             
               <Card.Body>
               <Card.Title><h3>{post.title}</h3></Card.Title>
-
-              <Card.Img variant="top" src={post.image.url}  className='success' />
-              <p className='role'>-{post.user.role}</p>
+              <Card.Img variant="top" src={post.image.url}  className='success'/>
+            
+             <p className='role'>-{post.user.role}</p>
               <Card.Text>
                 <div key={post._id} className="post" >
+                  <div className='name'>
+                     <p><FaUser className='icon'/> &nbsp;{post.user.username}</p>
+                  </div>
                   
-                  <h4 className='name'>{post.user.username}</h4>
-                  <p className='desp'>{post.body}</p>
+                  
+                  <p className='desp'>{post.body.substring(0,100)}...</p>
 
                 </div>
               </Card.Text>
@@ -71,18 +77,20 @@ function AcheiveFaculty() {
            </Button>
         </Link>
             
-            
-             Posted on: {new Date(post.createdAt).toLocaleDateString()}
+            <br />
+            Posted on: {new Date(post.createdAt).toLocaleDateString()}
           </Card.Body>
     </Card>
+    
 
           
         ))}
-      </div>
+        </div>
 }<Footer/>
+      
       </>
     
   );
 }
 
-export default AcheiveFaculty
+export default AcheiveInstitute;

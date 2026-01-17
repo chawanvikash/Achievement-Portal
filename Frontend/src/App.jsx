@@ -14,11 +14,13 @@ import Profile from './pages/Profile';
 import AcheiveAlumni from './pages/AcheiveAlumni';
 import AcheiveFaculty from './pages/AcheiveFaculty';
 import AcheiveStudents from './pages/AcheiveStudents';
+import AcheiveInstitute from './pages/AcheiveInstitute';
 import DashAdminUser from './pages/DashAdminUser';
 import DashAdminAcheivements from './pages/DashAdminAcheivements';
 import VerifyEmailPage from './pages/VerifyEmailPage';
 
 import AchievementDetail from './pages/AchievementDetail';
+import AdminReviews from './pages/AdminReviews';
 
 function App() {
   return (
@@ -37,11 +39,13 @@ function App() {
         <Route path="/achievements/faculty" element={<AcheiveFaculty />} />
         <Route path="/achievements/students" element={<AcheiveStudents />} />
         <Route path="/achievements/alumni" element={<AcheiveAlumni />} />
+        <Route path="/achievements/Institute" element={<AcheiveInstitute />} />
         <Route path="/achievements/:id" element={<AchievementDetail />} />
         <Route path="/dashboard/*" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
         <Route path="/MyAchievement" element={<DashAchievement />} />
         <Route path="/pendingUsers" element={<DashAdminUser />} />
         <Route path="/pendingAcheivements" element={<DashAdminAcheivements />} />
+        <Route path="/reviews" element={<AdminReviews />} />
         <Route path="/verify-email" element={<VerifyEmailPage />} />
 
 

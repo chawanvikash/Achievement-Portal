@@ -3,8 +3,6 @@ import axios from 'axios';
 import { Container, Row, Col, Card, Button, Spinner, Alert, Badge } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import ProfileSidebar from '../includes/ProfileSideBar';
-import HomeBtn from '../includes/HomeBtn';
-// Use the same CSS as the user dashboard for consistency
 import "../css/Achievement.css"; 
 
 function DashAdminAcheivements() {
@@ -17,7 +15,6 @@ function DashAdminAcheivements() {
   useEffect(() => { 
     const fetchPosts = async () => {
       try {  
-        // Fetch all posts where isApproved is false
         const response = await axios.get(url + '/api/admin/pending-achievements');
         setAchieves(response.data);
       } catch (err) {
@@ -34,17 +31,10 @@ function DashAdminAcheivements() {
     try {
       setError(null);
       setSuccessMessage(null);
-
-      const response = await axios.put(url + `/api/admin/achievements/${postId}/approve`);
-      
-     
-      setAchieves(prevAchieves => prevAchieves.filter(post => post._id !== postId));
-      
+      const response = await axios.put(url + `/api/admin/achievements/${postId}/approve`);           
+      setAchieves(prevAchieves => prevAchieves.filter(post => post._id !== postId));      
       setSuccessMessage(response.data.message);
-      
-
       setTimeout(() => setSuccessMessage(null), 3000);
-
     } catch (err) {
       setError(err.response?.data?.error || "Failed to approve achievement.");
     }
@@ -56,9 +46,7 @@ function DashAdminAcheivements() {
     try {
       setError(null);
       setSuccessMessage(null);
-
-      setAchieves(prevAchieves => prevAchieves.filter(post => post._id !== postId));
-      
+      setAchieves(prevAchieves => prevAchieves.filter(post => post._id !== postId));      
       setSuccessMessage("Achievement rejected and removed.");
       setTimeout(() => setSuccessMessage(null), 3000);
 
@@ -78,10 +66,9 @@ function DashAdminAcheivements() {
 
   return (
     <div className="dashboard-wrapper">
-      <ProfileSidebar/>
-      <HomeBtn/>
+      <ProfileSidebar/>     
       
-      <div style={{ marginLeft: '260px', padding: '20px', width: 'calc(100% - 260px)' }}>
+      <div style={{ marginLeft: '26px', padding: '20px', }}>
         <Container fluid>
 
 

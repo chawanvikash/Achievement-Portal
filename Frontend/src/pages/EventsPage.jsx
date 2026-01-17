@@ -44,10 +44,6 @@ function EventsPage(){
      <>
      <NavBar/>
      
-
-        
-     
-
       <section className="event">
         <div className="overview">
           <h1>Events and Fests</h1>

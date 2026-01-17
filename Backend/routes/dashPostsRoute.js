@@ -1,9 +1,7 @@
 const router = require('express').Router();
-
 const multer  = require('multer');
 const {storage}=require("../cloudConfig.js");
 const upload = multer({ storage })
-
 const Post  = require('../models/post.js');
 const { isVerified,isLoggedIn } = require('../utils/middleware');
 const wrapAsync = require('../utils/wrapAsync');
@@ -18,8 +16,7 @@ router.get('/myposts', isLoggedIn,isVerified, wrapAsync(async (req, res) => {
 }));
 
 router.post('/posts', isLoggedIn,isVerified,upload.single('image'), wrapAsync(async (req, res) => {
-  const { title, body } = req.body;
-  
+  const { title, body } = req.body; 
   if (!title || !body) {
     throw new ExpressError(400, "Title and body are required.");
   }
@@ -48,7 +45,6 @@ router.post('/posts', isLoggedIn,isVerified,upload.single('image'), wrapAsync(as
 router.put('/posts/:postId', isLoggedIn,isVerified,upload.single('image'), wrapAsync(async (req, res) => {
   const { postId } = req.params;
   const { title, body } = req.body;
-
   const post = await Post.findById(postId);
   if (!post) throw new ExpressError(404, "Post not found.");
   if (!post.user.equals(req.user._id)) {
@@ -60,10 +56,8 @@ router.put('/posts/:postId', isLoggedIn,isVerified,upload.single('image'), wrapA
     }
     else{
         post.isVerified=false;
-    }
-    
-  }
- 
+    }    
+  } 
   post.title = title;
   post.body = body;
   if(req.file){
@@ -74,20 +68,17 @@ router.put('/posts/:postId', isLoggedIn,isVerified,upload.single('image'), wrapA
   
   await post.save();
   await post.populate('user', 'username');
-
   res.json(post);
 }));
 
 
 router.delete('/posts/:postId', isLoggedIn,isVerified, wrapAsync(async (req, res) => {
   const { postId } = req.params;
-
   const post = await Post.findById(postId);
   if (!post) throw new ExpressError(404, "Post not found.");
   if (!post.user.equals(req.user._id)) {
     throw new ExpressError(403, "You are not authorized to delete this post.");
   }
-
   await Post.findByIdAndDelete(postId);
   res.json({ message: "Post deleted successfully." });
 }));

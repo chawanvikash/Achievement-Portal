@@ -28,13 +28,12 @@ export default function NavBar() {
           <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end" style={{ backgroundColor: '#ffffff' }}>
             <Nav className="me-auto">
               <Nav.Link as={Link} to="/">Home</Nav.Link>
-              <Nav.Link as={Link} to="/events">Events</Nav.Link>
-              <Nav.Link as={Link} to="/alumni">Alumni</Nav.Link>
-
+              
               <NavDropdown title="Achievements" id="basic-nav-dropdown">
                 <NavDropdown.Item as={Link} to="/achievements/students">Students</NavDropdown.Item>
                 <NavDropdown.Item as={Link} to="/achievements/faculty">Faculties</NavDropdown.Item>
                 <NavDropdown.Item as={Link} to="/achievements/alumni">Alumni</NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/achievements/Institute">Institute</NavDropdown.Item>
               </NavDropdown>
               
               <Nav.Link as={Link} to="/contacts">Contacts</Nav.Link>

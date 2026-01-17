@@ -4,7 +4,6 @@ import axios from 'axios';
 import { Container, Row, Col, Card, Form, Button, Modal, Spinner, Alert } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import ProfileSidebar from '../includes/ProfileSideBar';
-import HomeBtn from '../includes/HomeBtn';
 
 
 function DashAdminUser() {
@@ -69,7 +68,6 @@ function DashAdminUser() {
 
   return (
     <div>
-      <HomeBtn/>
     <Container className="pending-user-container ">
 
 

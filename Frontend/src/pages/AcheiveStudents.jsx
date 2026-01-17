@@ -3,9 +3,7 @@ import "../css/Achievement.css"
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios'; 
-import photo from "../assets/success.avif"
 import Footer from '../includes/Footer';
-
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { FaTrophy, FaUser, FaCalendarAlt, FaArrowRight } from 'react-icons/fa';

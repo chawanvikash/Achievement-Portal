@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import { Container, Row, Col, Card, Form, Button, Modal, Spinner, Alert } from 'react-bootstrap';
-import { FaEdit, FaTrash, FaPlus, FaCheckCircle, FaClock, FaImage } from 'react-icons/fa';
-import HomeBtn from '../includes/HomeBtn';
+import { Link } from 'react-router-dom';
+import { FaEdit, FaTrash, FaPlus, FaCheckCircle, FaClock, FaImage ,FaArrowLeft} from 'react-icons/fa';
 import ProfileSidebar from '../includes/ProfileSideBar';
 import "../css/AddAcheive.css"; 
 
@@ -11,6 +11,7 @@ function DashAchievement() {
   const { user } = useAuth(); 
   const [myPosts, setMyPosts] = useState([]);
   const [loading, setLoading] = useState(true);
+  
   const [error, setError] = useState(null);
   
   
@@ -63,6 +64,8 @@ function DashAchievement() {
     } catch (err) {
       console.error(err);
       setError(err.response?.data?.error || "Error creating post");
+    } finally{
+      
     }
   };
 
@@ -120,7 +123,6 @@ function DashAchievement() {
       <ProfileSidebar />
 
       <div className="main-content">
-        <HomeBtn />
         
         <Container fluid="md" className="py-4">
 
