@@ -56,14 +56,16 @@ async function main() {
 const sessionOptions = {
   secret: process.env.SESSION_SECRET,
   resave: false,
-  saveUninitialized: true,
+  saveUninitialized: false, // Changed to false for better security with passport
   cookie: {
     expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
     maxAge: 7 * 24 * 60 * 60 * 1000,
     httpOnly: true,
+    sameSite: "none", // Required for cross-site cookies
+    secure: true,     // Required when sameSite is "none"
   },
 };
-
+app.set("trust proxy", 1);
 app.use(session(sessionOptions));
 app.use(passport.initialize());
 app.use(passport.session());
