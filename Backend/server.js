@@ -54,7 +54,7 @@ main()
 async function main() {
   await mongoose.connect(process.env.DATABASE_URL);
 };
-app.set("trust proxy", 1);
+
 const sessionOptions = {
   secret: process.env.SESSION_SECRET,
   resave: false,
@@ -67,6 +67,7 @@ const sessionOptions = {
     secure: true,     // Required when sameSite is "none"
   },
 };
+app.set("trust proxy", 1);
 app.use(session(sessionOptions));
 app.use(passport.initialize());
 app.use(passport.session());
