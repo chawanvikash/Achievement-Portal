@@ -18,9 +18,9 @@ function VerifyEmailPage() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post(url+`/api/verify-otp`, { email: emailFromRegister, otp });
+            await axios.post(url+`/api/verify-otp`, { email: emailFromRegister, otp },{ withCredentials: true });
             setSuccess("Email Verified Successfully! Redirecting to Login...");
-            setTimeout(() => navigate('/dashboard'), 2000);
+            setTimeout(() => navigate('/login'), 2000);
         } catch (err) {
             setError(err.response?.data?.error || "Verification failed.");
         }
