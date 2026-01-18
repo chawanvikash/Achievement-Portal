@@ -24,19 +24,23 @@ const dashPostsRoute = require("./routes/dashPostsRoute");
 
 const sendOTP = require('./utils/email.js'); 
 const allowedOrigins = [
-  "http://localhost:5173",                          
-  "https://achievement-portal.vercel.app"          
+  "http://localhost:5173", 
+  "https://achievement-portal.vercel.app",
+  "https://achievement-portal-three.vercel.app", // Added based on your logs
+  "https://achievement-portal-gden.vercel.app"  // Common Vercel pattern
 ];
 
 app.use(cors({
   origin: function (origin, callback) {
-    // allow requests with no origin (like mobile apps or curl requests)
     if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) === -1) {
-      var msg = 'The CORS policy for this site does not allow access from the specified Origin.';
-      return callback(new Error(msg), false);
+    // Use .includes() for cleaner check
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    } else {
+      // Log the blocked origin to your Render console so you can see what to add next
+      console.log("Blocked by CORS:", origin); 
+      return callback(new Error('CORS policy block'), false);
     }
-    return callback(null, true);
   },
   credentials: true
 }));
