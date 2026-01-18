@@ -1,6 +1,7 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { Container, Spinner } from 'react-bootstrap'; 
+import { BASE_URL } from '../helper';
 
 
 const AuthContext = createContext(null);
@@ -9,7 +10,7 @@ const AuthContext = createContext(null);
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true); 
-  const url="http://localhost:8080"
+  const url=BASE_URL;
 
   
   useEffect(() => {
