@@ -25,9 +25,7 @@ const dashPostsRoute = require("./routes/dashPostsRoute");
 const sendOTP = require('./utils/email.js'); 
 const allowedOrigins = [
   "http://localhost:5173", 
-  "https://achievement-portal.vercel.app",
-  "https://achievement-portal-three.vercel.app", // Added based on your logs
-  "https://achievement-portal-gden.vercel.app"  // Common Vercel pattern
+  "https://achievement-portal.vercel.app"
 ];
 
 app.use(cors({
