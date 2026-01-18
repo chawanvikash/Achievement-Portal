@@ -23,7 +23,7 @@ export default function NavBar() {
               style={{ width: '40px', height: '40px', objectFit: 'contain' }}
             />
           </Navbar.Brand>        
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Toggle aria-controls="basic-navbar-nav" className='nav-toggle'/>
           <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end" style={{ backgroundColor: '#ffffff' }}>
             <Nav className="me-auto">
               <Nav.Link as={Link} to="/">Home</Nav.Link>
