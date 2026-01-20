@@ -20,7 +20,7 @@ function VerifyEmailPage() {
         try {
             await axios.post(url+`/api/verify-otp`, { email: emailFromRegister, otp },{ withCredentials: true });
             setSuccess("Email Verified Successfully! Redirecting to Login...");
-            setTimeout(() => navigate('/login'), 2000);
+            setTimeout(() => navigate('/dashboard'), 1500);
         } catch (err) {
             setError(err.response?.data?.error || "Verification failed.");
         }
