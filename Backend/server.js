@@ -207,7 +207,7 @@ app.post("/api/register", wrapAsync(async (req, res, next) => {
   else if(role === 'student' || role==='faculty'){
     const officialDomain = ".iiests.ac.in";    
       if (!email || !email.endsWith(officialDomain)) {  
-        throw new ExpressError(400, `Registration denied. You must use an official email address ending in ${officialDomain}`);
+        throw new ExpressError(400, `Registration denied. You must use an official email address`);
       }
   
     isAccountApproved = true; 
