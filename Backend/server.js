@@ -1,7 +1,7 @@
 if (process.env.NODE_ENV !== "production") {
     require('dotenv').config();
 }
-
+const MongoStore = require('connect-mongo');
 const express = require("express");
 const app = express();
 const port= process.env.PORT || 8080 ;
@@ -55,17 +55,30 @@ async function main() {
   await mongoose.connect(process.env.DATABASE_URL);
 };
 
+const store = MongoStore.create({
+    mongoUrl: process.env.DATABASE_URL,
+    crypto: {
+        secret: process.env.SESSION_SECRET
+    },
+    touchAfter: 24 * 3600 // Only update session once every 24 hours unless data changes
+});
+
+store.on("error", function(e) {
+    console.log("SESSION STORE ERROR", e);
+});
+
 const sessionOptions = {
-  secret: process.env.SESSION_SECRET,
-  resave: false,
-  saveUninitialized: false,
-  cookie: {
-    expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
-    maxAge: 7 * 24 * 60 * 60 * 1000,
-    httpOnly: true,
-    sameSite: "none", // Required for Vercel -> Render communication
-    secure: true,     // Required when sameSite is "none"
-  },
+    store: store, // Add the store here
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+        httpOnly: true,
+        sameSite: "none", 
+        secure: true,     
+    },
 };
 app.set("trust proxy", 1);
 app.use(session(sessionOptions));
