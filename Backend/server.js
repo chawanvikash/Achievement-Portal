@@ -1,7 +1,7 @@
 if (process.env.NODE_ENV !== "production") {
     require('dotenv').config();
 }
-const MongoStore = require('connect-mongo');
+
 const express = require("express");
 const app = express();
 const port= process.env.PORT || 8080 ;
@@ -55,20 +55,7 @@ async function main() {
   await mongoose.connect(process.env.DATABASE_URL);
 };
 
-const store = MongoStore.create({
-    mongoUrl: process.env.DATABASE_URL,
-    crypto: {
-        secret: process.env.SESSION_SECRET
-    },
-    touchAfter: 24 * 3600 // Only update session once every 24 hours unless data changes
-});
-
-store.on("error", function(e) {
-    console.log("SESSION STORE ERROR", e);
-});
-
 const sessionOptions = {
-    store: store, // Add the store here
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
