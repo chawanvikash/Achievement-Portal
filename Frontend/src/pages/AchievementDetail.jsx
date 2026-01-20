@@ -104,7 +104,6 @@ function AchievementDetail() {
                     <FaUserCircle className="text-secondary" size={45} />
                     <div>
                         <h5 className="fw-bold m-0 text-dark">{post.user?.username}</h5>
-                        <small className="text-muted super-text">{post.user?.email}</small>
                     </div>
                 </div>
             </div>

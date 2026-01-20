@@ -2,10 +2,8 @@ const brevo = require('@getbrevo/brevo');
 
 const sendOTP = async (email, otp) => {
     try {
-        // Correct initialization for @getbrevo/brevo v3.x
         let apiInstance = new brevo.TransactionalEmailsApi();
 
-        // Set the API Key using the specialized ApiKey object
         apiInstance.setApiKey(
             brevo.TransactionalEmailsApiApiKeys.apiKey, 
             process.env.BREVO_API_KEY
@@ -23,14 +21,13 @@ const sendOTP = async (email, otp) => {
             </div>
         `;
         
-        // IMPORTANT: The 'email' here must be your verified Brevo sender
+
         sendSmtpEmail.sender = { "name": "IIEST Portal", "email": process.env.EMAIL_USER };
         sendSmtpEmail.to = [{ "email": email }];
 
         const data = await apiInstance.sendTransacEmail(sendSmtpEmail);
         console.log(`OTP sent successfully via Brevo API. Message ID: ${data.body.messageId}`);
     } catch (error) {
-        // Log detailed error from Brevo if the request fails
         console.error("Brevo API Error Details:", error.response ? error.response.body : error.message);
         throw new Error("Email sending failed via Brevo API.");
     }
