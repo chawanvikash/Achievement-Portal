@@ -10,6 +10,7 @@ const path = require("path");
 const mongoose = require('mongoose');
 const cors = require("cors");
 const session = require("express-session");
+const MongoStore = require("connect-mongo");
 const passport = require("passport");
 const localStrategy = require("passport-local");
 
@@ -55,17 +56,28 @@ async function main() {
   await mongoose.connect(process.env.DATABASE_URL);
 };
 
-const sessionOptions = {
+const store = MongoStore.create({
+  mongoUrl: process.env.DATABASE_URL,
+  crypto: {
     secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-        expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
-        maxAge: 7 * 24 * 60 * 60 * 1000,
-        httpOnly: true,
-        sameSite: "none", 
-        secure: true,     
-    },
+  },
+  touchAfter: 24 * 3600, 
+});
+
+store.on("error", (err) => console.log("SESSION STORE ERROR", err));
+
+const sessionOptions = {
+  store: store, // This links your sessions to your MongoDB database
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+    httpOnly: true,
+    sameSite: "none", 
+    secure: true,    
+  },
 };
 app.set("trust proxy", 1);
 app.use(session(sessionOptions));
