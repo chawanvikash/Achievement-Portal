@@ -257,14 +257,14 @@ app.post('/api/verify-otp', wrapAsync(async (req, res, next) => {
                     role: user.role, 
                     email: user.email 
                 },
-                redirect: "/dashboard"
+                redirect: "/dashboard/*"
             });
         });
     } 
 
     else {
         res.status(200).json({ 
-            message: "Email verified! Please wait for Faculty Admin approval.",
+            message: "Email verified! Please wait for Admin approval.",
             redirect: "/login"
         });
     }
