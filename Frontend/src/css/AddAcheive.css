@@ -6,7 +6,6 @@
   background-color: #f8f9fa; 
   font-family: 'Inter', 'Segoe UI', sans-serif;
   width: 100%;
-  overflow-x: hidden;
 }
 
 .main-content {
@@ -16,6 +15,7 @@
   padding-left: 0;
   transition: padding-left 0.3s ease;
   box-sizing: border-box;
+  min-width: 0;
   
   
   
@@ -25,7 +25,6 @@
 @media (min-width: 768px) {
   .main-content {
     padding-left: 240px; 
-    width: 100%;
   }
 }
 
@@ -45,8 +44,7 @@
   background: #ffffff;
   border-radius: 12px;
   overflow: hidden;
-  width: 100%;
-  min-width: 300px; 
+  width: 100%; 
 }
 
 .create-post-card .form-control-lg {
@@ -75,8 +73,11 @@
   background-color: #ffffff;
   
   width: 100%;
-  min-width: 450px; 
   height: 100%; 
+}
+.achievement-card img{
+  max-width: 100%;
+  height: auto;
 }
 
 .achievement-card:hover {
