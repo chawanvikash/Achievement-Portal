@@ -32,10 +32,13 @@ app.use(cors({
   origin: function (origin, callback) {
     if (!origin) return callback(null, true);
 
-    if (allowedOrigins.includes(origin)) {
+    const isAllowed = allowedOrigins.includes(origin);
+
+    const isVercelPreview = origin.endsWith(".vercel.app");
+
+    if (isAllowed || isVercelPreview) {
       return callback(null, true);
     } else {
- 
       console.log("Blocked by CORS:", origin); 
       return callback(new Error('CORS policy block'), false);
     }
