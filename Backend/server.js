@@ -10,7 +10,6 @@ const path = require("path");
 const mongoose = require('mongoose');
 const cors = require("cors");
 const session = require("express-session");
-const MongoStore = require("connect-mongo");
 const passport = require("passport");
 const localStrategy = require("passport-local");
 
@@ -32,11 +31,11 @@ const allowedOrigins = [
 app.use(cors({
   origin: function (origin, callback) {
     if (!origin) return callback(null, true);
-    // Use .includes() for cleaner check
+
     if (allowedOrigins.includes(origin)) {
       return callback(null, true);
     } else {
-      // Log the blocked origin to your Render console so you can see what to add next
+ 
       console.log("Blocked by CORS:", origin); 
       return callback(new Error('CORS policy block'), false);
     }
@@ -56,18 +55,8 @@ async function main() {
   await mongoose.connect(process.env.DATABASE_URL);
 };
 
-const store = MongoStore.create({
-  mongoUrl: process.env.DATABASE_URL,
-  crypto: {
-    secret: process.env.SESSION_SECRET,
-  },
-  touchAfter: 24 * 3600, 
-});
-
-store.on("error", (err) => console.log("SESSION STORE ERROR", err));
 
 const sessionOptions = {
-  store: store, // This links your sessions to your MongoDB database
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
