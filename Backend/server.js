@@ -260,8 +260,8 @@ app.post('/api/verify-otp', wrapAsync(async (req, res, next) => {
                     username: user.username, 
                     role: user.role, 
                     email: user.email 
-                },
-                redirect: "/dashboard/*"
+                }
+
             });
         });
     } 

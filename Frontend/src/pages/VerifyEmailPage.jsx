@@ -60,7 +60,7 @@ function VerifyEmailPage() {
                                 onChange={(e) => setOtp(e.target.value)}
                                 maxLength="6"
                                 className="text-center fs-4"
-                                style={{ letterSpacing: '0.5rem' }} 
+                                style={{ letterSpacing: '0.3rem' }} 
                                 required
                                 disabled={loading} 
                             />

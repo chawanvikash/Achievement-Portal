@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import "../css/Register.css";
 import { useNavigate, Link } from 'react-router-dom'; 
-import { Alert,Button } from 'react-bootstrap';
+import { Alert,Button, Container, Card, Form, Spinner } from 'react-bootstrap';
 import { FaArrowLeft, FaCalendarAlt, FaUserCircle } from 'react-icons/fa';
 import { BASE_URL } from '../helper';
 
@@ -10,6 +10,7 @@ import { BASE_URL } from '../helper';
 function RegisterPage() {
   const navigate = useNavigate();
   const [error, setError] = useState(null);
+  const [loading,setLoading]=useState(false);
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -25,6 +26,7 @@ function RegisterPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     setError(null);
     try {
       const response=await axios.post(url + '/api/register', formData);
@@ -59,22 +61,22 @@ function RegisterPage() {
         
         <div className="input-group">
             <label htmlFor="ipname">Username</label>
-            <input id='ipname' type="text" name="username" placeholder="Full Name" value={formData.username} onChange={handleChange} required/>
+            <input id='ipname' type="text" name="username" placeholder="Full Name" value={formData.username} onChange={handleChange}  disabled={loading} required/>
         </div>
 
         <div className="input-group">
             <label htmlFor="ipemail">Email Address</label>
-            <input id='ipemail' type="email" name="email" placeholder="Email (use Gsuit id for Student/Faculty)" value={formData.email} onChange={handleChange} required/>
+            <input id='ipemail' type="email" name="email" placeholder="Email (use Gsuit id for Student/Faculty)" value={formData.email} onChange={handleChange} disabled={loading} required/>
         </div>
 
         <div className="input-group">
             <label htmlFor="ippass">Password</label>
-            <input id='ippass' type="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange} required/>
+            <input id='ippass' type="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange} disabled={loading} required/>
         </div>
 
         <div className="input-group">
             <label htmlFor="role-select">Role</label>
-            <select id="role-select" name="role" onChange={handleChange} value={formData.role} className='opts' required>
+            <select id="role-select" name="role" onChange={handleChange} value={formData.role} className='opts' disabled={loading} required>
               <option value="student">Student</option>
               <option value="faculty">Faculty</option>
               <option value="alumni">Alumni</option>
@@ -82,7 +84,14 @@ function RegisterPage() {
             </select>
         </div>
 
-        <button type="submit" className='sub-btn'>Register</button>
+        <button type="submit" className='sub-btn' disabled={loading}>
+          {loading ? (
+                      <>
+                      <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" className="me-2"/>
+                      Wait...
+                      </>
+                      ) : ("Register")
+          }</button>
         
         <br />
         <div style={{marginTop: '15px', textAlign: 'center'}}>
