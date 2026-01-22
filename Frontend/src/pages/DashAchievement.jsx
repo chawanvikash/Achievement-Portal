@@ -13,7 +13,7 @@ function DashAchievement() {
   const { user } = useAuth(); 
   const [myPosts, setMyPosts] = useState([]);
   const [loading, setLoading] = useState(true);
-  
+  const [load,setLoad]=useState(false);
   const [error, setError] = useState(null);
   
   
@@ -44,6 +44,7 @@ function DashAchievement() {
 
   const handleCreatePost = async (e) => {
     e.preventDefault();
+    setLoad(true);
     setError(null);
     
     const formData = new FormData();
@@ -150,6 +151,7 @@ function DashAchievement() {
                     className="form-control-lg"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
+                    disabled={load}
                     required
                   />
                 </Form.Group>
@@ -162,6 +164,7 @@ function DashAchievement() {
                     className="form-control-light"
                     value={body}
                     onChange={(e) => setBody(e.target.value)}
+                    disabled={load}
                     required
                   />
                 </Form.Group>
@@ -172,12 +175,22 @@ function DashAchievement() {
                         type="file" 
                         accept="image/*"
                         onChange={(e) => setImage(e.target.files[0])}
+                        disabled={load}
                     />
                 </Form.Group>
 
                 <div className="d-flex justify-content-end">
-                  <Button variant="primary" type="submit" className="px-4 fw-bold">
-                    <FaPlus className="me-2" /> Post Achievement
+                  <Button variant="primary" type="submit" className="px-4 fw-bold" disabled={load}>
+                    {load ? (
+                                <>
+                                <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" className="me-2"/>
+                                Please Wait..
+                                </>
+                                ) :
+                                <><FaPlus className="me-2" /> Post Achievement
+                                </>
+                              }
+                    
                   </Button>
                 </div>
               </Form>
