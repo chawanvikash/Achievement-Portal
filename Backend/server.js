@@ -10,6 +10,7 @@ const path = require("path");
 const mongoose = require('mongoose');
 const cors = require("cors");
 const session = require("express-session");
+const MongoStore = require('connect-mongo');
 const passport = require("passport");
 const localStrategy = require("passport-local");
 
@@ -58,8 +59,22 @@ async function main() {
   await mongoose.connect(process.env.DATABASE_URL);
 };
 
+const store = MongoStore.create({
+  mongoUrl: process.env.DATABASE_URL,
+  mongoOptions: {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  },
+  ttl: 14 * 24 * 60 * 60, // session TTL in seconds (14 days)
+  autoRemove: 'native',   // let MongoDB remove expired sessions
+  crypto: {
+    secret: process.env.SESSION_SECRET // optional encryption of session data
+  }
+});
 
 const sessionOptions = {
+  store,
+  name: 'sid',
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
