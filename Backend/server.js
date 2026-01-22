@@ -10,7 +10,7 @@ const path = require("path");
 const mongoose = require('mongoose');
 const cors = require("cors");
 const session = require("express-session");
-const MongoStore = require('connect-mongo');
+const MongoStore = require('connect-mongo').default;
 const passport = require("passport");
 const localStrategy = require("passport-local");
 
@@ -61,10 +61,6 @@ async function main() {
 
 const store = MongoStore.create({
   mongoUrl: process.env.DATABASE_URL,
-  mongoOptions: {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  },
   ttl: 14 * 24 * 60 * 60, // session TTL in seconds (14 days)
   autoRemove: 'native',   // let MongoDB remove expired sessions
   crypto: {
@@ -79,13 +75,16 @@ const sessionOptions = {
   resave: false,
   saveUninitialized: false,
   cookie: {
-    expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
     maxAge: 7 * 24 * 60 * 60 * 1000,
     httpOnly: true,
-    sameSite: "none", 
-    secure: true,    
-  },
+    sameSite: "none",
+    secure: process.env.NODE_ENV === "production"
+  }
 };
+
+app.set("trust proxy", 1);
+app.use(session(sessionOptions));
+
 app.set("trust proxy", 1);
 app.use(session(sessionOptions));
 app.use(passport.initialize());
