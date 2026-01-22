@@ -37,6 +37,7 @@ function DashAchievement() {
         setError(err.response?.data?.error || "Error fetching your posts. Are you logged in?");
       }
       setLoading(false);
+      setLoad(false);
     };
     if (user) fetchMyPosts();
   }, [user]); 
