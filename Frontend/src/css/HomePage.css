@@ -47,6 +47,9 @@
     justify-content: space-around;
     padding: 40px;
     background: white;
+    animation: appear linear;
+    animation-timeline: view();
+    animation-range: entry 0% cover 40%;
 }
 
 
@@ -114,4 +117,14 @@
 .view-all-btn:hover{
      background-color: rgb(130, 188, 71);
      border: 0.5px solid rgb(105, 225, 65);
+}
+@keyframes appear {
+    from{
+        opacity: 0;
+        transform: translate(-100px);
+    }
+    to{
+        opacity: 1;
+        transform: translate(0px);
+    }
 }
