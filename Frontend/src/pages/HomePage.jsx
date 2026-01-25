@@ -115,7 +115,7 @@ function HomePage() {
                   {posts.filter(post => post.user).slice(0, 3).map(post => (
                     
                     <Col key={post._id} md={6} lg={4}>
-                      <Link to={`/achievements/${post._id}`}>
+                      <Link to={`/achievements/${post._id}`} style={{textDecoration:"none"}}>
                       <Card className="h-100 shadow-sm border-0 achievement-card-public">
                        
                         <div className="card-img-wrapper" style={{height: '180px', overflow: 'hidden', backgroundColor: '#eee'}}>
