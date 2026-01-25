@@ -166,11 +166,11 @@ function HomePage() {
           <Container>
             <h2 className="text-center mb-4 fw-bold">Notable Departmental Milestones</h2>
             <ul className="list-group list-group-flush lead">
-              <li className="list-group-item bg-transparent border-0"><span className="fw-bold text-primary">1.</span> Ranked in top 10 engineering research institutes in India (2024).</li>
-              <li className="list-group-item bg-transparent border-0"><span className="fw-bold text-primary">2.</span> Students won national awards in Smart India Hackathon & robotics competitions.</li>
-              <li className="list-group-item bg-transparent border-0"><span className="fw-bold text-primary">3.</span> MoUs signed with MIT, Stanford, and NUS for collaborative research.</li>
-              <li className="list-group-item bg-transparent border-0"><span className="fw-bold text-primary">4.</span> Published 50+ patents and innovations in the past 5 years.</li>
-              <li className="list-group-item bg-transparent border-0"><span className="fw-bold text-primary">5.</span> Excellence in sports & cultural fests at national and international level.</li>
+              <li className="list-group-item bg-transparent border-0" id='list-content'><span className="fw-bold text-primary">1.</span> Ranked in top 10 engineering research institutes in India (2024).</li>
+              <li className="list-group-item bg-transparent border-0" id='list-content'><span className="fw-bold text-primary">2.</span> Students won national awards in Smart India Hackathon & robotics competitions.</li>
+              <li className="list-group-item bg-transparent border-0" id='list-content'><span className="fw-bold text-primary">3.</span> MoUs signed with MIT, Stanford, and NUS for collaborative research.</li>
+              <li className="list-group-item bg-transparent border-0" id='list-content'><span className="fw-bold text-primary">4.</span> Published 50+ patents and innovations in the past 5 years.</li>
+              <li className="list-group-item bg-transparent border-0" id='list-content'><span className="fw-bold text-primary">5.</span> Excellence in sports & cultural fests at national and international level.</li>
             </ul>
           </Container>
         </section>
