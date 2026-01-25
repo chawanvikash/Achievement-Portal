@@ -113,8 +113,9 @@ function HomePage() {
                 <Row className="g-4 verified-posts-grid">
                   
                   {posts.filter(post => post.user).slice(0, 3).map(post => (
-                    <Link to={`/achievements/${post._id}`}>
+                    
                     <Col key={post._id} md={6} lg={4}>
+                      <Link to={`/achievements/${post._id}`}>
                       <Card className="h-100 shadow-sm border-0 achievement-card-public">
                        
                         <div className="card-img-wrapper" style={{height: '180px', overflow: 'hidden', backgroundColor: '#eee'}}>
@@ -141,8 +142,9 @@ function HomePage() {
                           </div>
                         </Card.Body>
                       </Card>
+                      </Link>
                     </Col>
-                    </Link>
+                    
                   ))}
                 </Row>
 
