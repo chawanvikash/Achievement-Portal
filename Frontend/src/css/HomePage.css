@@ -47,6 +47,9 @@
     justify-content: space-around;
     padding: 40px;
     background: white;
+   
+}
+.content-box{
     animation: appear linear;
     animation-timeline: view();
     animation-range: entry 0% cover 40%;

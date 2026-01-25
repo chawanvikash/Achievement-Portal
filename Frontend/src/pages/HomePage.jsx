@@ -61,7 +61,7 @@ function HomePage() {
             <h2 className="text-center mb-5 fw-bold text-dark">Why Join Us?</h2>
             <Row className="g-4">
               <Col md={4}>
-                <Card className="h-100 text-center p-4 border-0 shadow-sm highlight-card">
+                <Card className="h-100 text-center p-4 border-0 shadow-sm highlight-card" id='content-box'>
                   <Card.Body>
                     <div className="icon-wrapper text-primary mb-3 display-4" id='icon1'>
                        <FaTrophy />
@@ -72,7 +72,7 @@ function HomePage() {
                 </Card>
               </Col>
               <Col md={4}>
-                <Card className="h-100 text-center p-4 border-0 shadow-sm highlight-card">
+                <Card className="h-100 text-center p-4 border-0 shadow-sm highlight-card" id='content-box'>
                   <Card.Body>
                     <div className="icon-wrapper text-success mb-3 display-4" id='icon2'>
                         <FaTrophy /> 
@@ -83,7 +83,7 @@ function HomePage() {
                 </Card>
               </Col>
               <Col md={4}>
-                <Card className="h-100 text-center p-4 border-0 shadow-sm highlight-card">
+                <Card className="h-100 text-center p-4 border-0 shadow-sm highlight-card" id='content-box'>
                   <Card.Body>
                     <div className="icon-wrapper mb-3 text-primary display-4" id='icon3'>
                          <FaTrophy />
