@@ -113,6 +113,7 @@ function HomePage() {
                 <Row className="g-4 verified-posts-grid">
                   
                   {posts.filter(post => post.user).slice(0, 3).map(post => (
+                    <Link to={`/achievements/${post._id}`}>
                     <Col key={post._id} md={6} lg={4}>
                       <Card className="h-100 shadow-sm border-0 achievement-card-public">
                        
@@ -141,6 +142,7 @@ function HomePage() {
                         </Card.Body>
                       </Card>
                     </Col>
+                    </Link>
                   ))}
                 </Row>
 
