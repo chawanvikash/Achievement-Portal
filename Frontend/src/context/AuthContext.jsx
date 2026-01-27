@@ -17,7 +17,7 @@ export function AuthProvider({ children }) {
     const checkLoggedIn = async () => {
       try {
   
-        const response = await axios.get(url+'/api/me');
+        const response = await axios.get(url+'/api/me',{ withCredentials: true });
         setUser(response.data.user); 
       } catch (err) {
         
@@ -40,7 +40,7 @@ export function AuthProvider({ children }) {
   
   const logout = async () => {
     try {
-      await axios.post(url+'/api/logout');
+      await axios.post(url+'/api/logout',{},{ withCredentials: true });
       setUser(null);
     
       window.location.href = '/login'; 

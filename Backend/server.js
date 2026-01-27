@@ -10,7 +10,7 @@ const path = require("path");
 const mongoose = require('mongoose');
 const cors = require("cors");
 const session = require("express-session");
-const MongoStore = require('connect-mongo');
+const MongoStore = require('connect-mongo').default;
 const passport = require("passport");
 const localStrategy = require("passport-local");
 
@@ -41,7 +41,8 @@ app.use(cors({
       return callback(null, true);
     } else {
       console.log("Blocked by CORS:", origin); 
-      return callback(new Error('CORS policy block'), false);
+      return callback(null, false);
+
     }
   },
   credentials: true
@@ -59,26 +60,27 @@ async function main() {
   await mongoose.connect(process.env.DATABASE_URL);
 };
 
-const store = new MongoStore({  // Added 'new' and removed '.create'
+const store = MongoStore.create({
     mongoUrl: process.env.DATABASE_URL,
-    ttl: 14 * 24 * 60 * 60,
-    autoRemove: 'native',
     crypto: {
         secret: process.env.SESSION_SECRET
-    }
+    }, // optional: only update session once per day
 });
 app.set("trust proxy", 1);
+
 const sessionOptions = {
-  store: store, // Your MongoStore instance
+  store,
   name: 'sid',
   secret: process.env.SESSION_SECRET,
   resave: false,
-  saveUninitialized: false, // Prevents creating empty sessions for non-logged-in users
+  saveUninitialized: false,
+  rolling: true,
+  proxy: true,
   cookie: {
-    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+    maxAge: 7 * 24 * 60 * 60 * 1000,
     httpOnly: true,
-    sameSite: "none", // REQUIRED for Vercel/Render cross-domain
-    secure: true,     // REQUIRED for sameSite: "none"
+    sameSite: "none",
+    secure: process.env.NODE_ENV === "production",
   }
 };
 store.on("error", function (e) {
@@ -317,10 +319,21 @@ app.post("/api/login", (req, res, next) => {
 });
 
 //for logout
-app.post("/api/logout",(req, res, next) => {
-  req.logout((err) => {
+app.post("/api/logout", (req, res, next) => {
+  req.logout(err => {
     if (err) return next(err);
-    res.status(200).json({ message: "Logout successful!" });
+
+    req.session.destroy(err => {
+      if (err) return next(err);
+
+      res.clearCookie("sid", {
+  sameSite: "none",
+  secure: process.env.NODE_ENV === "production",
+});
+
+
+      res.status(200).json({ message: "Logout successful!" });
+    });
   });
 });
 

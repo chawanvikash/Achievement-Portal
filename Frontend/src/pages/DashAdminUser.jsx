@@ -37,7 +37,7 @@ function DashAdminUser() {
       setSuccessMessage(null); 
 
       
-      const response = await axios.put(url + `/api/admin/users/${userId}/approve`, { withCredentials: true });
+      const response = await axios.put(url + `/api/admin/users/${userId}/approve`,{}, { withCredentials: true });
       setSuccessMessage(response.data.message || "User approved successfully!");
       setUsers(prevUsers => prevUsers.filter(user => user._id !== userId));
       setTimeout(() => setSuccessMessage(null), 3000);

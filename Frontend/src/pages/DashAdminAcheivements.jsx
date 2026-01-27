@@ -32,7 +32,7 @@ function DashAdminAcheivements() {
     try {
       setError(null);
       setSuccessMessage(null);
-      const response = await axios.put(url + `/api/admin/achievements/${postId}/approve`, { withCredentials: true });           
+      const response = await axios.put(url + `/api/admin/achievements/${postId}/approve`,{}, { withCredentials: true });           
       setAchieves(prevAchieves => prevAchieves.filter(post => post._id !== postId));      
       setSuccessMessage(response.data.message);
       setTimeout(() => setSuccessMessage(null), 3000);
