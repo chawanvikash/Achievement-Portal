@@ -60,12 +60,10 @@ async function main() {
   await mongoose.connect(process.env.DATABASE_URL);
 };
 
-const store = MongoStore.default.create({  
-  mongoUrl: process.env.DATABASE_URL,
-  crypto: {
-    secret: process.env.SESSION_SECRET
-  },
-  touchAfter: 24 * 3600
+const store = new MongoStore({
+    mongoUrl: process.env.DATABASE_URL,
+    crypto: { secret: process.env.SESSION_SECRET },
+    touchAfter: 24 * 3600
 });
 app.set("trust proxy", 1);
 
