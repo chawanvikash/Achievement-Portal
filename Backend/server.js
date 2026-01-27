@@ -59,13 +59,13 @@ async function main() {
   await mongoose.connect(process.env.DATABASE_URL);
 };
 
-const store = MongoStore.create({
-  mongoUrl: process.env.DATABASE_URL,
-  ttl: 14 * 24 * 60 * 60, // session TTL in seconds (14 days)
-  autoRemove: 'native',   // let MongoDB remove expired sessions
-  crypto: {
-    secret: process.env.SESSION_SECRET // optional encryption of session data
-  }
+const store = new MongoStore({  // Added 'new' and removed '.create'
+    mongoUrl: process.env.DATABASE_URL,
+    ttl: 14 * 24 * 60 * 60,
+    autoRemove: 'native',
+    crypto: {
+        secret: process.env.SESSION_SECRET
+    }
 });
 app.set("trust proxy", 1);
 const sessionOptions = {
@@ -81,6 +81,9 @@ const sessionOptions = {
     secure: true,     // REQUIRED for sameSite: "none"
   }
 };
+store.on("error", function (e) {
+    console.log("SESSION STORE ERROR:", e);
+});
 
 
 app.use(session(sessionOptions));
