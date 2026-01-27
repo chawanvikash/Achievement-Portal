@@ -10,7 +10,7 @@ const path = require("path");
 const mongoose = require('mongoose');
 const cors = require("cors");
 const session = require("express-session");
-const MongoStore = require('connect-mongo').default;
+const MongoStore = require('connect-mongo');
 const passport = require("passport");
 const localStrategy = require("passport-local");
 
@@ -64,7 +64,8 @@ const store = MongoStore.create({
     mongoUrl: process.env.DATABASE_URL,
     crypto: {
         secret: process.env.SESSION_SECRET
-    }, // optional: only update session once per day
+    }, 
+    touchAfter: 24 * 3600
 });
 app.set("trust proxy", 1);
 
