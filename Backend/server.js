@@ -10,7 +10,7 @@ const path = require("path");
 const mongoose = require('mongoose');
 const cors = require("cors");
 const session = require("express-session");
-const MongoStore = require('connect-mongo').default;
+const MongoStore = require('connect-mongo');
 const passport = require("passport");
 const localStrategy = require("passport-local");
 
@@ -67,25 +67,22 @@ const store = MongoStore.create({
     secret: process.env.SESSION_SECRET // optional encryption of session data
   }
 });
-
+app.set("trust proxy", 1);
 const sessionOptions = {
-  store,
+  store: store, // Your MongoStore instance
   name: 'sid',
   secret: process.env.SESSION_SECRET,
   resave: false,
-  saveUninitialized: false,
+  saveUninitialized: false, // Prevents creating empty sessions for non-logged-in users
   cookie: {
-    maxAge: 7 * 24 * 60 * 60 * 1000,
+    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     httpOnly: true,
-    sameSite: "none",
-    secure: process.env.NODE_ENV === "production"
+    sameSite: "none", // REQUIRED for Vercel/Render cross-domain
+    secure: true,     // REQUIRED for sameSite: "none"
   }
 };
 
-app.set("trust proxy", 1);
-app.use(session(sessionOptions));
 
-app.set("trust proxy", 1);
 app.use(session(sessionOptions));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -220,15 +217,17 @@ app.post("/api/register", wrapAsync(async (req, res, next) => {
     if (email !== AdminEmail) {
       throw new ExpressError(403, "Registration denied. You are not the authorized admin.");
     }
-    isAccountApproved = true; 
+    else isAccountApproved = true; 
   } 
   else if(role === 'student' || role==='faculty'){
     const officialDomain = ".iiests.ac.in";    
       if (!email || !email.endsWith(officialDomain)) {  
         throw new ExpressError(400, `Registration denied. You must use an official email address`);
       }
-  
-    isAccountApproved = true; 
+      else isAccountApproved = true; 
+  }
+  else if(role === 'alumni') {
+    isAccountApproved = false; 
   }
   const otp = Math.floor(100000 + Math.random() * 900000).toString();
   const otpExpires = Date.now() + 10 * 60 * 1000; // 10 minutes

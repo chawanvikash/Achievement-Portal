@@ -29,7 +29,7 @@ function RegisterPage() {
     setLoading(true);
     setError(null);
     try {
-      const response=await axios.post(url + '/api/register', formData);
+      const response=await axios.post(url + '/api/register', formData, { withCredentials: true });
         
       console.log("OTP Sent, navigating to verify...");
       

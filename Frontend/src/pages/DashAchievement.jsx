@@ -31,7 +31,7 @@ function DashAchievement() {
   useEffect(() => {
     const fetchMyPosts = async () => {
       try {
-        const response = await axios.get(url+'/api/dashboard/myposts');
+        const response = await axios.get(url+'/api/dashboard/myposts', { withCredentials: true });
         setMyPosts(response.data);
       } catch (err) {
         setError(err.response?.data?.error || "Error fetching your posts. Are you logged in?");
@@ -56,7 +56,7 @@ function DashAchievement() {
 
     try {
     
-      const response = await axios.post(url+'/api/dashboard/posts', formData);
+      const response = await axios.post(url+'/api/dashboard/posts', formData, { withCredentials: true });
       
       setMyPosts([response.data, ...myPosts]); 
       
@@ -75,7 +75,7 @@ function DashAchievement() {
   const handleDeletePost = async (postId) => {
     if (window.confirm("Are you sure you want to delete this achievement?")) {
       try {
-        await axios.delete(url+`/api/dashboard/posts/${postId}`);
+        await axios.delete(url+`/api/dashboard/posts/${postId}`, { withCredentials: true });
         setMyPosts(myPosts.filter(post => post._id !== postId)); 
       } catch (err) {
         setError(err.response?.data?.error || "Error deleting post");
@@ -101,7 +101,7 @@ function DashAchievement() {
       if (editImageFile) {
           formData.append('image', editImageFile);
       }
-      const response = await axios.put(url + `/api/dashboard/posts/${editingPost._id}`, formData);
+      const response = await axios.put(url + `/api/dashboard/posts/${editingPost._id}`, formData, { withCredentials: true });
 
    
       setMyPosts(myPosts.map(post => (post._id === editingPost._id ? response.data : post)));

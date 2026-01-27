@@ -19,7 +19,7 @@ function DashAdminUser() {
   useEffect(() => { 
     const fetchUsers = async () => {
       try {  
-        const response = await axios.get(url + '/api/admin/pending-users');
+        const response = await axios.get(url + '/api/admin/pending-users', { withCredentials: true });
         setUsers(response.data);
       } catch (err) {
         setError(err.response?.data?.error || "Error fetching users. Are you an admin?");
@@ -37,7 +37,7 @@ function DashAdminUser() {
       setSuccessMessage(null); 
 
       
-      const response = await axios.put(url + `/api/admin/users/${userId}/approve`);
+      const response = await axios.put(url + `/api/admin/users/${userId}/approve`, { withCredentials: true });
       setSuccessMessage(response.data.message || "User approved successfully!");
       setUsers(prevUsers => prevUsers.filter(user => user._id !== userId));
       setTimeout(() => setSuccessMessage(null), 3000);
@@ -52,7 +52,7 @@ function DashAdminUser() {
       setSuccessMessage(null); 
 
       
-      const response = await axios.delete(url + `/api/admin/users/${userId}/reject`);
+      const response = await axios.delete(url + `/api/admin/users/${userId}/reject`, { withCredentials: true });
       setSuccessMessage(response.data.message || "User rejected successfully!");
       setUsers(prevUsers => prevUsers.filter(user => user._id !== userId));
       setTimeout(() => setSuccessMessage(null), 3000);

@@ -16,7 +16,7 @@ function DashAdminAcheivements() {
   useEffect(() => { 
     const fetchPosts = async () => {
       try {  
-        const response = await axios.get(url + '/api/admin/pending-achievements');
+        const response = await axios.get(url + '/api/admin/pending-achievements', { withCredentials: true });
         setAchieves(response.data);
       } catch (err) {
         setError(err.response?.data?.error || "Error fetching achievements.");
@@ -32,7 +32,7 @@ function DashAdminAcheivements() {
     try {
       setError(null);
       setSuccessMessage(null);
-      const response = await axios.put(url + `/api/admin/achievements/${postId}/approve`);           
+      const response = await axios.put(url + `/api/admin/achievements/${postId}/approve`, { withCredentials: true });           
       setAchieves(prevAchieves => prevAchieves.filter(post => post._id !== postId));      
       setSuccessMessage(response.data.message);
       setTimeout(() => setSuccessMessage(null), 3000);
