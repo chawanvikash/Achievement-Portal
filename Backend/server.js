@@ -60,31 +60,31 @@ async function main() {
   await mongoose.connect(process.env.DATABASE_URL);
 };
 
-const store = new MongoStore({
-    mongoUrl: process.env.DATABASE_URL,
-    crypto: { secret: process.env.SESSION_SECRET },
-    touchAfter: 24 * 3600
+const store = MongoStore.create({
+  mongoUrl: process.env.DATABASE_URL,
+  touchAfter: 24 * 3600
 });
 app.set("trust proxy", 1);
 
 const sessionOptions = {
   store,
-  name: 'sid',
+  name: "sid",
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
-  rolling: true,
   proxy: true,
   cookie: {
-    maxAge: 7 * 24 * 60 * 60 * 1000,
-    httpOnly: true,
-    sameSite: "none",
-    secure: process.env.NODE_ENV === "production",
-  }
+  httpOnly: true,
+  maxAge: 7 * 24 * 60 * 60 * 1000,
+  sameSite: "none",
+  secure: process.env.NODE_ENV === "production"
+}
 };
-store.on("error", function (e) {
-    console.log("SESSION STORE ERROR:", e);
+
+store.on("error", e => {
+  console.log("SESSION STORE ERROR:", e);
 });
+
 
 
 app.use(session(sessionOptions));
