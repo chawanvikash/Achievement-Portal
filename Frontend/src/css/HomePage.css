@@ -1,17 +1,171 @@
 
-.hero{
-    margin-top: 33px;
-    background: url('https://www.iiests.ac.in/assets/images/whyiiest/02.jpg') no-repeat center/cover;
-    height: 600px;
-    position: relative;
-    color: white;
-    text-align: center;
-
-    animation-name: opacity;
-    animation-duration: 1.6s;
-    
-    
+.hero {
+  position: relative;
+  height: 600px;
+  overflow: hidden;
+  margin-top: 30px;
 }
+
+/* IMAGE WRAPPER */
+.hero-images {
+  position: absolute;
+  inset: 0;
+}
+
+/* ALL IMAGES */
+.hero-img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  animation: floatSlide 15s infinite;
+}
+
+/* EACH IMAGE TIMING */
+.img1 { animation-delay: 0s; }
+.img2 { animation-delay: 5s; }
+.img3 { animation-delay: 10s; }
+
+/* FLOAT + FADE */
+@keyframes floatSlide {
+  0% {
+    opacity: 0;
+    transform: scale(1) translateY(20px);
+  }
+  10% {
+    opacity: 1;
+    transform: scale(1.05) translateY(0);
+  }
+  40% {
+    opacity: 1;
+    transform: scale(1.05) translateY(-15px);
+  }
+  60% {
+    opacity: 0;
+    transform: scale(1) translateY(20px);
+  }
+  100% {
+    opacity: 0;
+  }
+}
+.latest-achievements-section {
+  background: linear-gradient(180deg, #f0f7ff, #ffffff);
+}
+
+/* GRID */
+.verified-posts-grid {
+  perspective: 1200px;
+}
+
+/* CARD */
+.achievement-card-pro {
+  border-radius: 18px;
+  overflow: hidden;
+  border: none;
+  background: linear-gradient(135deg, #f8fbff, #eef4ff);
+  transition: all 0.4s ease;
+  box-shadow: 0 12px 25px rgba(0,0,0,0.08);
+  position: relative;
+}
+
+.achievement-card-pro:hover {
+  transform: translateY(-12px) scale(1.02);
+  box-shadow: 0 25px 45px rgba(0,0,0,0.15);
+}
+
+/* IMAGE */
+.card-img-wrapper-pro {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+}
+
+.card-img-pro {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.achievement-card-pro:hover .card-img-pro {
+  transform: scale(1.1);
+}
+
+/* BADGE */
+.role-badge-pro {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(255,255,255,0.9);
+  color: #003366;
+  font-weight: 600;
+  border-radius: 50px;
+  padding: 6px 14px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+}
+
+/* BODY */
+.achievement-card-pro .card-body {
+  padding: 20px 22px 24px;
+}
+
+.achievement-card-pro .card-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #0d1b2a;
+  margin-bottom: 10px;
+}
+
+.achievement-card-pro .card-text {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #4a5568;
+}
+
+/* FOOTER */
+.post-footer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-top: 12px;
+  margin-top: 12px;
+  border-top: 1px solid rgba(0,0,0,0.08);
+  font-weight: 600;
+  color: #2b6cb0;
+}
+
+/* BUTTON */
+.view-all-btn {
+  background: linear-gradient(135deg, #4facfe, #00f2fe);
+  border: none;
+  color: white;
+}
+
+.view-all-btn:hover {
+  background: linear-gradient(135deg, #43e97b, #38f9d7);
+}
+
+/* EMPTY STATE */
+.no-posts-state {
+  background: linear-gradient(135deg, #ffffff, #f1f5ff);
+}
+
+
+/* TEXT OVERLAY */
+.overview {
+  position: relative;
+  z-index: 2;
+  background: rgba(0,0,0,0.5);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-shadow:2px  black;
+}
+
+
 .event{
     margin-top: 33px;
     background: url('https://assets.telegraphindia.com/telegraph/2024/Apr/1712148081_iiest.jpg') no-repeat center/cover;
@@ -133,21 +287,27 @@
         transform: scale(1,1);
     }
 }
-@keyframes leftshift{
-    from{
-        opacity: 0;
-        transform: translate(-100px);
-    }
-    to{
-        opacity: 1;
-        transform: translate(0px);
-    }
-}
-#list-content{
-    animation: leftshift linear;
-    animation-timeline: view();
-    animation-range: entry 0% cover 50%;
-    animation-delay: .2s;
 
     
+
+.box1{
+    background: linear-gradient(-13deg, #fda31d, #f0ccc0);
+
+}
+.box2{
+    background: linear-gradient(-13deg, #f5bff7, #d26ef1);
+
+}
+.box3{
+    background: linear-gradient(-13deg, #a5c5f5, #56a4f3);
+
+}
+.box1:hover{
+    background: linear-gradient(-13deg, #fda31d, #f0ccc0);
+}
+.box2:hover{
+    background: linear-gradient(-13deg, #f5bff7, #d26ef1);
+}
+.box3:hover{
+    background: linear-gradient(-13deg, #85b2f7, #56a4f3);
 }

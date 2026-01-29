@@ -160,7 +160,7 @@ function ContactPage() {
                         </div>
                         <div>
                             <h6 className="fw-bold mb-1">Phone</h6>
-                            <p className="text-muted small">+91 12345 67890</p>
+                            <p className="text-muted small"> +91 (033) 2668 4561 to 63</p>
                         </div>
                     </div>
 
@@ -170,7 +170,7 @@ function ContactPage() {
                         </div>
                         <div>
                             <h6 className="fw-bold mb-1">Email</h6>
-                            <p className="text-muted small">contacts@iiests.ac.in</p>
+                            <p className="text-muted small">head@cs.iiests.ac.in</p>
                         </div>
                     </div>
 

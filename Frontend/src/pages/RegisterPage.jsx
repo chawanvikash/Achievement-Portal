@@ -3,7 +3,7 @@ import axios from 'axios';
 import "../css/Register.css";
 import { useNavigate, Link } from 'react-router-dom'; 
 import { Alert,Button, Container, Card, Form, Spinner } from 'react-bootstrap';
-import { FaArrowLeft, FaCalendarAlt, FaUserCircle } from 'react-icons/fa';
+import { FaArrowLeft, FaCalendarAlt, FaUserCircle,FaEye, FaEyeSlash  } from 'react-icons/fa';
 import { BASE_URL } from '../helper';
 
 
@@ -11,6 +11,7 @@ function RegisterPage() {
   const navigate = useNavigate();
   const [error, setError] = useState(null);
   const [loading,setLoading]=useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -46,14 +47,19 @@ function RegisterPage() {
 
   return (
     <>
-    <Link to="/" className="text-decoration-none">
-        <Button variant="link" className="text-muted p-0 -mb-4 fw-bold" style={{ textDecoration: 'none' }}>
-          <FaArrowLeft className="me-2" /> Back to Achievements
-        </Button>
-      </Link>
+ <Link to="/" className="text-decoration-none">
+  <Button
+    variant="success"
+    className="fw-bold rounded-pill px-3 py-2 shadow-sm mb-3"
+  >
+    <FaArrowLeft className="me-2" />
+    Back to Achievements
+  </Button>
+</Link>
+
 
     
-    <div className="register-container" style={{display: 'flex', justifyContent: 'center', marginTop: '50px'}}>
+    <div className="register-container" style={{display: 'flex', justifyContent: 'center'}}>
       <form onSubmit={handleSubmit} className='register-form'>
         {error && <Alert variant="danger" onClose={() => setError(null)} dismissible>{error}</Alert>}
         
@@ -69,9 +75,31 @@ function RegisterPage() {
             <input id='ipemail' type="email" name="email" placeholder="Email (use Gsuit id for Student/Faculty)" value={formData.email} onChange={handleChange} disabled={loading} required/>
         </div>
 
-        <div className="input-group">
-            <label htmlFor="ippass">Password</label>
-            <input id='ippass' type="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange} disabled={loading} required/>
+        <div className="input-group" style={{ position: "relative" }}>
+                  <label htmlFor="ippass">Password</label>
+                  <input 
+                  id='ippass' 
+                  type={showPassword ? "text" : "password"} 
+                  name="password" 
+                  placeholder="Password" 
+                  value={formData.password} 
+                  onChange={handleChange} 
+                  required
+          />
+        
+          <span
+            onClick={() => setShowPassword(!showPassword)}
+            style={{
+              position: "absolute",
+              right: "12px",
+              top: "38px",
+              cursor: "pointer",
+              color: "#666",
+              fontSize: "18px"
+            }}
+          >
+            {showPassword ? <FaEyeSlash /> : <FaEye />}
+          </span>
         </div>
 
         <div className="input-group">

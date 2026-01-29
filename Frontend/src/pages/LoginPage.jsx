@@ -5,11 +5,14 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { BASE_URL } from '../helper';
 import { Alert, Spinner,Button } from 'react-bootstrap';
-import { FaArrowLeft, FaCalendarAlt, FaUserCircle } from 'react-icons/fa';
+import { FaArrowLeft, FaCalendarAlt, FaUserCircle,FaEye, FaEyeSlash } from 'react-icons/fa';
+
+
 function LoginPage() {
   const { login } = useAuth();
   const navigate = useNavigate(); 
   const [error, setError] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);  
   const [formData, setFormData] = useState({
     email: '',
@@ -67,9 +70,13 @@ function LoginPage() {
 
   return (
     <>
-      <Link to="/" className="text-decoration-none">
-        <Button variant="link" className="text-muted p-0 mb-4 fw-bold" style={{ textDecoration: 'none' }}>
-          <FaArrowLeft className="me-2" /> Back to Achievements
+       <Link to="/" className="text-decoration-none">
+        <Button
+          variant="success"
+          className="fw-bold rounded-pill px-3 py-2 shadow-sm mb-3"
+        >
+          <FaArrowLeft className="me-2" />
+          Back to Achievements
         </Button>
       </Link>
 
@@ -98,18 +105,33 @@ function LoginPage() {
           />
         </div>
 
-        <div className="input-group">
+        <div className="input-group" style={{ position: "relative" }}>
           <label htmlFor="ippass">Password</label>
           <input 
-            id='ippass' 
-            type="password" 
-            name="password" 
-            placeholder="Password" 
-            value={formData.password} 
-            onChange={handleChange} 
-            required
-          />
-        </div>
+          id='ippass' 
+          type={showPassword ? "text" : "password"} 
+          name="password" 
+          placeholder="Password" 
+          value={formData.password} 
+          onChange={handleChange} 
+          required
+  />
+
+  <span
+    onClick={() => setShowPassword(!showPassword)}
+    style={{
+      position: "absolute",
+      right: "12px",
+      top: "38px",
+      cursor: "pointer",
+      color: "#666",
+      fontSize: "18px"
+    }}
+  >
+    {showPassword ? <FaEyeSlash /> : <FaEye />}
+  </span>
+</div>
+
 
         <button type="submit" className='sub-btn'>Login</button> 
         
