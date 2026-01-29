@@ -4,8 +4,11 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Container, Card, Form, Button, Alert, Spinner } from 'react-bootstrap'; 
 import NavBar from '../includes/NavBar';
 import { BASE_URL } from '../helper';
+import { useAuth } from '../context/AuthContext';
 
 function VerifyEmailPage() {
+    const { login } = useAuth();
+
     const location = useLocation();
     const navigate = useNavigate();
     const emailFromRegister = location.state?.email || '';
@@ -23,14 +26,22 @@ function VerifyEmailPage() {
         setSuccess(null);
 
         try {
-            await axios.post(
+                     const response = await axios.post(
                 url + `/api/verify-otp`, 
                 { email: emailFromRegister, otp },
                 { withCredentials: true }
             );
-            
-            setSuccess("Email Verified Successfully! Redirecting to Dashboard...");
-            setTimeout(() => navigate('/dashboard'), 1500);
+
+            if (response.data.user) {
+                login(response.data.user); 
+                setSuccess("Email Verified! Redirecting to Dashboard...");
+                setTimeout(() => navigate('/dashboard'), 1000);
+            } 
+            else {
+                setSuccess(response.data.message);
+                setTimeout(() => navigate('/login'), 1500);
+            }
+
         } catch (err) {
             setError(err.response?.data?.error || "Verification failed.");
             setLoading(false); 
