@@ -42,6 +42,8 @@ function RegisterPage() {
       console.error('Error Registering user:', errorMessage);
       setError(errorMessage); 
       setFormData(prev => ({ ...prev, password: '' })); 
+    }finally{
+      setLoading(false);
     }
   };
 

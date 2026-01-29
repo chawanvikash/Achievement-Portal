@@ -12,6 +12,7 @@ function LoginPage() {
   const { login } = useAuth();
   const navigate = useNavigate(); 
   const [error, setError] = useState(null);
+  const [loading,setLoading]=useState(false);
   const [showPassword, setShowPassword] = useState(false);  
   const [formData, setFormData] = useState({
     email: '',
@@ -25,6 +26,7 @@ function LoginPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     setError(null);
 
     try {
@@ -48,7 +50,9 @@ function LoginPage() {
       const errorMessage = error.response?.data?.error || 'Invalid email or password.';
       console.error('Error Login user:', errorMessage);
       setError(errorMessage); 
-    } 
+    } finally{
+      setLoading(false);
+    }
 
   };
 
@@ -87,6 +91,7 @@ function LoginPage() {
             placeholder="Email" 
             value={formData.email} 
             onChange={handleChange} 
+            disabled={loading}
             required
           />
         </div>
@@ -100,6 +105,7 @@ function LoginPage() {
           placeholder="Password" 
           value={formData.password} 
           onChange={handleChange} 
+          disabled={loading}
           required
   />
 
@@ -119,7 +125,14 @@ function LoginPage() {
 </div>
 
 
-        <button type="submit" className='sub-btn'>Login</button> 
+        <button type="submit" className='sub-btn' disabled={loading}>
+          {loading ? (
+                                <>
+                                <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" className="me-2"/>
+                                Wait...
+                                </>
+                                ) : ("LogIn")
+                    }</button> 
         
         <br /> <br />
         

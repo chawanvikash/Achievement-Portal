@@ -7,7 +7,7 @@ import photo from "../assets/icon.jpg";
 import { FaEdit, FaTrash, FaPlus, FaCheckCircle, FaClock, FaImage ,FaArrowLeft} from 'react-icons/fa';
 import ProfileSidebar from '../includes/ProfileSideBar';
 import "../css/AddAcheive.css";
-import { BASE_URL } from '../helper'; 
+import { BASE_URL } from '../helper';             
 
 function DashAchievement() {
   const { user } = useAuth(); 

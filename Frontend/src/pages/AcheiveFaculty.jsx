@@ -42,7 +42,7 @@ function AcheiveFaculty() {
        style={{ minHeight: '70vh' }}
      >
        <Spinner animation="border" variant="primary" role="status" />
-       <span className="mt-3 fw-bold text-primary">Loading achievements...</span>
+       <span className="mt-3 fw-bold text-dark">Loading achievements...</span>
      </div>
    );
  }
