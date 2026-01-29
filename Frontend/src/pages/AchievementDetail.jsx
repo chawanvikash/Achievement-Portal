@@ -58,9 +58,13 @@ function AchievementDetail() {
       
      
       <Link to="/achievements/students" className="text-decoration-none">
-        <Button variant="link" className="text-muted p-0 mb-4 fw-bold" style={{ textDecoration: 'none' }}>
-          <FaArrowLeft className="me-2" /> Back to Achievements
-        </Button>
+          <Button
+    variant="success"
+    className="fw-bold rounded-pill px-3 py-2 shadow-sm mb-3"
+  >
+    <FaArrowLeft className="me-2" />
+    Back to Achievements
+  </Button>
       </Link>
 
       
