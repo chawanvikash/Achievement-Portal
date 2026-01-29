@@ -20,25 +20,36 @@ function HomePage() {
   
   const url = BASE_URL;
 
-  useEffect(() => {
-    const fetchHome = async () => {
+   useEffect(() => {
+    let intervalId;
+
+    const fetchPosts = async () => {
       try {
-      
-        const response = await axios.get(url + '/api/public/achievements');
-        setPosts(response.data);
+        const response = await axios.get(url + "/api/public/achievements");
+
+        // Only update if posts have changed
+        if (JSON.stringify(response.data) !== JSON.stringify(posts)) {
+          setLoading(true);      // show spinner while updating
+          setPosts(response.data);
+          setLoading(false);
+        }
       } catch (err) {
         console.error("Error fetching public posts:", err);
         setError("Could not load recent achievements.");
-      }finally{
         setLoading(false);
       }
     };
 
-    fetchHome(); 
-  }, []); 
+    fetchPosts();
+
+    // Poll every 30s for updates
+    intervalId = setInterval(fetchPosts, 30000);
+
+    return () => clearInterval(intervalId);
+  }, [posts]);
 
  if (loading) {
-    return <Container className="text-center mt-5"><Spinner animation="border" /> <p>Loading pending users...</p></Container>;
+    return <Container className="text-center mt-5"><Spinner animation="border" /> <p>Loading users...</p></Container>;
   }
  
   return (

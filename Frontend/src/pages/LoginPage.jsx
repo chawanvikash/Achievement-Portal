@@ -12,8 +12,7 @@ function LoginPage() {
   const { login } = useAuth();
   const navigate = useNavigate(); 
   const [error, setError] = useState(null);
-  const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);  
+  const [showPassword, setShowPassword] = useState(false);  
   const [formData, setFormData] = useState({
     email: '',
     password: '',  
@@ -26,9 +25,6 @@ function LoginPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-   
-    setLoading(true);
     setError(null);
 
     try {
@@ -52,21 +48,11 @@ function LoginPage() {
       const errorMessage = error.response?.data?.error || 'Invalid email or password.';
       console.error('Error Login user:', errorMessage);
       setError(errorMessage); 
-    } finally {
-    
-      setLoading(false);
-    }
+    } 
+
   };
 
- 
-  if (loading) {
-    return (
-      <div className="loading-screen" style={{ textAlign: 'center', marginTop: '20%' }}>
-        <Spinner animation="border" variant="primary" />
-        <p>Logging in...</p>
-      </div>
-    );
-  }
+
 
   return (
     <>

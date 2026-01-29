@@ -9,7 +9,7 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { FaTrophy, FaUser, FaCalendarAlt, FaArrowRight } from 'react-icons/fa';
 import { BASE_URL } from '../helper';
-
+import { Spinner } from 'react-bootstrap';
 function AcheiveInstitute() {
   
   const [posts, setPosts] = useState([]);
@@ -37,9 +37,17 @@ function AcheiveInstitute() {
   }, []); 
 
  
-  if (loading) {
-    return <p>Loading achievements...</p>;
-  }
+   if (loading) {
+   return (
+     <div
+       className="d-flex flex-column justify-content-center align-items-center"
+       style={{ minHeight: '70vh' }}
+     >
+       <Spinner animation="border" variant="primary" role="status" />
+       <span className="mt-3 fw-bold text-primary">Loading achievements...</span>
+     </div>
+   );
+ }
 
   if (error) {
     return <p>Error loading data: {error}</p>;

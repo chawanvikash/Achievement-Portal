@@ -9,6 +9,7 @@ import Card from 'react-bootstrap/Card';
 import Footer from '../includes/Footer';
 import { FaArrowRight, FaCalendarAlt, FaUserCircle } from 'react-icons/fa';
 import { BASE_URL } from '../helper';
+import { Spinner } from 'react-bootstrap';
 
 function AcheiveAlumni() {
   
@@ -38,8 +39,17 @@ function AcheiveAlumni() {
 
  
   if (loading) {
-    return <p>Loading achievements...</p>;
-  }
+  return (
+    <div
+      className="d-flex flex-column justify-content-center align-items-center"
+      style={{ minHeight: '70vh' }}
+    >
+      <Spinner animation="border" variant="primary" role="status" />
+      <span className="mt-3 fw-bold text-primary">Loading achievements...</span>
+    </div>
+  );
+}
+
 
   if (error) {
     return <p>Error loading data: {error}</p>;
