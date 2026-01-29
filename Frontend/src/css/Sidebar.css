@@ -4,16 +4,20 @@
   top: 0;
   left: 0;
   width: 260px;
+  height: 100vh;
   z-index: 1000;
-  border-radius: 5px;  
+  border-radius: 0px;  
   display: flex;
   flex-direction: column;
   padding: 20px 15px;
   background: linear-gradient(180deg, #1a2226 0%, #101517 100%);
   box-shadow: 4px 0 15px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
-  margin-top: 0px;
+  
 
+}
+.custom-sidebar {
+  overflow-y: auto;
 }
 
 .custom-sidebar .nav-item {
