@@ -1,7 +1,7 @@
 
 .custom-sidebar {
   position: fixed;
-  bottom: 0;
+  top: 0;
   left: 0;
   width: 260px;
   z-index: 1000;
