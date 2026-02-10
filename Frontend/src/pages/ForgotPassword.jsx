@@ -60,7 +60,7 @@ const ForgotPassword = () => {
                         </div>
                         <h3 className="fw-bold">{step === 1 ? 'Forgot Password' : 'Reset Password'}</h3>
                         <p className="text-muted small">
-                            {step === 1 ? 'Enter your institutional email to receive a reset code.' : 'Enter the 6-digit code and your new password.'}
+                            {step === 1 ? 'Enter your existing email to receive a reset code.' : 'Enter the 6-digit code and your new password.'}
                         </p>
                     </div>
 
@@ -75,7 +75,7 @@ const ForgotPassword = () => {
                                     <span className="input-group-text bg-light border-end-0"><FaEnvelope className="text-muted" /></span>
                                     <Form.Control 
                                         type="email" 
-                                        placeholder="name@iiests.ac.in" 
+                                        placeholder="Email" 
                                         className="bg-light border-start-0"
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
