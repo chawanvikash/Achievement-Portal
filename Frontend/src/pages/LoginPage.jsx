@@ -123,6 +123,15 @@ function LoginPage() {
     {showPassword ? <FaEyeSlash /> : <FaEye />}
   </span>
 </div>
+<div className="text-end mb-3" style={{ marginTop: "-10px" }}>
+          <Link 
+            to="/forgot-password" 
+            className="text-decoration-none small text-primary fw-bold"
+            style={{ fontSize: "0.85rem" }}
+          >
+            Forgot Password?
+          </Link>
+        </div>
 
 
         <button type="submit" className='sub-btn' disabled={loading}>
@@ -137,10 +146,9 @@ function LoginPage() {
         <br /> <br />
         
         <div className="text-center">
-          <p>New Account?</p>
           
           <Link to="/register">
-            <button type="button" className='reg-btn'>Register</button>
+            <button type="button" className='reg-btn'>New Account?</button>
           </Link>
         </div>
       </form>   

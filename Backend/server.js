@@ -339,6 +339,40 @@ app.post("/api/logout", (req, res, next) => {
   });
 });
 
+app.post("/api/forgot-password", wrapAsync(async (req, res) => {
+    const { email } = req.body;
+    const user = await User.findOne({ email });
+
+    if (!user) throw new ExpressError(404, "User with this email does not exist.");
+
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    user.resetPasswordOTP = otp;
+    user.resetPasswordExpires = Date.now() + 10 * 60 * 1000; // 10 mins
+    await user.save();
+
+    await sendOTP(email, otp); // Reusing your existing email util
+    res.status(200).json({ message: "OTP sent to your email." });
+}));
+
+app.post("/api/reset-password", wrapAsync(async (req, res) => {
+    const { email, otp, newPassword } = req.body;
+    const user = await User.findOne({ 
+        email, 
+        resetPasswordOTP: otp, 
+        resetPasswordExpires: { $gt: Date.now() } 
+    });
+
+    if (!user) throw new ExpressError(400, "Invalid or expired OTP.");
+
+    // setPassword is a helper from passport-local-mongoose
+    await user.setPassword(newPassword);
+    user.resetPasswordOTP = undefined;
+    user.resetPasswordExpires = undefined;
+    await user.save();
+
+    res.status(200).json({ message: "Password updated successfully! You can now login." });
+}));
+
 
 //middle wares for the error handling
 app.use((req, res, next) => {

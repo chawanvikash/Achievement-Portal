@@ -21,6 +21,7 @@ import VerifyEmailPage from './pages/VerifyEmailPage';
 
 import AchievementDetail from './pages/AchievementDetail';
 import AdminReviews from './pages/AdminReviews';
+import ForgotPassword from './pages/ForgotPassword';
 
 function App() {
   return (
@@ -47,6 +48,7 @@ function App() {
         <Route path="/pendingAcheivements" element={<DashAdminAcheivements />} />
         <Route path="/reviews" element={<AdminReviews />} />
         <Route path="/verify-email" element={<VerifyEmailPage />} />
+        <Route path="/forgot-password" element={<ForgotPassword/>} />
 
 
 
