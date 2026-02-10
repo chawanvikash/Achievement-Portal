@@ -83,7 +83,7 @@ function ContactPage() {
                                         name="name" 
                                         value={formData.name} 
                                         onChange={handleChange} 
-                                        placeholder="John Doe" 
+                                        placeholder="name" 
                                         required 
                                         className="form-control-lg"
                                     />
@@ -95,7 +95,7 @@ function ContactPage() {
                                         name="email" 
                                         value={formData.email} 
                                         onChange={handleChange} 
-                                        placeholder="name@example.com" 
+                                        placeholder="email" 
                                         required 
                                         className="form-control-lg"
                                     />
