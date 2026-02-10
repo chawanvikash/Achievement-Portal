@@ -22,7 +22,7 @@ const ForgotPassword = () => {
         setError(null);
         setMessage(null);
         try {
-            const res = await axios.post(`${BASE_URL}/api/forgot-password`, { email });
+            const res = await axios.post(`${BASE_URL}/api/forgot-password`, { email },{ withCredentials: true });
             setMessage(res.data.message);
             setStep(2);
         } catch (err) {
@@ -37,7 +37,7 @@ const ForgotPassword = () => {
         setLoading(true);
         setError(null);
         try {
-            const res = await axios.post(`${BASE_URL}/api/reset-password`, { email, otp, newPassword });
+            const res = await axios.post(`${BASE_URL}/api/reset-password`, { email, otp, newPassword },{ withCredentials: true });
             setMessage(res.data.message + " Redirecting to login...");
             setTimeout(() => {
                 navigate('/login');

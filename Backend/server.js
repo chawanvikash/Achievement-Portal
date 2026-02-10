@@ -6,6 +6,7 @@ const express = require("express");
 const app = express();
 const port= process.env.PORT || 8080 ;
 const path = require("path");
+const crypto = require("crypto");
 
 const mongoose = require('mongoose');
 const cors = require("cors");
@@ -234,17 +235,21 @@ app.post("/api/register", wrapAsync(async (req, res, next) => {
     isAccountApproved = false; 
   }
   const otp = Math.floor(100000 + Math.random() * 900000).toString();
-  const otpExpires = Date.now() + 10 * 60 * 1000; // 10 minutes
+const otpExpires = Date.now() + 10 * 60 * 1000;
 
-  const newUser = new User({ 
-    username, 
-    email, 
-    role, 
-    isVerified: isAccountApproved, 
-    isEmailVerified: false,        
-    otp,                           
-    otpExpires                     
-  }); 
+
+const hashedOTP = crypto.createHash("sha256").update(otp).digest("hex");
+
+const newUser = new User({ 
+  username, 
+  email, 
+  role, 
+  isVerified: isAccountApproved, 
+  isEmailVerified: false,        
+  otp: hashedOTP,                 
+  otpExpires                     
+});
+
   const registeredUser = await User.register(newUser, password);
   await sendOTP(email, otp);
 
@@ -261,7 +266,9 @@ app.post('/api/verify-otp', wrapAsync(async (req, res, next) => {
     const user = await User.findOne({ email });
     if (!user) return res.status(404).json({ error: "User not found." });
 
-    if (String(user.otp) !== String(otp) || user.otpExpires < Date.now()) {
+    const hashedOTP = crypto.createHash("sha256").update(otp).digest("hex");
+
+    if (user.otp !== hashedOTP || user.otpExpires < Date.now()) {
         return res.status(400).json({ error: "Invalid or expired OTP." });
     }
 
@@ -284,14 +291,14 @@ app.post('/api/verify-otp', wrapAsync(async (req, res, next) => {
                 }
             });
         });
-    } 
-    else {
+    } else {
         return res.status(200).json({
             message: "Email verified! Please wait for Admin approval.",
             redirect: "/login"
         });
     }
 }));
+
 
 
 //login
@@ -346,21 +353,27 @@ app.post("/api/forgot-password", wrapAsync(async (req, res) => {
     if (!user) throw new ExpressError(404, "User with this email does not exist.");
 
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
-    user.resetPasswordOTP = otp;
-    user.resetPasswordExpires = Date.now() + 10 * 60 * 1000; // 10 mins
+
+    const hashedOTP = crypto.createHash("sha256").update(otp).digest("hex");
+
+    user.resetPasswordOTP = hashedOTP;
+    user.resetPasswordExpires = Date.now() + 10 * 60 * 1000;
     await user.save();
 
-    await sendOTP(email, otp); // Reusing your existing email util
+    await sendOTP(email, otp);
     res.status(200).json({ message: "OTP sent to your email." });
 }));
 
 app.post("/api/reset-password", wrapAsync(async (req, res) => {
     const { email, otp, newPassword } = req.body;
+    const hashedOTP = crypto.createHash("sha256").update(otp).digest("hex");
+
     const user = await User.findOne({ 
-        email, 
-        resetPasswordOTP: otp, 
-        resetPasswordExpires: { $gt: Date.now() } 
-    });
+  email, 
+  resetPasswordOTP: hashedOTP, 
+  resetPasswordExpires: { $gt: Date.now() } 
+});
+
 
     if (!user) throw new ExpressError(400, "Invalid or expired OTP.");
 
