@@ -95,6 +95,10 @@ passport.use(new localStrategy({ usernameField: 'email' }, User.authenticate()))
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+app.get("/api/ping", (req, res) => {
+  res.status(200).send("pong");
+});
+
 //home route
 app.get("/api", (req, res) => {
   res.send("Root is absolutely working");

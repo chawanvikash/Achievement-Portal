@@ -2,7 +2,8 @@
 import { useState } from 'react'
 import { Routes, Route } from 'react-router-dom' ;
 import ProtectedRoute from './content/ProtectedRoute';
-
+import { useEffect } from "react";
+import { BASE_URL } from "./helper";
 import HomePage from './pages/HomePage';
 import ContactPage from './pages/ContactPage';
 import RegisterPage from './pages/RegisterPage';
@@ -24,6 +25,11 @@ import AdminReviews from './pages/AdminReviews';
 import ForgotPassword from './pages/ForgotPassword';
 
 function App() {
+  useEffect(() => {
+    fetch(`${BASE_URL}/api/ping`)
+      .then(() => console.log("Backend awake"))
+      .catch(() => console.log("Ping failed"));
+  }, []);
   return (
     <>
       
